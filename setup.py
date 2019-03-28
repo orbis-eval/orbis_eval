@@ -30,8 +30,8 @@ setup(
         'Sphinx==1.7.5',
         'regex==2018.2.21',
         'SPARQLWrapper==1.8.2',
-        'PyYAML==3.13',
-        'requests==2.19.1'
+        'pyyaml>=4.2b1',
+        'requests>=2.20.0'
     ],
     entry_points={
         'console_scripts': [
