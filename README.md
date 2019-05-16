@@ -9,6 +9,7 @@ A python-based evaluation framework for web services and apis.
 Needs Python 3.6
 
 Needs following packages:
+- dev
 - setuptools
 - sphinx
 - lxml
