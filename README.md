@@ -10,6 +10,7 @@ Needs Python 3.6
 
 Needs following packages:
 - setuptools
+- sphinx
 - lxml
 - palettable
 - isodate
