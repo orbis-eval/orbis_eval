@@ -7,7 +7,9 @@ A python-based evaluation framework for web services and apis.
 
 #### Requirements
 Needs Python 3.6
+
 Needs following packages:
+- setuptools
 - lxml
 - palettable
 - isodate
