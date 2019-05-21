@@ -4,9 +4,6 @@
 /docker_volumes
 *.nogit.*
 
-# Include test corpus
-!/home/fabian/Documents/Projects/orbis/github.com/data/corpora/rss1
-
 # Sublime 3
 *.sublime-project
 *.sublime-workspace
