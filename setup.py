@@ -39,7 +39,9 @@ def load_metadata():
 def load_requirements_file():
     requirements = []
     with open(__requirements_file__, encoding="utf8") as open_file:
-        requirements.append(line for line in open_file.readlines())
+        for line in open_file.readlines():
+            requirements.append(line.replace("\n", ""))
+
     return requirements
 
 
