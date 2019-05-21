@@ -38,19 +38,14 @@ def _get_args():
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('-t', '--text', type=str, default=None,
                         help='Text input as string. Use \' in console')
-
     parser.add_argument('-p', '--profile_name', type=str,
                         default="DBPEDIA",
                         help='The desired profile name')
-
     parser.add_argument('-i', '--id', type=str,
                         default=None, help="Document id")
-
     parser.add_argument('-r', '--remote', default=False,
                         action='store_true')
-
     args = parser.parse_args()
-
     return args
 
 
@@ -77,13 +72,11 @@ def _query_recognize(input_txt, profile_name, limit=0, id_key="orbis_test"):
 
     recognize_client = Recognize()
     jeremia_client = Jeremia()
-
     document = {"id": id_key,
                 "body": input_txt,
                 "title": "",
                 "format": "text/html",
                 "header": {}}
-
     jeremia_document = jeremia_client.submit_document(document)
     recognize_document = recognize_client.search_document(profile_name=profile_name, document=jeremia_document, limit=limit)
 
@@ -96,24 +89,18 @@ def function_test():
     without any arguments.
     """
     print("Running function test\n")
-
     text = """Microsoft is an American multinational corporation \
     headquartered in Redmond, Washington, that develops, manufactures, \
     licenses, supports and sells computer software, consumer electronics \
     and personal computers and services. It was was founded by \
     Bill Gates and Paul Allen on April 4, 1975."""
-
     profile_name = "DBPEDIA"
-
     response = _query_recognize(text, profile_name, id_key=111)
-
     return response
 
 
 if __name__ == "__main__":
-
     args = _get_args()
-
     if args.remote or args.text:
         print(_query_recognize(args.text, args.profile_name, id_key=args.id))
     else:
