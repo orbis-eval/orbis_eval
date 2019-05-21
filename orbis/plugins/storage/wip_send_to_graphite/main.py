@@ -3,7 +3,6 @@ from orbis import app
 
 
 class SendToGraphite(object):
-    """docstring for SendToGraphite"""
 
     def __init__(self, rucksack):
         super(SendToGraphite, self).__init__()
@@ -15,7 +14,6 @@ class SendToGraphite(object):
         self.results = self.rucksack["results"]
 
     def run(self):
-        """ """
         graphite_server = 'localhost'
         # graphite_port = 2003
 
