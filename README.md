@@ -7,6 +7,7 @@ To be able to develop and run Orbis you will need the following installed and
 configured on your system:
 - Python 3.6
 - Python Setup Tools
+- A Linux OS (Windows and Mac are untested)
 
 
 Install
@@ -21,7 +22,7 @@ To use Orbis, the repository needs to be clone and Orbis has to be installed on 
     $ python3 setup.py develop
 ```
 
-Depending on your system and if you have Python 2 and Python 3 installed you either need use ```python3``` (like on Ubuntu) or maybe just ```python```.
+Depending on your system and if you have Python 2 and Python 3 installed you either need to use ```python3``` (like on Ubuntu) or maybe just ```python```.
 
 Run
 ---
