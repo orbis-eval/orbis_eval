@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 
 """
-    .. moduleauthor:: Fabian Odoni fabian.odoni@htwchur.ch
-
 External script to access the weblyzard api since the weblyzard client, that is used,
 is still written in Python 2.7 whereas Orbis is written in 3.6.
 

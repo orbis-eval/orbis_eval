@@ -27,6 +27,7 @@ Run
 ---
 
 After installation Orbis can be executed by running ```orbis```. The Orbis help can be be called by using ```-h``` (```orbis -h```)
+Before you can run an evaluation, please install a corpus using the repoman addon ```orbis --run-addon```.
 
 Configure evaluation runs
 -------------------------
