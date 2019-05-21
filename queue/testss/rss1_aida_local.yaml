@@ -1,0 +1,23 @@
+
+aggregation:
+  service:
+    name: aida
+    location: local
+  input:
+    data_set:
+      name: rss1
+
+evaluation:
+  name: binary_classification_evaluation
+
+scoring:
+  name: nel_scorer
+  condition: overlap
+  ignore_empty: False
+
+metrics:
+  name: binary_classification_metrics
+
+storage:
+  - csv_result_list
+  - html_pages

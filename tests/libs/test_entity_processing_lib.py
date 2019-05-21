@@ -1,8 +1,11 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
+'''
+    .. moduleauthor:: Fabian Odoni fabian.odoni@htwchur.ch
+'''
 
-from orbis.libs import entity_preprocessing_lib
+from orbis.lib import entity_preprocessing_lib
 
 
 def test_build_source_path():
@@ -36,28 +39,28 @@ def test_load_filter():
 """
 def test_convert_resources():
     source_path = entity_preprocessing_lib.build_source_path("test", resource)
-    resource = 
+    resource =
 
     entity_preprocessing_lib.convert_resources(source_path, resource)
 
 
 def test_convert_mapping():
-    source_path = 
-    resource = 
+    source_path =
+    resource =
 
     entity_preprocessing_lib.convert_mapping(source_path)
 
 
 def test_convert_lense():
-    source_path = 
-    resource = 
+    source_path =
+    resource =
 
     entity_preprocessing_lib.convert_lense(source_path)
 
 
 def test_convert_filter():
-    source_path = 
-    resource = 
+    source_path =
+    resource =
 
     entity_preprocessing_lib.convert_filter(source_path)
 """

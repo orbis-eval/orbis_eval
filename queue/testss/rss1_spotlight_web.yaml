@@ -1,0 +1,26 @@
+
+aggregation:
+  service:
+    name: spotlight
+    location: web
+  input:
+    data_set:
+      name: rss1
+
+evaluation:
+  name: binary_classification_evaluation
+
+scoring:
+  name: nel_scorer
+  condition: overlap
+  entities:
+    - Person
+    - Organization
+    - Place
+  ignore_empty: False
+
+metrics:
+  name: binary_classification_metrics
+
+storage:
+  - cache_webservice_results

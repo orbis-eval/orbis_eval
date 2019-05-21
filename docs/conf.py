@@ -14,20 +14,25 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../src'))
+sys.path.insert(0, os.path.abspath('../orbis'))
 autoclass_content = 'both'
 
 
 # -- Project information -----------------------------------------------------
+metadata_dict = {}
+with open("../metadata.txt", encoding="utf-8") as open_file:
+    for line in open_file.readlines():
+        key, value = line.replace(" ", "").split("=")
+        metadata_dict[key] = value.replace('"', '').replace("\n", "")
 
-project = 'Orbis'
-copyright = '2018, Fabian Odoni'
-author = 'Fabian Odoni'
+project = metadata_dict['__project__']
+copyright = metadata_dict['__copyright__']
+author = metadata_dict['__author__']
 
 # The short X.Y version
-version = '0.4'
+version = metadata_dict['__version__']
 # The full version, including alpha/beta/rc tags
-release = '0.4'
+release = metadata_dict['__release__']
 
 
 # -- General configuration ---------------------------------------------------
@@ -84,7 +89,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'classic'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

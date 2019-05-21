@@ -1,10 +1,13 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
+'''
+    .. moduleauthor:: Fabian Odoni fabian.odoni@htwchur.ch
+'''
 
 import os
 import json
-from orbis.libs import scorer_lib
+from orbis.lib import scorer_lib
 from orbis.config import paths
 
 test_cases = {

@@ -1,8 +1,12 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
+'''
+    .. moduleauthor:: Fabian Odoni fabian.odoni@htwchur.ch
+'''
 
-from orbis.libs import metrics_lib
+
+from orbis.lib import metrics_lib
 
 tp = 8
 fp = 4

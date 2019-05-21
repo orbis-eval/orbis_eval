@@ -1,13 +1,15 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
-
+"""
+    .. moduleauthor:: Fabian Odoni fabian.odoni@htwchur.ch
+"""
 import urllib
 import regex
 
-from orbis.libs.entity_type_lib import normalize_entity_type
-from orbis.libs.entity_type_lib import get_dbpedia_type
-from orbis.libs.entity_type_lib import get_sparql_redirect
-from orbis.libs.entity_type_lib import get_regex_patterns
+from orbis.lib.entity_type_lib import normalize_entity_type
+from orbis.lib.entity_type_lib import get_dbpedia_type
+from orbis.lib.entity_type_lib import get_sparql_redirect
+from orbis.lib.entity_type_lib import get_regex_patterns
 from orbis.config import regex_patterns
 
 
