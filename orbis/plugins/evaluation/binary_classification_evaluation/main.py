@@ -15,11 +15,31 @@ class BinaryClassificationEvaluation(object):
         self.ignore_empty = rucksack.open['config']['scoring']['ignore_empty']
         self.entities = rucksack.open['config']['scoring'].get('entities', [])
 
+        if len(self.entities) <= 0:
+            self.entities = self.get_all_entity_types()
+
         self.scorer = rucksack.plugins["scoring"]
         self.nel_scorer = self.scorer()
 
         self.metrics = rucksack.plugins["metrics"]
         self.bc_metrics = self.metrics()
+
+    def get_all_entity_types(self):
+        entity_types = set()
+        for item_key, item in self.gold.items():
+
+            for entity in item:
+                entity_type = entity.get('entity_type', False)
+                if entity_type:
+                    entity_types.add(entity_type)
+
+        for item_key, item in self.computed.items():
+            for entity in item:
+                entity_type = entity.get('entity_type', False)
+                if entity_type:
+                    entity_types.add(entity_type)
+
+        return list(entity_types)
 
     def run(self):
 
@@ -30,9 +50,7 @@ class BinaryClassificationEvaluation(object):
 
         results = {
             "items": {},
-            "summary": {
-                "binary_classification": {}
-            }
+            "summary": {}
         }
 
         micro = {
@@ -57,26 +75,16 @@ class BinaryClassificationEvaluation(object):
 
         app.logger.info("Starting Evaluation Calculation for {}".format(self.file_name))
 
-        for number, item in self.computed.items():
+        for item_key, item in self.computed.items():
             # app.logger.debug(f"Evaluating item: {item}")
-
-            results["items"] = {
-                number: {
-                    "binary_classification": {}
-                }
-            }
 
             if len(item) <= 0:
                 stats["empty_responses"] += 1
                 if self.ignore_empty:
                     continue
 
-            if self.gold.get(number):
-                current_gold = [entity for entity in self.gold[number] if entity["entity_type"] in self.entities or len(self.entities) <= 0]
-            else:
-                current_gold = []
-
-            current_computed = [entity for entity in item if entity["entity_type"] in self.entities or len(self.entities) <= 0]
+            current_gold = [entity for entity in self.gold[item_key] if entity["entity_type"] in self.entities]
+            current_computed = [entity for entity in item if entity["entity_type"] in self.entities]
 
             # Scorer
             confusion_matrix = self.nel_scorer.run(current_computed, current_gold, self.scorer_condition)
@@ -102,13 +110,19 @@ class BinaryClassificationEvaluation(object):
             macro["f1_score"] += f1_score
             macro["item_sum"] += 1
 
-            results["items"][number]["binary_classification"] = {
-                "confusion_matrix": confusion_matrix,
-                "item_sum": item_sum,
-                "precision": precision,
-                "recall": recall,
-                "f1_score": f1_score,
-                "entities": ", ".join(self.entities)
+            entities_string = ", ".join(self.entities)
+            with open("debug.txt", "w") as of:
+                of.write(str(entities_string))
+
+            results["items"][item_key] = {
+                "binary_classification": {
+                    "confusion_matrix": confusion_matrix,
+                    "item_sum": item_sum,
+                    "precision": precision,
+                    "recall": recall,
+                    "f1_score": f1_score,
+                    "entities": entities_string
+                }
             }
 
             if f1_score > 0 or precision > 0 or recall > 0:
@@ -134,7 +148,7 @@ class BinaryClassificationEvaluation(object):
             "has_score": stats["has_score"],
             "no_score": stats["no_score"],
             "empty_responses": stats["empty_responses"],
-            "entities": ", ".join(self.entities),
+            "entities": self.entities,
 
             "total_tp": micro["tp_sum"],
             "total_fp": micro["fp_sum"],

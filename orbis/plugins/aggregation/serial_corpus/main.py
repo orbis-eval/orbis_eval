@@ -6,16 +6,19 @@ from orbis import app
 class SerialCorpus(object):
     """docstring for SerialCorpus"""
 
-    def __init__(self, rucksack):
+    def __init__(self, rucksack, path=None):
         super(SerialCorpus, self).__init__()
         self.rucksack = rucksack
+        if not path:
+            self.corpus_path = self.rucksack.open['config']['corpus_path']
+        else:
+            self.corpus_path = path
 
     def run(self):
 
         corpus = {}
-        corpus_path = os.path.abspath(os.path.join(self.rucksack.open['config']['corpus_path'], '*.txt'))
 
-        for file_dir in glob.glob(corpus_path):
+        for file_dir in glob.glob(os.path.abspath(os.path.join(self.corpus_path, '*.txt'))):
             try:
                 file_number = file_dir.split('/')[-1].split('.')[0]
                 with open(file_dir) as open_file:

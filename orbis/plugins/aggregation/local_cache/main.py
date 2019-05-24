@@ -40,18 +40,21 @@ class LocalCacheAggregation(AggregationBaseClass):
             with open(file_dir) as open_file:
                 app.logger.debug(f"Opening {file_dir}")
 
-                for item in json.load(open_file):
+                items = json.load(open_file)
 
-                    item['key'] = monocle.apply_mapping(mapping, item['key'])
-                    in_lense = monocle.apply_lense(lense, item['key'])
-                    to_filter = monocle.apply_filter(filter_, item['surfaceForm'])
-                    item['entity_type'] = dbpedia_entity_types.normalize_entity_type(item['entity_type'])
+                if items:
+                    for item in items:
 
-                    if item.get('entity_metadata'):
-                        item['document_start'] = int(item['entity_metadata']['document_index_start'][0])
-                        item['document_end'] = int(item['entity_metadata']['document_index_end'][0])
+                        item['key'] = monocle.apply_mapping(mapping, item['key'])
+                        in_lense = monocle.apply_lense(lense, item['key'])
+                        to_filter = monocle.apply_filter(filter_, item['surfaceForm'])
+                        item['entity_type'] = dbpedia_entity_types.normalize_entity_type(item['entity_type'])
 
-                    if in_lense and not to_filter:
-                        computed[file_number].append(item)
+                        if item.get('entity_metadata'):
+                            item['document_start'] = int(item['entity_metadata']['document_index_start'][0])
+                            item['document_end'] = int(item['entity_metadata']['document_index_end'][0])
+
+                        if in_lense and not to_filter:
+                            computed[file_number].append(item)
 
         return computed

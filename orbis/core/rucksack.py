@@ -8,16 +8,7 @@ from orbis import app
 
 class Rucksack(object):
 
-    """Summary
-
-    Attributes:
-        config (TYPE): Description
-        index (int): Description
-        open (TYPE): Description
-        paths (object): Description
-    """
-
-    def __init__(self, config_file):
+    def __init__(self, config_file=None):
         """Summary
 
         Args:
@@ -25,17 +16,17 @@ class Rucksack(object):
         """
         super(Rucksack, self).__init__()
 
-        self.config = config_file
+        if config_file:
+            self.config = config_file
+        else:
+            self.config = None
+
         self.open = self.pack_rucksack()
         self.plugins = {}
         self.index = 0
 
-    def pack_rucksack(self) -> dict:
-        """Summary
+    def pack_rucksack(self):
 
-        Returns:
-            dict: Description
-        """
         rucksack = {}
 
         rucksack['config'] = deepcopy(self.config)
@@ -49,14 +40,17 @@ class Rucksack(object):
         rucksack['data']['mapping'] = app.mappings
         rucksack['data']['filter'] = app.filters
         rucksack['data']['str_filter'] = app.filters
-        rucksack['config']['data_set_path'] = os.path.join(app.paths.corpora_dir, self.config['aggregation']['input']['data_set']['name'])
-        rucksack['config']['corpus_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'corpus'))
-        rucksack['config']['gold_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'gold'))
-        rucksack['config']['computed_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'computed', self.config['aggregation']['service']['name'])) if rucksack['config']['aggregation']['service']['location'] == "local" else None
+
+        if self.config:
+            rucksack['config']['data_set_path'] = os.path.join(app.paths.corpora_dir, self.config['aggregation']['input']['data_set']['name'])
+            rucksack['config']['corpus_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'corpus'))
+            rucksack['config']['gold_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'gold'))
+            rucksack['config']['computed_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'computed', self.config['aggregation']['service']['name'])) if rucksack['config']['aggregation']['service']['location'] == "local" else None
 
         return rucksack
 
     def load_plugin(self, name, plugin):
+
         self.plugins[name] = plugin
 
     def pack_gold(self, gold):
@@ -95,14 +89,7 @@ class Rucksack(object):
         raise NotImplemented
 
     def pack_results_summary(self, results_summary):
-        """Summary
 
-        Args:
-            results_summary (TYPE): Description
-
-        Raises:
-            NotImplemented: Description
-        """
         raise NotImplemented
 
     def get_paths(self):
@@ -113,27 +100,28 @@ class Rucksack(object):
         """
         raise NotImplemented
 
-    def itemview(self, key):
-        """Summary
-
-        Yields:
-            dict: Description
-        """
+    def get_keys(self):
+        keys = []
         data = self.open['data']
-        result = {
-            'index': key,
-            'corpus': data['corpus'].get(key, None),
-            'gold': data['gold'].get(key, None),
-            'computed': data['computed'].get(key, None)
-        }
-        return result
+        for key in data['corpus'].keys():
+            keys.append(key)
+        return sorted(keys)
+
+    def itemview(self, key):
+
+        data = self.open['data']
+        if data['corpus'].get(key, None):
+            result = {
+                'index': key,
+                'corpus': data['corpus'].get(key, None),
+                'gold': data['gold'].get(key, None),
+                'computed': data['computed'].get(key, None)
+            }
+            return result
+        else:
+            return None
 
     def itemsview(self):
-        """Summary
-
-        Yields:
-            dict: Description
-        """
         data = self.open['data']
 
         for key, item in data['corpus'].items():
@@ -146,11 +134,7 @@ class Rucksack(object):
             yield result
 
     def result_summary(self, specific=None):
-        """Summary
 
-        Yields:
-            dict: Description
-        """
         summary = self.open['results']["summary"]
         results = summary.get(specific) if specific else summary
         return results

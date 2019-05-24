@@ -49,7 +49,7 @@ def run_setup():
         install_requires=load_requirements_file(metadata),
         entry_points={
             'console_scripts': [
-                'orbis = orbis.main:main'
+                'orbis = orbis.__main__:main'
             ]
         },
     )
