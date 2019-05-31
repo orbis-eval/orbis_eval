@@ -22,4 +22,3 @@ class App(object):
         self.lenses = None
         self.mappings = None
         self.filters = None
-

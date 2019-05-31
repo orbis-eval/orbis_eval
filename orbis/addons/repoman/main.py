@@ -1,18 +1,13 @@
-import os
+from . import corpus
+from . import monocle
+from orbis.lib import addons
 
-from . import corpora_downloader
-from . import filter_downloader
-from . import lense_downloader
-from . import map_downloader
-
-
-def download_everything():
-    raise NotImplementedError
+from . import addon_path
 
 
 def menu():
-    os.system('cls')  # on Windows
-    os.system('clear')  # on linux / os x
+    addons.clear_screen()
+
     print("\nWelcome to Repoman!")
     print("What would you like to download?")
     print("[0]:\t Corpora")
@@ -21,16 +16,18 @@ def menu():
     print("[3]:\t Mappings")
     print("[4]:\t Everything")
     choice = int(input("-> "))
+
     if choice == 0:
-        corpora_downloader.menu()
+        corpus.main(addon_path).run()
     elif choice == 1:
-        filter_downloader.menu()
+        monocle.filter_downloader.menu()
     elif choice == 2:
-        lense_downloader.menu()
+        monocle.lense_downloader.menu()
     elif choice == 3:
-        map_downloader.menu()
+        monocle.map_downloader.menu()
     elif choice == 4:
-        download_everything()
+        print("Not implemented yet")
+        menu()
     else:
         menu()
 

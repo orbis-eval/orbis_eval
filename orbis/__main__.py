@@ -39,17 +39,21 @@ def start_runner(config):
 
 
 def run_orbis(config_file=None, args=None):
+
     app.logger.info("Welcome to Orbis!")
+
     if config_file:
         app.logger.debug("Single config")
         config = load_config([config_file])[0]
         check_resources(config, refresh=False)
         start_runner(config)
+
     else:
         config_files = sorted(glob.glob(os.path.join(app.paths.queue, "*.yaml")))
         app.logger.debug(f"Loading queue: {str(config_files)}")
         configs = load_config(config_files)
         check_resources(configs, refresh=False)
+
         if app.settings.multiprocessing:
             with multiprocessing.Pool(processes=app.settings.multi_process_number) as pool:
                 pool.map(start_runner, configs)
@@ -64,6 +68,7 @@ def main():
         maintainance.delete_html_folders()
     if args.test:
         app.paths.queue = app.paths.test_queue
+
     if args.start_server:
         webgui.server.start()
     elif args.run_addon:
