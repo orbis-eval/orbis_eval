@@ -1,3 +1,6 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 from glob import glob
 import os
 
@@ -9,11 +12,10 @@ from . import recognize_profiles
 from . import templates
 
 
-
 def header() -> None:
     """
     Clears the screen and prints the ascii turtle
-    
+
     :return: True
     """
 
@@ -24,21 +26,21 @@ def header() -> None:
 
 def get_folder_names(corpora_dir: str) -> list:
     """
-    
+
     :param corpora_dir: The directory pointing to the folder containing all the corpora.
         Standard would be: orbis/data/corpora
     :type corpora_dir: str
     :return: A list of corpora names
-    
+
     :Example:
-    
+
     >>> corpora_dir = ""
     >>> get_folder_names(corpora_dir)
     2
-    
+
     Args:
         corpora_dir (str): Description
-    
+
     Returns:
         list: Description
     """
@@ -57,17 +59,17 @@ def get_plugins(stage_name):
 
 def list_resources(resources_path: str = paths.data_dir, resources=None) -> dict:
     """
-    
+
     :param resources_path:
     :type resources_path: str
     :param resources:
     :return: A dict containing all the resources
     :rtype: dict
-    
+
     Args:
         resources_path (str, optional): Description
         resources (None, optional): Description
-    
+
     Returns:
         dict: Description
     """
@@ -86,13 +88,13 @@ def list_resources(resources_path: str = paths.data_dir, resources=None) -> dict
 
 def get_settings() -> dict:
     """
-    
+
     :return: The settings as a dict.
     :rtype: dict
-    
+
     Returns:
         dict: Description
-    
+
     """
 
     settings = {}
@@ -131,7 +133,7 @@ def get_settings() -> dict:
 def build_yamls(settings) -> None:
     """
     :param settings:
-    
+
     Args:
         settings (TYPE): Description
     """
@@ -185,7 +187,7 @@ def build_yamls(settings) -> None:
 
 def main() -> None:
     """
-    
+
     """
 
     settings = get_settings()

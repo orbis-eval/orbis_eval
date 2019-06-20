@@ -1,6 +1,10 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 from pathlib import Path
 import os
 import shutil
+
 
 def main():
     p = Path('.')

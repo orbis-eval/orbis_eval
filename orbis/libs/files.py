@@ -1,7 +1,10 @@
-import pathlib
-import os
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 import datetime
 import json
+import os
+import pathlib
 
 
 def get_timestamp():

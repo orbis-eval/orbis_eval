@@ -1,16 +1,16 @@
+import configparser
 import glob
 import multiprocessing
 import os
 import yaml
-import configparser
 
 from orbis import app
 from orbis.core import pipeline
-from orbis.plugins.aggregation.monocle.main import check_resources
+from orbis.interfaces import webgui
 from orbis.libs import addons
 from orbis.libs import maintainance
-from orbis.interfaces import webgui
 from orbis.libs.arguments import parse_args
+from orbis.plugins.aggregation.monocle.main import check_resources
 
 
 def load_config(config_files) -> dict:

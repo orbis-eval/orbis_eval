@@ -1,7 +1,10 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 import functools
-import time
-import os
 import json
+import os
+import time
 
 from orbis.config import paths
 

@@ -1,12 +1,15 @@
-import importlib
-import pathlib
-import os
-import shutil
-from urllib.request import urlretrieve
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
 
-from orbis.libs.config import load_config
+from urllib.request import urlretrieve
+import importlib
+import os
+import pathlib
+import shutil
+
 from orbis.config import paths
 from orbis.libs import addons
+from orbis.libs.config import load_config
 
 from .. import addon_path
 
@@ -53,15 +56,16 @@ class Corpus(object):
         action = "load" if self.choice[self.selection][0] == "local" else "download"
 
         if action == "local":
-            source_available = self.load()
+            file_destination = self.load()
         else:
-            source_available = self.download()
+            file_destination, corpus_dir, file_name = self.download()
 
-        if source_available:
-            module_path = f"orbis.addons.repoman.format.{self.choice[self.selection][2]}.Main().run()"
+        if file_destination:
+            module_path = f"orbis.addons.repoman.format.{self.choice[self.selection][2]}.main"
             print(f">>>>>>> {module_path}")
             imported_module = importlib.import_module(module_path)
-            imported_module.run(*self.choice[self.selection])
+            print(*self.choice[self.selection])
+            imported_module.run(file_destination, corpus_dir, file_name)
 
     def source_exists(self, corpus_dir):
         if pathlib.Path(corpus_dir).is_dir():
@@ -87,7 +91,7 @@ class Corpus(object):
             download_destination = os.path.join(download_destination, f"{download_name}.{download_filetype}")
             urlretrieve(corpus_url, download_destination)
 
-            return download_destination
+            return download_destination, corpus_dir, download_name
         return False
 
     def ask_for_format(self):

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 import datetime
 import importlib
 import collections
@@ -7,7 +10,7 @@ import json
 from orbis.libs import files
 
 
-def cache(run: dict):
+def cache(run):
     data = run['data']
     data_set_path = run['config']['data_set_path']
     aggregator_name = run['aggregator']['service']['name']

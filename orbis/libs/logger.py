@@ -1,6 +1,9 @@
-import os
-import logging
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 from logging.handlers import RotatingFileHandler
+import logging
+import os
 
 
 def create_logger(app, maxBytes=False, backupCount=False):

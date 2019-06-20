@@ -1,5 +1,9 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 # WIP
 import click
+
 
 @click.command()
 @click.option("--count", default=1, help="Number of greetings.")

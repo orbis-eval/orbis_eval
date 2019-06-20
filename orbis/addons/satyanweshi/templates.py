@@ -1,3 +1,6 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 html_body = """
 <!doctype html>
 <html lang="en">

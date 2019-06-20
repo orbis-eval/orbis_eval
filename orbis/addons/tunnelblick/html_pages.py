@@ -1,12 +1,16 @@
-import os
-from palettable.tableau import Tableau_20
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 from operator import itemgetter
+from palettable.tableau import Tableau_20
+import os
 
 from orbis import app
-from orbis.libs import files
 from orbis.core.rucksack import Rucksack
-from orbis.plugins.aggregation.serial_corpus import Module as SerialCorpus
+from orbis.libs import files
 from orbis.plugins.aggregation.gold_gs import Module as GoldGS
+from orbis.plugins.aggregation.serial_corpus import Module as SerialCorpus
+
 from .html_templates import html_body
 
 

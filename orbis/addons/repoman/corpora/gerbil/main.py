@@ -1,12 +1,15 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 from urllib.request import urlopen, urlretrieve
-import re
 import json
 import os
 import pathlib
+import re
 import shutil
 
-from orbis.config import paths
 from orbis.addons.repoman.format.nif import convert
+from orbis.config import paths
 
 
 def list_available_corpora(config):
