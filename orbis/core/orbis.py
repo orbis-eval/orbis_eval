@@ -2,7 +2,7 @@
 """
 from orbis.config import paths
 from orbis.config import settings
-from orbis.lib import logger, files
+from orbis.libs import logger, files
 
 
 class App(object):

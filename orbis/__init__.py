@@ -1,6 +1,6 @@
 from orbis.core import orbis
-from orbis.lib import logger
-from orbis.lib import files
+from orbis.libs import logger
+from orbis.libs import files
 
 
 app = orbis.App()
