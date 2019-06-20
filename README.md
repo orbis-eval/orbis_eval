@@ -17,9 +17,7 @@ To use Orbis, the repository needs to be clone and Orbis has to be installed on 
 ```shell
     $ git clone https://github.com/htwchur/Orbis.git
     $ cd Orbis
-    $ python3 setup.py install --user
-    # or if you are developing Orbis and don't want to reinstall after every code change:
-    $ python3 setup.py develop
+    $ python3 setup.py develop --user
 ```
 
 Depending on your system and if you have Python 2 and Python 3 installed you either need to use ```python3``` (like on Ubuntu) or maybe just ```python```.
