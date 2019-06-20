@@ -10,10 +10,7 @@ from operator import itemgetter
 class HTMLPages(object):
 
     def __init__(self, rucksack):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         super(HTMLPages, self).__init__()
         self.rucksack = rucksack
         self.config = self.rucksack.open['config']
@@ -23,10 +20,7 @@ class HTMLPages(object):
         self.queue = self.rucksack.get_keys()
 
     def _get_keys(self, item):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         keys = set()
         for entity in item['gold']:
             keys.add(entity['key'])
@@ -35,10 +29,7 @@ class HTMLPages(object):
         return keys
 
     def _get_sf_colors(self, keys):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         sf_colors = {}
         colour_idx = 0
         for sf in keys:
@@ -47,22 +38,15 @@ class HTMLPages(object):
         return sf_colors
 
     def _get_gold_entities(self, item, sf_colors, gold_html):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         gold_entities = []
         if len(item['gold']) > 0:
             last_start = int(len(item['corpus']))
             last_end = int(len(item['corpus']))
             # last_word = ""
             for entity in sorted(item['gold'], key=itemgetter("end"), reverse=True):
-<<<<<<< HEAD
-                entity_types = self.config['scoring'].get('entities', [])
-=======
-
                 entity_types = self.rucksack.result_summary(specific='binary_classification')['entities']
->>>>>>> dev/master
+
                 if entity['entity_type'] not in entity_types and len(entity_types) >= 0:
                     continue
                 start_tag = '<abbr title="{}" style="background-color:{};">'.format(entity['key'], sf_colors[entity['key']])
@@ -110,10 +94,7 @@ class HTMLPages(object):
         return gold_entities, gold_html
 
     def _get_computed_entities(self, item, sf_colors, computed_html):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         computed_entities = []
         if len(item['computed']) > 0:
             last_start = len(item['corpus'])
@@ -178,10 +159,7 @@ class HTMLPages(object):
         return computed_entities, computed_html
 
     def _get_top_header(self):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         top_header_0 = {
             "aggregator_name": self.config['aggregation']['service']['name'],
             "aggregator_profile": self.config['aggregation']['service'].get("profile", "None"),
@@ -238,10 +216,7 @@ class HTMLPages(object):
         return header_html_0, header_html_1, header_html_2, header_html_3
 
     def _get_item_header(self, key):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         item_header_0 = {
             "precision": self.rucksack.resultview(key, specific='binary_classification')['precision'],
             "recall": self.rucksack.resultview(key, specific='binary_classification')['recall'],
@@ -265,10 +240,7 @@ class HTMLPages(object):
         return header_html_0, header_html_1
 
     def _get_gold_html(self, item, sf_colors):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         gold_html = item['corpus']
         gold_entities, gold_html = self._get_gold_entities(item, sf_colors, gold_html)
         gold_entities_html = ""
@@ -277,10 +249,7 @@ class HTMLPages(object):
         return gold_html, gold_entities_html
 
     def _get_computed_html(self, item, sf_colors):
-<<<<<<< HEAD
-=======
 
->>>>>>> dev/master
         computed_html = item['corpus']
         computed_entities, computed_html = self._get_computed_entities(item, sf_colors, computed_html)
         computed_entities_html = ""
@@ -289,53 +258,35 @@ class HTMLPages(object):
         return computed_html, computed_entities_html
 
     def _get_next_button(self, key):
-<<<<<<< HEAD
-        if self.data.get(str(int(key) + 1)):
-            next_item = os.path.join(str(int(key) + 1) + ".html")
-=======
 
         if key:
             next_item = os.path.join(str(key) + ".html")
->>>>>>> dev/master
+
             next_button = """<p><a id="next_page_link" class="btn btn-secondary" href="{url}" role="button" style="float: right;">Next Item &raquo;</a></p>""".format(url=next_item)
         else:
             next_button = ""
         return next_button
 
     def _get_previous_button(self, key):
-<<<<<<< HEAD
-        if self.data.get(str(int(key) - 1)):
-            previous_item = os.path.join(str(int(key) - 1) + ".html")
-=======
 
         if key:
             previous_item = os.path.join(str(key) + ".html")
->>>>>>> dev/master
             previous_button = """<p><a id="previous_page_link" class="btn btn-secondary" href="{url}" role="button">&laquo; Previous Item</a></p>""".format(url=previous_item)
         else:
             previous_button = ""
         return previous_button
 
-<<<<<<< HEAD
-    def _build_html_page(self, item, sf_colors):
-=======
     def _build_html_page(self, item, next_item, previous_item, sf_colors):
 
->>>>>>> dev/master
         key = item['index']
         header_html_0, header_html_1, header_html_2, header_html_3 = self._get_top_header()
         header_html_4, header_html_5 = self._get_item_header(key)
         gold_html, gold_entities_html = self._get_gold_html(item, sf_colors)
         computed_html, computed_entities_html = self._get_computed_html(item, sf_colors)
-<<<<<<< HEAD
-        previous_button = self._get_previous_button(key)
-        next_button = self._get_next_button(key)
-=======
 
         previous_button = self._get_previous_button(previous_item)
         next_button = self._get_next_button(next_item)
 
->>>>>>> dev/master
         html_item_dict = {
             "header_html_0": header_html_0, "header_html_1": header_html_1,
             "header_html_2": header_html_2, "header_html_3": header_html_3,
@@ -348,11 +299,6 @@ class HTMLPages(object):
         return html
 
     def run(self):
-<<<<<<< HEAD
-        app.logger.debug("Building HTML pages")
-        for item in self.rucksack.itemsview():
-            timestamp = files.get_timestamp()
-=======
 
         app.logger.debug("Building HTML pages")
 
@@ -374,20 +320,12 @@ class HTMLPages(object):
                 previous_item = None
             app.logger.error(f"PREVIOUS: {previous_item}")
 
->>>>>>> dev/master
             key = item['index']
             keys = self._get_keys(item)
             sf_colors = self._get_sf_colors(keys)
-<<<<<<< HEAD
-            html = self._build_html_page(item, sf_colors)
-            file_dir = os.path.join(self.folder + f"-{timestamp}")
-            files.create_folder(file_dir)
-            file_dir = os.path.join(file_dir, str(key) + ".html")
-=======
             html = self._build_html_page(item, next_item, previous_item, sf_colors)
 
             file_dir = os.path.join(folder_dir, str(key) + ".html")
->>>>>>> dev/master
             app.logger.debug(file_dir)
             with open(file_dir, "w") as open_file:
                 open_file.write(html)

@@ -22,19 +22,6 @@ class LocalCacheAggregation(AggregationBaseClass):
             computed[file_number] = []
             with open(file_dir) as open_file:
                 app.logger.debug(f"Opening {file_dir}")
-<<<<<<< HEAD
-                for item in json.load(open_file):
-                    item['key'] = monocle.apply_mapping(mapping, item['key'])
-                    in_lense = monocle.apply_lense(lense, item['key'])
-                    to_filter = monocle.apply_filter(filter_, item['surfaceForm'])
-                    item['entity_type'] = dbpedia_entity_types.normalize_entity_type(item['entity_type'])
-                    if item.get('entity_metadata'):
-                        item['document_start'] = int(item['entity_metadata']['document_index_start'][0])
-                        item['document_end'] = int(item['entity_metadata']['document_index_end'][0])
-                    if in_lense and not to_filter:
-                        computed[file_number].append(item)
-=======
-
                 items = json.load(open_file)
 
                 if items:
@@ -52,5 +39,4 @@ class LocalCacheAggregation(AggregationBaseClass):
                         if in_lense and not to_filter:
                             computed[file_number].append(item)
 
->>>>>>> dev/master
         return computed

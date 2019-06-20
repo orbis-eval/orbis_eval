@@ -9,7 +9,6 @@ from orbis.core import pipeline
 from orbis.plugins.aggregation.monocle.main import check_resources
 from orbis.libs import addons
 from orbis.libs import maintainance
-from orbis.interfaces import webgui
 from orbis.libs.arguments import parse_args
 
 

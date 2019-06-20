@@ -26,30 +26,16 @@ class GoldGS(object):
     def run(self):
         gold = {}
         for file_dir in glob.glob(os.path.abspath(os.path.join(self.gold_path, '*.gs'))):
-<<<<<<< HEAD
-=======
             print(f">>>>> FILE DIR: {file_dir}")
 
->>>>>>> dev/master
             with open(file_dir) as open_file:
                 for line in open_file.readlines():
-<<<<<<< HEAD
-                    """
-                    gs file structuring:
-                    ---------------------
-                     0    1    2   3    4    5
-                    doc|start|end|url|score|type|
-                    """
-=======
-                    print(line)
-                    print(self.corpus)
 
                     # gs file structuring:
                     # ---------------------
                     #  0    1    2   3    4    5
                     # doc|start|end|url|score|type|
 
->>>>>>> dev/master
                     nuggets = line.split()
                     file_number = nuggets[0]
                     start = int(nuggets[1])

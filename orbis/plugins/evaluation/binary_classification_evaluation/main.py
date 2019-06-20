@@ -12,13 +12,10 @@ class BinaryClassificationEvaluation(object):
         self.gold = rucksack.open['data']['gold']
         self.ignore_empty = rucksack.open['config']['scoring']['ignore_empty']
         self.entities = rucksack.open['config']['scoring'].get('entities', [])
-<<<<<<< HEAD
-=======
 
         if len(self.entities) <= 0:
             self.entities = self.get_all_entity_types()
 
->>>>>>> dev/master
         self.scorer = rucksack.plugins["scoring"]
         self.nel_scorer = self.scorer()
         self.metrics = rucksack.plugins["metrics"]
@@ -68,36 +65,15 @@ class BinaryClassificationEvaluation(object):
             "empty_responses": 0
         }
         app.logger.info("Starting Evaluation Calculation for {}".format(self.file_name))
-<<<<<<< HEAD
-        for number, item in self.computed.items():
-            # app.logger.debug(f"Evaluating item: {item}")
-            results["items"] = {
-                number: {
-                    "binary_classification": {}
-                }
-            }
-=======
-
         for item_key, item in self.computed.items():
             # app.logger.debug(f"Evaluating item: {item}")
-
->>>>>>> dev/master
             if len(item) <= 0:
                 stats["empty_responses"] += 1
                 if self.ignore_empty:
                     continue
-<<<<<<< HEAD
-            if self.gold.get(number):
-                current_gold = [entity for entity in self.gold[number] if entity["entity_type"] in self.entities or len(self.entities) <= 0]
-            else:
-                current_gold = []
-            current_computed = [entity for entity in item if entity["entity_type"] in self.entities or len(self.entities) <= 0]
-=======
-
             current_gold = [entity for entity in self.gold[item_key] if entity["entity_type"] in self.entities]
             current_computed = [entity for entity in item if entity["entity_type"] in self.entities]
 
->>>>>>> dev/master
             # Scorer
             confusion_matrix = self.nel_scorer.run(current_computed, current_gold, self.scorer_condition)
             # app.logger.debug("Gold Entities: {}".format(current_gold))
@@ -117,15 +93,6 @@ class BinaryClassificationEvaluation(object):
             macro["recall"] += recall
             macro["f1_score"] += f1_score
             macro["item_sum"] += 1
-<<<<<<< HEAD
-            results["items"][number]["binary_classification"] = {
-                "confusion_matrix": confusion_matrix,
-                "item_sum": item_sum,
-                "precision": precision,
-                "recall": recall,
-                "f1_score": f1_score,
-                "entities": ", ".join(self.entities)
-=======
 
             entities_string = ", ".join(self.entities)
 
@@ -138,8 +105,8 @@ class BinaryClassificationEvaluation(object):
                     "f1_score": f1_score,
                     "entities": entities_string
                 }
->>>>>>> dev/master
             }
+
             if f1_score > 0 or precision > 0 or recall > 0:
                 stats["has_score"] += 1
             else:
@@ -160,12 +127,8 @@ class BinaryClassificationEvaluation(object):
             "has_score": stats["has_score"],
             "no_score": stats["no_score"],
             "empty_responses": stats["empty_responses"],
-<<<<<<< HEAD
-            "entities": ", ".join(self.entities),
-=======
             "entities": self.entities,
 
->>>>>>> dev/master
             "total_tp": micro["tp_sum"],
             "total_fp": micro["fp_sum"],
             "total_fn": micro["fn_sum"],
