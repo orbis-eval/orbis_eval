@@ -111,8 +111,6 @@ class BinaryClassificationEvaluation(object):
             macro["item_sum"] += 1
 
             entities_string = ", ".join(self.entities)
-            with open("debug.txt", "w") as of:
-                of.write(str(entities_string))
 
             results["items"][item_key] = {
                 "binary_classification": {
