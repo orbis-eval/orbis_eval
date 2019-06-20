@@ -32,7 +32,7 @@ Before you can run an evaluation, please install a corpus using the repoman addo
 
 Configure evaluation runs
 -------------------------
-Orbis uses yaml files to configure the evaluation runs. These config file are located in the queue folder in the Orbis root directory ```orbis/queue```.
+Orbis uses yaml files to configure the evaluation runs. These config file are located in the queue folder in the Orbis root directory ```Orbis/queue```.
 Executing Orbis in test mode will run the yaml configs located in the test folder within the queue folder. These test configs are short evaluation runs for different annotators (AIDA, Babelfly, Recognyze and Spotlight).
 
 A YAML configuration file is divided into the seperate stages of the pipeline:
@@ -89,8 +89,8 @@ A YAML configuration file is divided into the seperate stages of the pipeline:
           - us_states_list_en-txt-12_jan_28-0913am
 ```
 
-The service section of the yaml config specifies the name of the web service (annotation service). This should be the same (written the same) as the folder of the webservice located in ```orbis/orbis/plugins/aggregation```.
-Location specifies where the annotations should come from. If it's set to web, then the aggregation plugin will attemt to query the webservice. If location is set to local, then the local cache (located in ```orbis/data/corpora/{corpus_name}/copmuted/{annotator_name}/```) will be used assumed there is a cache to be used.
+The service section of the yaml config specifies the name of the web service (annotation service). This should be the same (written the same) as the folder of the webservice located in ```Orbis/orbis/plugins/aggregation```.
+Location specifies where the annotations should come from. If it's set to web, then the aggregation plugin will attemt to query the webservice. If location is set to local, then the local cache (located in ```Orbis/data/corpora/{corpus_name}/copmuted/{annotator_name}/```) will be used assumed there is a cache to be used.
 
 ``` yaml
     aggregation:
@@ -99,11 +99,11 @@ Location specifies where the annotations should come from. If it's set to web, t
         location: web
 ```
 
-The service section of the yaml config specifies the name of the web service (annotation service). This should be the same (written the same) as the folder of the webservice located in ```orbis/orbis/plugins/aggregation```.
-Location specifies where the annotations should come from. If it's set to web, then the aggregation plugin will attemt to query the webservice. If location is set to local, then the local cache (located in ```orbis/data/corpora/{corpus_name}/copmuted/{annotator_name}/```) will be used assumed there is a cache to be used.
+The service section of the yaml config specifies the name of the web service (annotation service). This should be the same (written the same) as the folder of the webservice located in ```Orbis/orbis/plugins/aggregation```.
+Location specifies where the annotations should come from. If it's set to web, then the aggregation plugin will attemt to query the webservice. If location is set to local, then the local cache (located in ```Orbis/data/corpora/{corpus_name}/copmuted/{annotator_name}/```) will be used assumed there is a cache to be used.
 If there is no cache, run the evaluation in web mode and add ```- cache_webservice_results``` to the storage section to build a cache.
 
-The input section defines what corpus should be used (in the example rss1). The corpora name should be written the same as the corpus folder located in ```orbis/data/corpora/```.
+The input section defines what corpus should be used (in the example rss1). The corpora name should be written the same as the corpus folder located in ```Orbis/data/corpora/```.
 Orbis will locate from there on automatically the corpus texts and the gold standard.
 
 ```yaml
@@ -118,10 +118,10 @@ Orbis will locate from there on automatically the corpus texts and the gold stan
         - us_states_list_en-txt-12_jan_28-0913am
 ```
 
-If needed, the lenses, mappings and filters can also be specified in the input section. These should be located in ```orbis/data/[filters|lenses|mappings]``` and should be specified in the section without the file ending.
+If needed, the lenses, mappings and filters can also be specified in the input section. These should be located in ```Orbis/data/[filters|lenses|mappings]``` and should be specified in the section without the file ending.
 
 
-- Evaluation: The evaluator stage evaluates the the annotator results against the gold standard. The evaluation section defines what kind of evaluation should be used. The evaluator should have the same name the evaluation folder name in ```orbis/orbis/plugins/evaluation```. At the moment the
+- Evaluation: The evaluator stage evaluates the the annotator results against the gold standard. The evaluation section defines what kind of evaluation should be used. The evaluator should have the same name the evaluation folder name in ```Orbis/orbis/plugins/evaluation```. At the moment the
 
 ```yaml
     evaluation:
@@ -159,14 +159,14 @@ Currently available conditions are:
     - same entity type
     - overlap
 
-- Metrics: The metrics stage calculates the metrics to analyze the evaluation. The defined metrics name should be written the same as the folder of the metrics plugin located at ```orbis/orbis/plugins/metrics/```.
+- Metrics: The metrics stage calculates the metrics to analyze the evaluation. The defined metrics name should be written the same as the folder of the metrics plugin located at ```Orbis/orbis/plugins/metrics/```.
 
 ```yaml
     metrics:
       name: binary_classification_metrics
 ```
 
-- Storage: The storage stage defines what kind of output orbis should create. As allways, the metrics plugin should be written the same as the folder of the metrics plugin defined in ```orbis/orbis/plugins/storage```.
+- Storage: The storage stage defines what kind of output orbis should create. As allways, the metrics plugin should be written the same as the folder of the metrics plugin defined in ```Orbis/orbis/plugins/storage```.
 
 ``` yaml
     storage:
@@ -177,9 +177,22 @@ Currently available conditions are:
 
 Multiple storage options can be chosen and the ones in the example above are the recomended (at the moment working) possibilities.
 
-Running ```orbis -t``` will run the test files located in ```orbis/queue/tests```. It is possible to just take one of these YAML files and modify them to your own needs.
+Running ```Orbis -t``` will run the test files located in ```Orbis/queue/tests```. It is possible to just take one of these YAML files and modify them to your own needs.
 
 Addons
 ======
 
-To run an Orbis addon Orbis provides a CLI that can be accessed by running ```orbis --run-addon```. The menu will guide you to the addons and the addons mostly provide an own menu. Please be aware, that not all addons are working with the newest version of Orbis yet.
+To run an Orbis addon Orbis provides a CLI that can be accessed by running ```Orbis --run-addon```. The menu will guide you to the addons and the addons mostly provide an own menu. Please be aware, that not all addons are working with the newest version of Orbis yet.
+
+
+Run Orbis in a virtual environment
+==================================
+
+Orbis can be run in a Python virtual environment:
+
+``` python
+# Run from within the Orbis root folder (Orbis/; the folder where setup.py is located)
+python3 -m virtualenv virtenv
+
+
+```

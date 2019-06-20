@@ -21,11 +21,16 @@ def load_metadata():
     return metadata
 
 
-def load_requirements_file(metadata):
+def load_requirements_file(metadata, dev):
     requirements = []
     with open(metadata['requirements_file'], encoding="utf8") as open_file:
         for line in open_file.readlines():
-            requirements.append(line.replace("\n", ""))
+            if dev:
+                line = line.replace("\n", "").replace("<", "=").replace(">", "=")
+                line = line.split("=")[0]
+                requirements.append(line)
+            else:
+                requirements.append(line.replace("\n", ""))
     return requirements
 
 
@@ -35,18 +40,19 @@ def check_python_version(metadata):
         sys.exit(f"Sorry, Python {metadata['min_python_version']} or newer needed")
 
 
-def run_setup():
+def run_setup(dev):
     metadata = load_metadata()
     check_python_version(metadata)
     setuptools.setup(
         name=metadata['project'],
+        author=metadata['author'],
         version=metadata['version'],
         description=metadata['description'],
         url=metadata['url'],
         license=metadata['license'],
         packages=setuptools.find_packages(),
         python_requires=f">={metadata['min_python_version']}",
-        install_requires=load_requirements_file(metadata),
+        install_requires=load_requirements_file(metadata, dev),
         entry_points={
             'console_scripts': [
                 'orbis = orbis.__main__:main'
@@ -56,4 +62,5 @@ def run_setup():
 
 
 if __name__ == '__main__':
-    run_setup()
+    dev = True
+    run_setup(dev)

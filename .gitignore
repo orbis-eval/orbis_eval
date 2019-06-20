@@ -1,6 +1,7 @@
 # Orbis Specific
 /logs/
 /output/
+/data/corpora/
 /docker_volumes
 *.nogit.*
 

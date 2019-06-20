@@ -17,7 +17,7 @@ class SpotlightAggregator(AggregationBaseClass):
         try:
             response = spotlight.annotate(client, text=text, filters=only_pol_filter)
         except Exception as exception:
-            app.looger.error(f"Query failed: {exception}")
+            app.logger.error(f"Query failed: {exception}")
             response = None
         return response
 
