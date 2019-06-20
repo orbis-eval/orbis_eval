@@ -7,10 +7,10 @@ import configparser
 from orbis import app
 from orbis.core import pipeline
 from orbis.plugins.aggregation.monocle.main import check_resources
-from orbis.lib import addons
-from orbis.lib import maintainance
+from orbis.libs import addons
+from orbis.libs import maintainance
 from orbis.interfaces import webgui
-from orbis.lib.arguments import parse_args
+from orbis.libs.arguments import parse_args
 
 
 def load_config(config_files) -> dict:

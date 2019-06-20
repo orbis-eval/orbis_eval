@@ -40,7 +40,7 @@ def get_nif_corpora(source_urls):
         if file_type == "ttl":
             list_of_available_corpora.append((corpus_name, corpus_download, "nif"))
         else:
-            print(f">>>>>>> Corpus not valid: {corpus_name} ({corpus_download})")
+            print(f"Corpus not supported yet: {corpus_name} ({corpus_download})")
 
     return list_of_available_corpora
 

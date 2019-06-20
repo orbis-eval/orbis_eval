@@ -4,7 +4,7 @@ import os
 import json
 
 from orbis import app
-from orbis.lib import files
+from orbis.libs import files
 
 
 class CacheWebserviceResults(object):

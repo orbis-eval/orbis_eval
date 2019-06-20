@@ -2,19 +2,21 @@ import importlib
 import pathlib
 import os
 import shutil
-from urllib.request import urlopen, urlretrieve
+from urllib.request import urlretrieve
 
-from orbis.lib.config import load_config
+from orbis.libs.config import load_config
 from orbis.config import paths
-from orbis.lib import addons
+from orbis.libs import addons
+
+from .. import addon_path
 
 
 class Corpus(object):
     """docstring for Corpus"""
 
-    def __init__(self, addon_path):
+    def __init__(self):
         super(Corpus, self).__init__()
-        self.config = load_config([f"{addon_path}config.yaml"])[0]
+        self.config = load_config([f"{addon_path}sources.yaml"])[0]
         self.available_corpora = {}
         self.choice = {}
         self.selection = None
@@ -22,13 +24,12 @@ class Corpus(object):
     def fetch_available(self):
         for file_format in self.config['corpora']:
             for source in self.config['corpora'][file_format]:
-                module_path = f"orbis.addons.repoman.corpus.{source}.main"
+                module_path = f"orbis.addons.repoman.corpora.{source}.main"
                 imported_module = importlib.import_module(module_path)
                 corpora = imported_module.list_available_corpora(self.config)
                 self.available_corpora[source] = corpora
 
     def select(self):
-
         addons.clear_screen()
         print("Please select the corpus you want to download:")
 
@@ -40,8 +41,6 @@ class Corpus(object):
             for corpus in self.available_corpora[source]:
                 print(f'[{counter}]:\t {corpus[0]} ({corpus[2]})')
                 self.choice[counter] = *corpus, source
-                # self.choice[counter] = name, url, type, source
-                # print(self.choice[counter])
                 counter += 1
 
         print(f'[{counter}]:\t Load local corpus file')
@@ -59,7 +58,7 @@ class Corpus(object):
             source_available = self.download()
 
         if source_available:
-            module_path = f"orbis.addons.repoman.format.{self.choice[self.selection][2]}.{action}"
+            module_path = f"orbis.addons.repoman.format.{self.choice[self.selection][2]}.Main().run()"
             print(f">>>>>>> {module_path}")
             imported_module = importlib.import_module(module_path)
             imported_module.run(*self.choice[self.selection])
@@ -100,15 +99,9 @@ class Corpus(object):
             space = 5 - len(str(idx))
             print(f"[{idx}]{space * ' '}{format_name}")
 
-        selected_format = int(input("\nPlease enter number of the addon you want to run: "))
-        """
-        confirmation = str(input(f"Do you want to run {addon_list[selected_format]} now? (Y/n)")).lower()
-        if not (confirmation == "y" or confirmation == "j" or len(confirmation) == 0):
-            addon_selection(addon_list)
-        """
-        format_name = format_list[selected_format]
-        print(f">>>>>>> {format_name}")
-        addon = importlib.import_module(f"orbis.addons.{format_name}.main")
+        selected_format = int(input("\nPlease select format: "))
+
+        return format_list[selected_format]
 
     def load(self):
         file_path = input("Please enter path to corpus file: ")

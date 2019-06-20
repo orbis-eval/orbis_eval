@@ -5,7 +5,7 @@ import datetime
 
 from orbis import app
 from orbis.core.rucksack import Rucksack
-from orbis.lib.files import save_rucksack
+from orbis.libs.files import save_rucksack
 
 
 class Pipeline(object):

@@ -6,7 +6,7 @@ import html
 from urllib.parse import unquote_plus
 
 from orbis import app
-from orbis.lib import cli
+from orbis.libs import cli
 
 
 def build_source_path(file_name: str, resource_type: str) -> str:

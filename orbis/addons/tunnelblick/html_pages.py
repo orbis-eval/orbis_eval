@@ -3,7 +3,7 @@ from palettable.tableau import Tableau_20
 from operator import itemgetter
 
 from orbis import app
-from orbis.lib import files
+from orbis.libs import files
 from orbis.core.rucksack import Rucksack
 from orbis.plugins.aggregation.serial_corpus import Module as SerialCorpus
 from orbis.plugins.aggregation.gold_gs import Module as GoldGS
