@@ -71,8 +71,7 @@ def run_setup(dev):
             'console_scripts': [
                 'orbis = orbis.__main__:main'
             ]
-        },
-        data_files=[('~/.orbisopt/my_project', ['empty.txt'])]
+        }
     )
 
 
