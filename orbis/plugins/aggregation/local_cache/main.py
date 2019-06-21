@@ -1,5 +1,3 @@
-"""Summary
-"""
 import glob
 import json
 import os
@@ -11,35 +9,19 @@ from orbis.core.aggregation import AggregationBaseClass
 
 
 class LocalCacheAggregation(AggregationBaseClass):
-    """docstring for LocalCacheAggregation
-    """
 
     def run(self):
-        """Summary
-
-        Returns:
-            dict: Description
-
-        Deleted Parameters:
-            run (dict): Description
-        """
-
         computed_path = self.config['computed_path']
         lense = self.data['lense']
         mapping = self.data['mapping']
         filter_ = self.data['filter']
-
         computed = {}
-
         app.logger.debug(f"Serching for cache files in {computed_path}")
         for file_dir in glob.glob(os.path.join(computed_path, '*.json')):
-
             file_number = file_dir.split('/')[-1].split('.')[0]
             computed[file_number] = []
-
             with open(file_dir) as open_file:
                 app.logger.debug(f"Opening {file_dir}")
-
                 items = json.load(open_file)
 
                 if items:

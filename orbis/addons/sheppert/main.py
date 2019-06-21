@@ -56,9 +56,7 @@ def get_imports(only_orbis=False):
         folder = dirpath.split("github.com/")[-1]
 
         for filename in filenames:
-            if filename.endswith("pyc"):
-                continue
-            if filename.endswith("html"):
+            if not filename.endswith("py"):
                 continue
 
             module_name = filename.replace(".py", "")
@@ -205,5 +203,9 @@ def main():
     sankey(graph)
 
 
-if __name__ == '__main__':
+def run():
     main()
+
+
+if __name__ == '__main__':
+    run()

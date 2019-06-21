@@ -7,7 +7,6 @@ from orbis.config import paths
 
 
 class CacheWebservices(object):
-    """docstring for CacheWebservicesCaching"""
 
     def __init__(self, rucksack):
         super(CacheWebservices, self).__init__()

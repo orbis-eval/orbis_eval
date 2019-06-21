@@ -5,7 +5,6 @@ from orbis.plugins.aggregation import monocle
 
 
 class AggregationBaseClass(object):
-    """docstring for AggregationBaseClass"""
 
     def __init__(self, rucksack):
         super(AggregationBaseClass, self).__init__()
@@ -13,20 +12,17 @@ class AggregationBaseClass(object):
         self.config = self.rucksack.open['config']
         self.data = self.rucksack.open['data']
         self.results = self.rucksack.open['results']
-
         self.file_name = self.config['file_name']
         self.lense = self.data['lense']
         self.mapping = self.data['mapping']
         self.str_filter = self.data['str_filter']
 
     def run(self):
-
         computed = {}
         for item in self.rucksack.itemsview():
             response = self.query(item['corpus'], item)
             if response:
                 computed[item['index']] = self.get_computed(response, item)
-
         return computed
 
     def run_monocle(self, entities):

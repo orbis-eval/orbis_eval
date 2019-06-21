@@ -28,6 +28,7 @@ def load_config(config_files) -> dict:
             config["file_name"] = str(config_file).split("/")[-1]
             config["file_dir"] = str(config_file).split("/")[0:-1]
             configs.append(config)
+        app.logger.debug(f"test : {configs}")
         return configs
 
 
@@ -49,6 +50,7 @@ def run_orbis(config_file=None, args=None):
         start_runner(config)
 
     else:
+        app.logger.debug(f'Searching in: {str(os.path.join(app.paths.queue, "*.yaml"))}')
         config_files = sorted(glob.glob(os.path.join(app.paths.queue, "*.yaml")))
         app.logger.debug(f"Loading queue: {str(config_files)}")
         configs = load_config(config_files)

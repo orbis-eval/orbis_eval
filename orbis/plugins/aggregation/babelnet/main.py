@@ -7,7 +7,6 @@ from orbis.core.aggregation import AggregationBaseClass
 
 
 class BabelnetAggregator(AggregationBaseClass):
-    """docstring for BabelnetAggregator"""
 
     def query(self, text, item):
         service_url = 'https://babelfy.io/v1/disambiguate'
