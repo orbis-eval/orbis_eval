@@ -51,9 +51,6 @@ def check_python_version(metadata):
         sys.exit(f"Sorry, Python {metadata['min_python_version']} or newer needed")
 
 
-
-
-
 def run_setup(dev):
     metadata = load_metadata()
     check_python_version(metadata)
@@ -71,8 +68,7 @@ def run_setup(dev):
             'console_scripts': [
                 'orbis = orbis.__main__:main'
             ]
-        },
-        data_files=[('~/.orbisopt/my_project', ['empty.txt'])]
+        }
     )
 
 
