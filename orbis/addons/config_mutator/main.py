@@ -185,7 +185,7 @@ def build_yamls(settings) -> None:
                 open_file.write(yaml_content)
 
 
-def main() -> None:
+def run():
     """
 
     """
@@ -201,7 +201,3 @@ def main() -> None:
 
     header()
     print(" Config yamls generated. Good bye!")
-
-
-if __name__ == '__main__':
-    main()

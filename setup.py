@@ -12,8 +12,6 @@ def create_orbis_external_folder():
     default_dir = input(f"> ({str(default_dir)}):") or default_dir
 
 
-
-
 def load_metadata():
     metadata = {}
     with open("metadata.txt", encoding="utf-8") as open_file:
@@ -51,9 +49,6 @@ def check_python_version(metadata):
         sys.exit(f"Sorry, Python {metadata['min_python_version']} or newer needed")
 
 
-
-
-
 def run_setup(dev):
     metadata = load_metadata()
     check_python_version(metadata)
@@ -69,7 +64,8 @@ def run_setup(dev):
         install_requires=load_requirements_file(metadata, dev),
         entry_points={
             'console_scripts': [
-                'orbis = orbis.__main__:main'
+                'orbis = orbis.__main__:run',
+                'orbis-addons = orbis.addons.main:run'
             ]
         }
     )

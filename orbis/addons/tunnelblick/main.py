@@ -29,9 +29,5 @@ def menu():
     hp.run()
 
 
-def main():
+def run():
     menu()
-
-
-if __name__ == '__main__':
-    main()

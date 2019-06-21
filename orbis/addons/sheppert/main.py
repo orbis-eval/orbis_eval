@@ -195,16 +195,12 @@ def sankey(graph):
     plotly.offline.plot(fig, validate=False)
 
 
-def main():
+def run():
     # functions = get_functions()
     imports = get_imports(only_orbis=True)
     graph = build_graph(imports)
     # draw_graph(graph)
     sankey(graph)
-
-
-def run():
-    main()
 
 
 if __name__ == '__main__':
