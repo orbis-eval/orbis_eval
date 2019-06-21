@@ -1,3 +1,6 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 from operator import itemgetter
 from palettable.tableau import Tableau_20
 from typing import Tuple, Dict, List, Any

@@ -2,6 +2,17 @@ from datetime import datetime
 import setuptools
 import sys
 
+from pathlib import Path
+home = str(Path.home())
+
+
+def create_orbis_external_folder():
+    default_dir = Path.home() / "orbis-eval"
+    print("Where would you like to install the Orbis input/output directory?")
+    default_dir = input(f"> ({str(default_dir)}):") or default_dir
+
+
+
 
 def load_metadata():
     metadata = {}
@@ -40,6 +51,9 @@ def check_python_version(metadata):
         sys.exit(f"Sorry, Python {metadata['min_python_version']} or newer needed")
 
 
+
+
+
 def run_setup(dev):
     metadata = load_metadata()
     check_python_version(metadata)
@@ -58,6 +72,7 @@ def run_setup(dev):
                 'orbis = orbis.__main__:main'
             ]
         },
+        data_files=[('~/.orbisopt/my_project', ['empty.txt'])]
     )
 
 

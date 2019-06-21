@@ -1,3 +1,6 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
+
 # Set the location of the folder containing the yaml test run files.
 # paths start at the packege root (same level as setup.py)
 # https://martin-thoma.com/configuration-files-in-python/
