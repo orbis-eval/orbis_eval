@@ -2,8 +2,10 @@
 /logs/
 /output/
 /data/corpora/
+!/data/corpora/rss1/
 /docker_volumes
 *.nogit.*
+temp-plot.html
 
 # Sublime 3
 *.sublime-project
