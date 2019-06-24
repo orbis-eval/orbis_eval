@@ -17,12 +17,14 @@ To use Orbis, the repository needs to be cloned and Orbis has to be installed on
 ```shell
     $ git clone https://github.com/orbis-eval/Orbis.git
     $ cd Orbis
-    $ python3 setup.py develop --user
+    $ python3 setup.py install --user
     # or
-    $ python setup.py develop --user
+    $ python setup.py install --user
 ```
 
 Depending on your system and if you have Python 2 and Python 3 installed you either need to use ```python3``` (like on Ubuntu) or maybe just ```python```.
+
+You will promted to set an orbis user folder. This folder will contain the evaluation run queue, the logs, the corpora and monocle data, the output and the documentation. Default location will be ```orbis-eval``` in the user's home folder. An alternative location can be specified.
 
 Run
 ---
@@ -142,6 +144,8 @@ If needed, the lenses, mappings and filters can also be specified in the input s
 ```
 
 Currently available conditions are:
+
+```
   - simple:
     - same url
     - same entity type
@@ -158,6 +162,7 @@ Currently available conditions are:
     - same url
     - same entity type
     - overlap
+```
 
 - Metrics: The metrics stage calculates the metrics to analyze the evaluation. The defined metrics name should be written the same as the folder of the metrics plugin located at ```Orbis/orbis/plugins/metrics/```.
 

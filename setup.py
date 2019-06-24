@@ -3,7 +3,6 @@ import setuptools
 import sys
 import json
 from distutils.dir_util import copy_tree
-
 from pathlib import Path
 
 home = str(Path.home())
@@ -62,6 +61,7 @@ def load_metadata():
 
 
 def load_requirements_file(metadata, dev):
+    # Why the dev again?
     requirements = []
     with open(metadata['requirements_file'], encoding="utf8") as open_file:
         for line in open_file.readlines():

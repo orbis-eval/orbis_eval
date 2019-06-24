@@ -27,7 +27,7 @@ log_path = os.path.join(user_dir, 'logs')
 # /queue/activated
 queue = os.path.join(user_dir, config['queue'] or 'queue', 'activated')
 # /queue/tests
-test_queue = os.path.join(source_root, config['queue'] or 'queue', 'tests')
+test_queue = os.path.join(user_dir, config['queue'] or 'queue', 'tests')
 # /output
 output_path = os.path.join(user_dir, 'output')
 # /orbis/addons

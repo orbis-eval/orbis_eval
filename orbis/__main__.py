@@ -6,8 +6,6 @@ import yaml
 
 from orbis import app
 from orbis.core import pipeline
-from orbis.interfaces import webgui
-from orbis.addons import main as addons
 from orbis.libs import maintainance
 from orbis.libs.arguments import parse_args
 from orbis.plugins.aggregation.monocle.main import check_resources
@@ -71,12 +69,7 @@ def run():
     if args.test:
         app.paths.queue = app.paths.test_queue
 
-    if args.start_server:
-        webgui.server.start()
-    elif args.run_addon:
-        addons.run()
-    else:
-        run_orbis(args.config or None, args)
+    run_orbis(args.config or None, args)
 
 
 if __name__ == '__main__':

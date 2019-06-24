@@ -1,5 +1,5 @@
 {
-    "user_dir": null,
+    "user_dir": "/home/fabian/orbis-eval",
     "queue": null,
     "multiprocessing": "True",
     "multi_process_number": 2,
