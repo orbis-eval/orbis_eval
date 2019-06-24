@@ -56,8 +56,8 @@ def run_orbis(config_file=None, args=None):
         configs = load_config(config_files)
         check_resources(configs, refresh=False)
 
-        if app.settings.multiprocessing:
-            with multiprocessing.Pool(processes=app.settings.multi_process_number) as pool:
+        if app.settings['multiprocessing']:
+            with multiprocessing.Pool(processes=app.settings['multi_process_number']) as pool:
                 pool.map(start_runner, configs)
         else:
             for config in configs:
