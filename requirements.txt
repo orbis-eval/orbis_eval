@@ -8,3 +8,4 @@ regex==2018.2.21
 SPARQLWrapper==1.8.2
 pyyaml>=4.2b1
 requests>=2.20.0
+recommonmark

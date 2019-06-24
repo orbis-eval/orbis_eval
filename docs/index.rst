@@ -7,10 +7,9 @@ Welcome to the Orbis documentation!
 =================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
 
-   quickstart/index.rst
+   quickstart/index.md
    development_guide/index.rst
 
 

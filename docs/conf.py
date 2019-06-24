@@ -14,9 +14,19 @@
 #
 import os
 import sys
+from shutil import copyfile
+
 sys.path.insert(0, os.path.abspath('../orbis'))
 autoclass_content = 'both'
 
+# -- Use MD in documentation--------------------------------------------------
+from recommonmark.parser import CommonMarkParser
+source_parsers = {'.md': CommonMarkParser}
+source_suffix = ['.rst', '.md']
+
+src = "../README.md"
+dst = "quickstart/index.md"
+copyfile(src, dst)
 
 # -- Project information -----------------------------------------------------
 metadata_dict = {}
@@ -25,14 +35,14 @@ with open("../metadata.txt", encoding="utf-8") as open_file:
         key, value = line.replace(" ", "").split("=")
         metadata_dict[key] = value.replace('"', '').replace("\n", "")
 
-project = metadata_dict['__project__']
-copyright = metadata_dict['__copyright__']
-author = metadata_dict['__author__']
+project = metadata_dict['project']
+copyright = metadata_dict['copyright']
+author = metadata_dict['author']
 
 # The short X.Y version
-version = metadata_dict['__version__']
+version = metadata_dict['version']
 # The full version, including alpha/beta/rc tags
-release = metadata_dict['__release__']
+release = metadata_dict['release']
 
 
 # -- General configuration ---------------------------------------------------
