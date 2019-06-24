@@ -10,7 +10,6 @@ source_root = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__fil
 package_root = os.path.join(source_root, 'orbis')
 # /orbis/config/settings.json
 settings_file = os.path.join(package_root, 'config', 'settings.json')
-
 # /tests
 tests_dir = os.path.join(source_root, 'tests')
 
@@ -35,4 +34,3 @@ output_path = os.path.join(user_dir, 'output')
 addons_path = os.path.join(package_root, 'addons')
 # /orbis/plugins
 plugins_path = os.path.join(package_root, 'plugins')
-print(user_dir)

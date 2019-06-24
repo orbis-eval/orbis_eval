@@ -57,18 +57,19 @@ def addon_selection_menu(addon_list, msg=None):
         sys.exit("\nExiting Orbis addon menu. Bye\n")
 
     try:
-        selected_addon = int(selected_addon) - 1
-    except Exception:
+        selected_addon = int(selected_addon)
+    except Exception as exception:
+        print(exception)
         addon_selection_menu(addon_list, f"\nInvalid input: {selected_addon}\nPlease try again.")
 
-    if selected_addon not in range(1, len(addon_list) - 1):
-        addon_selection_menu(addon_list, f"\nInvalid input: {selected_addon + 1}\nPlease try again.")
+    if selected_addon not in range(1, len(addon_list) + 1):
+        addon_selection_menu(addon_list, f"\nInvalid input: {selected_addon}\nPlease try again.")
 
-    confirmation = str(input(f"Do you want to run {addon_list[selected_addon]} now? (Y/n)")).lower()
+    confirmation = str(input(f"Do you want to run {addon_list[selected_addon - 1]} now? (Y/n)")).lower()
     if not (confirmation == "y" or confirmation == "j" or len(confirmation) == 0):
         addon_selection_menu(addon_list)
 
-    addon_name = addon_list[selected_addon]
+    addon_name = addon_list[selected_addon - 1]
 
     return addon_name
 

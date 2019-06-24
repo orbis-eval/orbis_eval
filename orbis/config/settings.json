@@ -1,5 +1,5 @@
 {
-    "user_dir": null,
+    "user_dir": "",
     "queue": null,
     "multiprocessing": "True",
     "multi_process_number": 2,
