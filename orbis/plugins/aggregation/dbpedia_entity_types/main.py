@@ -133,7 +133,7 @@ def categorize_types(results):
         app.logger.debug(f"Entity type found: {entity_type}")
     return entity_type
 
-
+"""
 def normalize_tags(input_entity, evaluator):
     if app.settings.entity_maps.get(evaluator):
         entity_mappings = app.settings.entity_maps[evaluator]
@@ -141,3 +141,4 @@ def normalize_tags(input_entity, evaluator):
             if entity == input_entity:
                 return replacement
     return input_entity
+"""

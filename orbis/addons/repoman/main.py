@@ -34,15 +34,6 @@ def select():
 
 
 @clear_screen()
-def main():
+def run():
     start_menu()
     select()
-
-
-@clear_screen()
-def run():
-    main()
-
-
-if __name__ == '__main__':
-    run()

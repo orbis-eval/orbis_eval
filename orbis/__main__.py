@@ -7,7 +7,7 @@ import yaml
 from orbis import app
 from orbis.core import pipeline
 from orbis.interfaces import webgui
-from orbis.libs import addons
+from orbis.addons import main as addons
 from orbis.libs import maintainance
 from orbis.libs.arguments import parse_args
 from orbis.plugins.aggregation.monocle.main import check_resources
@@ -56,15 +56,15 @@ def run_orbis(config_file=None, args=None):
         configs = load_config(config_files)
         check_resources(configs, refresh=False)
 
-        if app.settings.multiprocessing:
-            with multiprocessing.Pool(processes=app.settings.multi_process_number) as pool:
+        if app.settings['multiprocessing']:
+            with multiprocessing.Pool(processes=app.settings['multi_process_number']) as pool:
                 pool.map(start_runner, configs)
         else:
             for config in configs:
                 start_runner(config)
 
 
-def main():
+def run():
     args = parse_args()
     if args and args.deletehtml:
         maintainance.delete_html_folders()
@@ -74,15 +74,10 @@ def main():
     if args.start_server:
         webgui.server.start()
     elif args.run_addon:
-        addon_list = addons.get_addons()
-        if len(addon_list) > 0:
-            addon = addons.addon_selection(addon_list)
-            addon.main()
-        else:
-            print("No addons installed.")
+        addons.run()
     else:
         run_orbis(args.config or None, args)
 
 
 if __name__ == '__main__':
-    main()
+    run()

@@ -14,7 +14,7 @@ from orbis.addons.satyanweshi import templates
 from orbis.config.paths import output_path
 
 
-def main(args=None) -> None:
+def run(args=None):
     print(type(args))
     if not args or not args.input:
         response = str(input(f"Search for json item files in {output_path}? (Y/n)")).lower()
@@ -53,7 +53,7 @@ def main(args=None) -> None:
     print("Build complete. Have a nice day!")
 
 
-def load_jsons(files: list) -> list:
+def load_jsons(files):
     result = []
     for file in files:
         data = json.load(open(file))
@@ -61,7 +61,7 @@ def load_jsons(files: list) -> list:
     return result
 
 
-def get_sf_colours(content: dict, keys: set = None) -> Tuple[set, dict]:
+def get_sf_colours(content, keys=None):
     keys = keys or set()
     for entity in content["gold"]:
         keys.add(entity["key"])
@@ -78,7 +78,7 @@ def get_sf_colours(content: dict, keys: set = None) -> Tuple[set, dict]:
     return keys, sf_colors
 
 
-def get_gold_entities(content: dict, config: dict, sf_colors: dict) -> Tuple[Any, List[Dict[str, Any]]]:
+def get_gold_entities(content, config, sf_colors) -> Tuple[Any, List[Dict[str, Any]]]:
     html = content["corpus"]
     entities = []
     if len(content["gold"]) > 0:
@@ -121,7 +121,7 @@ def get_gold_entities(content: dict, config: dict, sf_colors: dict) -> Tuple[Any
     return html, entities
 
 
-def get_computed_entities(content: dict, config: dict, sf_colors: dict) -> Tuple[Any, List[Dict[str, Any]]]:
+def get_computed_entities(content, config, sf_colors) -> Tuple[Any, List[Dict[str, Any]]]:
     html = content["corpus"]
     entities = []
     if len(content["computed"]) > 0:
@@ -175,7 +175,7 @@ def get_computed_entities(content: dict, config: dict, sf_colors: dict) -> Tuple
     return html, entities
 
 
-def get_entities_html(entities: list) -> str:
+def get_entities_html(entities):
     entities_html = ""
     for entity in list(reversed(entities)):
         entities_html += '<p><span style="background-color:{background};"><b>{surfaceForm}</b></span> (<a href="{key}">{key}</a>): {start} - {end}</p>'.format(
@@ -183,7 +183,7 @@ def get_entities_html(entities: list) -> str:
     return entities_html
 
 
-def get_prev_next_links(key: str, content: dict, directory_name: str) -> Tuple[str, str]:
+def get_prev_next_links(key, content, directory_name):
     key = int(key)
     if content.get(str(key - 1)):
         previous_item = os.path.join(
@@ -199,7 +199,7 @@ def get_prev_next_links(key: str, content: dict, directory_name: str) -> Tuple[s
     return previous_html, next_html
 
 
-def build_index_rows(table: dict, directory_name: str) -> None:
+def build_index_rows(table, directory_name):
     print("Building index rows.")
     rows = ""
     for key in sorted(table.keys()):
@@ -236,7 +236,7 @@ def build_index_rows(table: dict, directory_name: str) -> None:
         open_file.write(html)
 
 
-def build_index_csv(table: dict, directory_name: str) -> None:
+def build_index_csv(table, directory_name):
     print("Building index csv")
     file_name = os.path.join(directory_name, "index.csv")
     with open(file_name, 'w', newline='') as csvfile:
@@ -250,7 +250,7 @@ def build_index_csv(table: dict, directory_name: str) -> None:
             spamwriter.writerow(row_list)
 
 
-def build_html_pages(data: list) -> None:
+def build_html_pages(data):
     config_0 = data[0]["config"]
     config_1 = data[1]["config"]
     algorithm_0 = config_0["aggregator"]["service"]["name"]

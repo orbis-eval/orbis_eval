@@ -8,7 +8,7 @@ import pathlib
 import shutil
 
 from orbis.config import paths
-from orbis.libs import addons
+from orbis.libs.decorators import clear_screen
 from orbis.libs.config import load_config
 
 from .. import addon_path
@@ -32,8 +32,8 @@ class Corpus(object):
                 corpora = imported_module.list_available_corpora(self.config)
                 self.available_corpora[source] = corpora
 
+    @clear_screen()
     def select(self):
-        addons.clear_screen()
         print("Please select the corpus you want to download:")
 
         counter = 0
