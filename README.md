@@ -26,7 +26,7 @@ Run
 ---
 
 After installation Orbis can be executed by running ```orbis```. The Orbis help can be be called by using ```-h``` (```orbis -h```)
-Before you can run an evaluation, please install a corpus using the repoman addon ```orbis --run-addon```.
+Before you can run an evaluation, please install a corpus using the repoman addon ```orbis-addons```.
 
 Configure evaluation runs
 -------------------------
@@ -175,22 +175,9 @@ Currently available conditions are:
 
 Multiple storage options can be chosen and the ones in the example above are the recomended (at the moment working) possibilities.
 
-Running ```Orbis -t``` will run the test files located in ```Orbis/queue/tests```. It is possible to just take one of these YAML files and modify them to your own needs.
+Running ```orbis -t``` will run the test files located in ```Orbis/queue/tests```. It is possible to just take one of these YAML files and modify them to your own needs.
 
 Addons
 ======
 
-To run an Orbis addon Orbis provides a CLI that can be accessed by running ```Orbis --run-addon```. The menu will guide you to the addons and the addons mostly provide an own menu. Please be aware, that not all addons are working with the newest version of Orbis yet.
-
-
-Run Orbis in a virtual environment
-==================================
-
-Orbis can be run in a Python virtual environment:
-
-``` python
-# Run from within the Orbis root folder (Orbis/; the folder where setup.py is located)
-python3 -m virtualenv virtenv
-
-
-```
+To run an Orbis addon Orbis provides a CLI that can be accessed by running ```orbis-addons``` or ```orbis --run-addon```. The menu will guide you to the addons and the addons mostly provide an own menu.

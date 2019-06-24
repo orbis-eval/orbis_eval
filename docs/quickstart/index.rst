@@ -28,7 +28,8 @@ Depending on your system and if you have Python 2 and Python 3 installed you eit
 Run
 ---
 
-After installation Orbis can be executed by running :samp:`orbis`. The Orbis help can be be called by using :samp:`-h` (:samp:`orbis -h`)
+After installation Orbis can be executed by running :samp:`orbis`. The Orbis help can be be called by using :samp:`-h` (:samp:`orbis -h`).
+Before you can run an evaluation, please install a corpus using the repoman addon :samp:`orbis-addons`.
 
 Configure evaluation runs
 -------------------------
@@ -184,4 +185,4 @@ Running :samp:`orbis -t` will run the test files located in :samp:`orbis/queue/t
 Addons
 ======
 
-To run an Orbis addon Orbis provides a CLI that can be accessed by running :samp:`orbis --run-addon`. The menu will guide you to the addons and the addons mostly provide an own menu. Please be aware, that not all addons are working with the newest version of Orbis yet.
+To run an Orbis addon Orbis provides a CLI that can be accessed by running :samp:`orbis-addons` or :samp:`orbis --run-addon`. The menu will guide you to the addons and the addons mostly provide an own menu. Please be aware, that not all addons are working with the newest version of Orbis yet.
