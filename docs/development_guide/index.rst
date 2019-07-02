@@ -1,10 +1,10 @@
 Welcome to the Orbis developer documentation!
-=================================
+=============================================
 
 .. toctree::
    :maxdepth: 2
 
-   development_guide/index.rst
+   plugin_development.rst
 
 
 Indices and tables
