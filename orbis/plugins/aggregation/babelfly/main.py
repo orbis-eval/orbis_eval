@@ -6,7 +6,7 @@ from orbis.plugins.aggregation import dbpedia_entity_types
 from orbis.core.aggregation import AggregationBaseClass
 
 
-class BabelnetAggregator(AggregationBaseClass):
+class BabelflyAggregator(AggregationBaseClass):
 
     def query(self, text, item):
         service_url = 'https://babelfy.io/v1/disambiguate'

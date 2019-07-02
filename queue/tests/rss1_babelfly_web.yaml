@@ -1,8 +1,8 @@
 
 aggregation:
   service:
-    name: babelnet
-    location: local
+    name: babelfly
+    location: web
   input:
     data_set:
       name: rss1
@@ -23,5 +23,4 @@ metrics:
   name: binary_classification_metrics
 
 storage:
-  - csv_result_list
-  - html_pages
+  - cache_webservice_results
