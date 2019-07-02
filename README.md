@@ -25,7 +25,7 @@ You will promted to set an orbis user folder. This folder will contain the evalu
 
 ## Run
 After installation Orbis can be executed by running ```orbis```. The Orbis help can be be called by using ```-h``` (```orbis -h```)
-Before you can run an evaluation, please install a corpus using the repoman addon ```orbis-addons```.
+Before you can run an evaluation, please install a corpus using the repoman addon ```orbis-addons ```.
 
 ## Configure evaluation runs
 Orbis uses yaml files to configure the evaluation runs. These config file are located in the queue folder in the Orbis root directory ```Orbis/queue```.
