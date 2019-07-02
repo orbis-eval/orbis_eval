@@ -1,1 +1,1 @@
-recursive-include config *
+recursive-include orbis/config *.json
