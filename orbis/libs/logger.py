@@ -12,7 +12,7 @@ def create_logger(app, maxBytes=False, backupCount=False):
     maxBytes = maxBytes or 100000
     backupCount = backupCount or 1
 
-    logger_format = app.settings['logger_format'] or '%(levelname)-8s %(asctime)-25s %(module)-25s %(lineno)-5d %(message)s'
+    logger_format = app.settings['logger_format'] or '%(levelname)-8s %(asctime)-25s %(package)-25s %(module)-25s %(lineno)-5d %(message)s'
     logging_level = app.settings['logging_level'] or 'debug'
     log_path = app.paths.log_path
 

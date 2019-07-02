@@ -7,6 +7,7 @@ import datetime
 from orbis import app
 from orbis.core.rucksack import Rucksack
 from orbis.libs.files import save_rucksack
+from orbis.libs.plugins import load_plugin
 
 
 class Pipeline(object):
@@ -20,8 +21,9 @@ class Pipeline(object):
 
     def get_plugin(self, pipeline_stage_name, plugin_name):
         app.logger.debug(f"Getting {pipeline_stage_name} plugin: {plugin_name}")
-        module_path = f"orbis.plugins.{pipeline_stage_name}.{plugin_name}"
-        imported_module = importlib.import_module(module_path)
+        imported_module = load_plugin(pipeline_stage_name, plugin_name)
+        # imported_module = importlib.import_module(module_path)
+        # module_path = f"orbis.plugins.{pipeline_stage_name}.{plugin_name}"
         module_class_object = imported_module.Module
         return module_class_object
 
