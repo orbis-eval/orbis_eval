@@ -97,6 +97,7 @@ def run_setup(dev):
         packages=setuptools.find_packages(),
         python_requires=f">={metadata['min_python_version']}",
         install_requires=load_requirements_file(metadata, dev),
+        include_package_data=True,
         entry_points={
             'console_scripts': [
                 'orbis = orbis.__main__:run',
