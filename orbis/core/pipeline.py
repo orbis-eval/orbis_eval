@@ -24,7 +24,7 @@ class Pipeline(object):
         imported_module = load_plugin(pipeline_stage_name, plugin_name)
         # imported_module = importlib.import_module(module_path)
         # module_path = f"orbis.plugins.{pipeline_stage_name}.{plugin_name}"
-        module_class_object = imported_module.Module
+        module_class_object = imported_module.Main
         return module_class_object
 
     @classmethod

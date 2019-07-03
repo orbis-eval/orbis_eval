@@ -1,5 +1,0 @@
-corpora:
-  nif:
-    gerbil:
-      - "https://github.com/dice-group/gerbil/tree/master/src/main/resources/dataId/corpora"
-

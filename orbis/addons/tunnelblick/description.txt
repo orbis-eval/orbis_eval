@@ -1,1 +1,0 @@
-Display corpus items only as HTML output.
