@@ -6,6 +6,7 @@ import os
 import importlib
 import sys
 
+from orbis import app
 from orbis.config import paths
 from orbis.libs.decorators import clear_screen
 from orbis.libs.addons import load_addon
@@ -79,14 +80,19 @@ def run():
 
     parser = argparse.ArgumentParser(description='Run a Orbis addon')
     parser.add_argument('addon', type=str, nargs='?', default=False)
+    parser.add_argument('--logging', default="error", action='store', help='Set logging level')
     arg = parser.parse_args()
+
+    if arg.logging:
+        app.logger.debug("Setting logging level to {arg.logging}")
+        app.logger.setLevel(arg.logging.upper())
 
     if arg and arg.addon in [addon[0] for addon in addon_list]:
         addon = addon_module_list[addon_name_list.index(arg.addon)].Main()
         addon.run()
     elif len(addon_list) > 0:
         addon_name = addon_selection_menu(addon_list)
-        print(addon_list)
+        # print(addon_list)
         addon = addon_module_list[addon_name_list.index(addon_name)].Main()
         addon.run()
     else:

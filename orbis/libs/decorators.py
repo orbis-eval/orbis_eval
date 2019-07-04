@@ -6,6 +6,7 @@ import json
 import os
 import time
 
+from orbis import app
 from orbis.config import paths
 
 
@@ -13,9 +14,9 @@ def clear_screen():
     def decorator(fn):
         @functools.wraps(fn)
         def inner(*args, **kwargs):
-
-            os.system('cls')  # on Windows
-            os.system('clear')  # on linux / os x
+            if app.logger.level != "debug":
+                os.system('cls')  # on Windows
+                os.system('clear')  # on linux / os x
 
             result = fn(*args, **kwargs)
             return result

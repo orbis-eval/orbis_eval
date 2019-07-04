@@ -64,8 +64,8 @@ def run_orbis(config_file=None, args=None):
 
 def run():
     args = parse_args()
-    if args.logging_level:
-        app.logger.setLevel(args.logging_level.upper())
+    if args.logging:
+        app.logger.setLevel(args.logging.upper())
     if args and args.deletehtml:
         maintainance.delete_html_folders()
     if args.test:
