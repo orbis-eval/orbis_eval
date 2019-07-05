@@ -8,7 +8,7 @@ from orbis import app
 from orbis.core import pipeline
 from orbis.libs import maintainance
 from orbis.libs.arguments import parse_args
-from orbis.plugins.aggregation.monocle.main import check_resources
+from orbis_plugin_aggregation_monocle import check_resources
 
 
 def load_config(config_files) -> dict:

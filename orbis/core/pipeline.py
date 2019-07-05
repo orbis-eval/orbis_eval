@@ -1,7 +1,6 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
-import importlib
 import datetime
 
 from orbis import app

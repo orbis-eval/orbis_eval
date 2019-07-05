@@ -3,7 +3,6 @@
 
 import argparse
 import os
-import importlib
 import sys
 
 from orbis import app

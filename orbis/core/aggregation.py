@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.6
 # -*- coding: utf-8 -*-
 
-from orbis.plugins.aggregation import monocle
+import orbis_plugin_aggregation_monocle as monocle
 
 
 class AggregationBaseClass(object):
