@@ -24,3 +24,5 @@ metrics:
 
 storage:
   - cache_webservice_results
+  - csv_result_list
+  - html_pages

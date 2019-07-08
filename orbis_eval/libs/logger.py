@@ -5,19 +5,41 @@ import logging
 import os
 
 
+def set_color(org_string, level=None):
+    color_levels = {
+        10: "\033[36m{}\033[0m",       # DEBUG
+        20: "\033[32m{}\033[0m",       # INFO
+        30: "\033[33m{}\033[0m",       # WARNING
+        40: "\033[31m{}\033[0m",       # ERROR
+        50: "\033[7;31;31m{}\033[0m"   # FATAL/CRITICAL/EXCEPTION
+    }
+    if level is None:
+        return color_levels[20].format(org_string)
+    else:
+        return color_levels[int(level)].format(org_string)
+
+
 def create_logger(app, maxBytes=False, backupCount=False):
     """ """
 
     maxBytes = maxBytes or 100000
     backupCount = backupCount or 1
 
-    logger_format = app.settings['logger_format'] or '%(levelname)-8s %(asctime)-25s %(module)-25s %(lineno)-5d %(message)s'
+    logger_format = app.settings.get('logger_format') or '%(levelname)-8s %(asctime)-25s %(module)-25s %(lineno)-5d %(message)s'
     level = app.settings['logging_level'] or 'debug'
     log_path = app.paths.log_path
 
     formatter = logging.Formatter(logger_format)
     logger = logging.getLogger()
-    logger.setLevel(logging.NOTSET)
+    logger.setLevel(eval(f"logging.{level.upper()}"))
+
+    """
+    logger.info(set_color("test"))
+    logger.debug(set_color("test", level=10))
+    logger.warning(set_color("test", level=30))
+    logger.error(set_color("test", level=40))
+    logger.fatal(set_color("test", level=50))
+    """
 
     error_log_path = os.path.join(log_path, "error.log")
     error_handler = RotatingFileHandler(error_log_path, maxBytes=maxBytes, backupCount=backupCount)
@@ -53,5 +75,7 @@ def create_logger(app, maxBytes=False, backupCount=False):
     console_handler.setLevel(eval(f"logging.{level.upper()}"))
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
+
+    print(console_handler.level)
 
     return logger

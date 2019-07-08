@@ -33,17 +33,17 @@ class Pipeline(object):
         return rucksack
 
     def run(self):
-        app.logger.info(f"Running: {self.file_name}")
+        app.logger.debug(f"Running: {self.file_name}")
         # Aggregation
-        app.logger.info(f"Starting aggregation for {self.file_name}")
+        app.logger.debug(f"Starting aggregation for {self.file_name}")
         self.rucksack = Aggregation(self.rucksack).run()
         # Evaluation
-        app.logger.info(f"Starting evaluation for {self.file_name}")
+        app.logger.debug(f"Starting evaluation for {self.file_name}")
         self.rucksack = Evaluation(self.rucksack).run()
-        # app.logger.info(self.rucksack.open)
-        # save_rucksack(f"rucksack_{self.file_name}.json", app.paths.log_path, self.rucksack)
+        # app.logger.debug(self.rucksack.open)
+        # save_rucksack(f"{app.paths.user_dir}/rucksack_{self.file_name}.json", app.paths.log_path, self.rucksack)
         # Storage
-        app.logger.info(f"Starting storage for {self.file_name}")
+        app.logger.debug(f"Starting storage for {self.file_name}")
         self.rucksack = Storage(self.rucksack).run()
 
 

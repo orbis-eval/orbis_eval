@@ -3,7 +3,6 @@
 from pathlib import PurePath
 from setuptools import find_packages
 from setuptools import setup
-import importlib
 import re
 import io
 import os
@@ -43,19 +42,6 @@ class OrbisSetupBaseClass(object):
         regex = f"^{target} = ['\"](.*?)['\"]"
         metadatum = re.search(regex, file_content, re.MULTILINE).group(1)
         return metadatum
-
-    def run_additional_setup(self, plugin_name):
-        add_setup = False
-        try:
-            add_setup = importlib.import_module(f".additional_setup")
-            print(add_setup)
-        except Exception as exception:
-            add_setup = False
-            print(f"Additional setup not needed: {exception}")
-            pass
-
-        if add_setup:
-            add_setup.run()
 
     def load_metadata(self, directory, plugin_name):
         metadata = {}
@@ -111,8 +97,6 @@ class OrbisSetupBaseClass(object):
             }
 
         setup(**setup_dict)
-
-        self.run_additional_setup(plugin_name)
 
 
 if __name__ == '__main__':

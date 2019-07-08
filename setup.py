@@ -3,7 +3,8 @@
 from pathlib import PurePath
 from setuptools import find_packages
 from setuptools import setup
-import importlib
+from pathlib import Path
+from distutils.dir_util import copy_tree
 import re
 import io
 import os
@@ -105,6 +106,48 @@ class OrbisSetup(object):
                 extras[part] = extras.get(part, []) + [extra]
         return extras
 
+    def load_user_folder_path(self, user_folder_settings_file):
+        try:
+            with open(user_folder_settings_file, 'r', encoding='utf-8') as settings_file:
+                user_folder = settings_file.read()
+        except Exception as exception:
+            print(f"User folder location not found: ({exception})")
+            user_folder = False
+
+        if not user_folder:
+            print(f"\nCreating new...\n")
+            user_folder = self.create_orbis_external_folder(user_folder_settings_file)
+
+        return user_folder
+
+    def create_orbis_external_folder(self, user_folder_settings_file):
+        default_dir = Path.home() / "orbis-eval"
+        print("Where would you like to install the Orbis input/output directory?")
+        user_dir = input(f"> ({str(default_dir)}):") or default_dir
+        print(f"Creating: {user_dir}")
+        Path(user_dir).mkdir(parents=True, exist_ok=True)
+        with open(user_folder_settings_file, 'w', encoding='utf-8') as settings_file:
+            settings_file.write(str(user_dir))
+        self.fill_data(user_dir)
+        self.fill_queue(user_dir)
+        return user_dir
+
+    def fill_data(self, user_dir):
+        # ToDo: check if data already filled!
+        data = Path("data")
+        source = data
+        target = user_dir / "data"
+        print(f"Copying: {str(source)} -> {str(target)}")
+        copy_tree(str(source), str(target))
+
+    def fill_queue(self, user_dir):
+        # ToDo: check if data already filled!
+        queue = Path("queue")
+        source = queue
+        target = user_dir / "queue"
+        print(f"Copying: {str(source)} -> {str(target)}")
+        copy_tree(str(source), str(target))
+
     def run(self, directory):
 
         path_split = PurePath(directory).parts
@@ -136,7 +179,7 @@ class OrbisSetup(object):
                 'console_scripts': [
                     'orbis-eval = orbis_eval.__main__:run',
                     'orbis-addons = orbis_eval.interfaces.addons.main:run'
-                ],
+                ]
             }
 
             setup_dict["extras_require"] = {
@@ -163,6 +206,7 @@ class OrbisSetup(object):
             }
 
         setup(**setup_dict)
+        self.load_user_folder_path(PurePath(directory) / plugin_name / "config" / "user_folder.txt")
 
 
 if __name__ == '__main__':
