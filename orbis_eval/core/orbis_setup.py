@@ -10,14 +10,15 @@ import os
 import sys
 
 
-class OrbisSetup(object):
-    """docstring for OrbisSetup"""
+class OrbisSetupBaseClass(object):
+    """docstring for OrbisSetupBaseClass"""
 
     def __init__(self):
-        super(OrbisSetup, self).__init__()
+        super(OrbisSetupBaseClass, self).__init__()
 
     def load_requirements_file(self, plugin_name, metadata, dev):
-        requirements = ["orbis_eval"] if metadata["type"] != "main" else []
+        # requirements = ["orbis_eval"] if metadata["type"] != "main" else []
+        requirements = []
         with open(metadata['requirements_file'], encoding="utf8") as open_file:
             for line in open_file.readlines():
                 if dev:
@@ -46,10 +47,11 @@ class OrbisSetup(object):
     def run_additional_setup(self, plugin_name):
         add_setup = False
         try:
-            add_setup = importlib.import_module(f"additional_setup")
+            add_setup = importlib.import_module(f".additional_setup")
+            print(add_setup)
         except Exception as exception:
             add_setup = False
-            print(exception)
+            print(f"Additional setup not needed: {exception}")
             pass
 
         if add_setup:
@@ -103,8 +105,8 @@ class OrbisSetup(object):
             print("Main found. Installing entry points.")
             setup_dict["entry_points"] = {
                 'console_scripts': [
-                    'orbis-eval = orbis_eval.__main__:run',
-                    'orbis-addons = orbis_eval.interfaces.addons.main:run'
+                    'orbis = orbis.__main__:run',
+                    'orbis-addons = orbis.interfaces.addons.main:run'
                 ]
             }
 
@@ -115,4 +117,4 @@ class OrbisSetup(object):
 
 if __name__ == '__main__':
     directory = os.path.dirname(os.path.realpath(__file__))
-    OrbisSetup().run(directory)
+    OrbisSetupBaseClass().run(directory)

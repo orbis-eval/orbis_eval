@@ -1,1 +1,1 @@
-recursive-include orbis/config settings.json
+recursive-include orbis_eval/config settings.json
