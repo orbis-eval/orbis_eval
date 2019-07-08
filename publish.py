@@ -163,7 +163,7 @@ def publish(pkg_name):
     metadata = load_metadata(pkg_name)
     next_version = get_next_version(metadata)
     write_version(pkg_name, next_version)
-    update_dependencies(pkg_name, next_version)
+    # update_dependencies(pkg_name, next_version)
 
 
 def main():

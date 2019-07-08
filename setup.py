@@ -8,6 +8,7 @@ import re
 import io
 import os
 import sys
+from .extras import extras
 
 
 class OrbisSetup(object):
@@ -43,18 +44,6 @@ class OrbisSetup(object):
         metadatum = re.search(regex, file_content, re.MULTILINE).group(1)
         return metadatum
 
-    def run_additional_setup(self, plugin_name):
-        add_setup = False
-        try:
-            add_setup = importlib.import_module(f"additional_setup")
-        except Exception as exception:
-            add_setup = False
-            print(exception)
-            pass
-
-        if add_setup:
-            add_setup.run()
-
     def load_metadata(self, directory, plugin_name):
         metadata = {}
 
@@ -73,6 +62,26 @@ class OrbisSetup(object):
         metadata["type"] = self.parse_metadata("__type__", file_content)
 
         return metadata
+
+    def get_extras(self):
+        for extra in extras["all"]:
+            extra_parts = extra.split("_")
+
+            if extra_parts[1] == "plugin":
+                extra_parts[1] = "all_plugins"
+                extra_parts[3] = "_".join(extra_parts[3:])
+                extra_parts = extra_parts[1:4]
+                print(extra_parts)
+
+            if extra_parts[1] == "addon":
+                extra_parts[1] = "all_addons"
+                extra_parts[2] = "_".join(extra_parts[2:])
+                extra_parts = extra_parts[1:3]
+
+            print(extra_parts)
+            for part in extra_parts:
+                extras[part] = extras.get(part, []) + [extra]
+        return extras
 
     def run(self, directory):
 
@@ -105,12 +114,12 @@ class OrbisSetup(object):
                 'console_scripts': [
                     'orbis-eval = orbis_eval.__main__:run',
                     'orbis-addons = orbis_eval.interfaces.addons.main:run'
-                ]
+                ],
             }
 
-        setup(**setup_dict)
+            setup_dict["extras_require"] = self.get_extras()
 
-        self.run_additional_setup(plugin_name)
+        setup(**setup_dict)
 
 
 if __name__ == '__main__':
