@@ -20,8 +20,6 @@ class Pipeline(object):
     def get_plugin(self, pipeline_stage_name, plugin_name):
         app.logger.debug(f"Getting {pipeline_stage_name} plugin: {plugin_name}")
         imported_module = load_plugin(pipeline_stage_name, plugin_name)
-        # imported_module = importlib.import_module(module_path)
-        # module_path = f"orbis.plugins.{pipeline_stage_name}.{plugin_name}"
         module_class_object = imported_module.Main
         return module_class_object
 
@@ -34,14 +32,16 @@ class Pipeline(object):
 
     def run(self):
         app.logger.debug(f"Running: {self.file_name}")
+
         # Aggregation
         app.logger.debug(f"Starting aggregation for {self.file_name}")
         self.rucksack = Aggregation(self.rucksack).run()
+
         # Evaluation
         app.logger.debug(f"Starting evaluation for {self.file_name}")
         self.rucksack = Evaluation(self.rucksack).run()
-        # app.logger.debug(self.rucksack.open)
-        # save_rucksack(f"{app.paths.user_dir}/rucksack_{self.file_name}.json", app.paths.log_path, self.rucksack)
+        save_rucksack(f"{app.paths.user_dir}/rucksack_{self.file_name}.json", app.paths.log_path, self.rucksack)
+
         # Storage
         app.logger.debug(f"Starting storage for {self.file_name}")
         self.rucksack = Storage(self.rucksack).run()
@@ -56,7 +56,8 @@ class Aggregation(Pipeline):
         self.rucksack = rucksack
         self.file_name = self.rucksack.open['config']['file_name']
         self.plugin_name = self.rucksack.open['config']['aggregation']['service']['name']
-        # Getting computed data either form a webservice or local storage
+
+        # Getting computed data either from a webservice or local storage
         self.aggregator_location = self.rucksack.open['config']['aggregation']['service']['location']
         self.aggregator_service = {'local': 'local_cache', 'web': self.plugin_name}[self.aggregator_location]
 
@@ -64,9 +65,11 @@ class Aggregation(Pipeline):
         # Getting corpus
         app.logger.debug(f"Getting corpus texts for {self.file_name}")
         self.rucksack.pack_corpus(self.run_plugin(self.pipeline_stage_name, "serial_corpus", self.rucksack))
+
         # Getting gold
         app.logger.debug(f"Getting gold results for {self.file_name}")
         self.rucksack.pack_gold(self.run_plugin(self.pipeline_stage_name, "gold_gs", self.rucksack))
+
         # Getting computed
         app.logger.debug(f"Getting computed results for {self.plugin_name} via {self.aggregator_location}")
         self.rucksack.pack_computed(self.run_plugin(self.pipeline_stage_name, self.aggregator_service, self.rucksack))

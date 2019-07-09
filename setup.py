@@ -94,14 +94,14 @@ class OrbisSetup(object):
                 extra_parts[1] = "all_plugins"
                 extra_parts[3] = "_".join(extra_parts[3:])
                 extra_parts = extra_parts[1:4]
-                print(extra_parts)
+                # print(extra_parts)
 
             if extra_parts[1] == "addon":
                 extra_parts[1] = "all_addons"
                 extra_parts[2] = "_".join(extra_parts[2:])
                 extra_parts = extra_parts[1:3]
 
-            print(extra_parts)
+            # print(extra_parts)
             for part in extra_parts:
                 extras[part] = extras.get(part, []) + [extra]
         return extras
@@ -182,28 +182,7 @@ class OrbisSetup(object):
                 ]
             }
 
-            setup_dict["extras_require"] = {
-                'all': [
-                    "orbis_plugin_aggregation_dbpedia_entity_types",
-                    "orbis_plugin_aggregation_monocle",
-                    "orbis_plugin_aggregation_gold_gs",
-                    "orbis_plugin_aggregation_serial_corpus",
-                    "orbis_plugin_aggregation_local_cache",
-                    "orbis_plugin_aggregation_aida",
-                    "orbis_plugin_aggregation_babelfly",
-                    "orbis_plugin_aggregation_spotlight",
-                    "orbis_plugin_evaluation_binary_classification_evaluation",
-                    "orbis_plugin_metrics_binary_classification_metrics",
-                    "orbis_plugin_scoring_nel_scorer",
-                    "orbis_plugin_storage_cache_webservice_results",
-                    "orbis_plugin_storage_csv_result_list",
-                    "orbis_plugin_storage_html_pages",
-                    "orbis_plugin_storage_single_view",
-                    "orbis_addon_tunnelblick",
-                    "orbis_addon_satyanweshi",
-                    "orbis_addon_repoman"
-                ]
-            }
+        setup_dict["extras_require"] = self.get_extras()
 
         setup(**setup_dict)
         self.load_user_folder_path(PurePath(directory) / plugin_name / "config" / "user_folder.txt")
@@ -212,3 +191,5 @@ class OrbisSetup(object):
 if __name__ == '__main__':
     directory = os.path.dirname(os.path.realpath(__file__))
     OrbisSetup().run(directory)
+    # SETUP = OrbisSetup()
+    # print(SETUP.get_extras())

@@ -7,6 +7,8 @@ import shutil
 from pathlib import PurePath
 from packaging import version
 from glob import glob
+import sys
+import subprocess
 
 
 def remove(dirpath):
@@ -124,7 +126,8 @@ def choose_candidate():
         print(f"[{idx}]\t{folder}")
 
     selection = input("Choose: ")
-    publish(folders[selection])
+    candidate = folders[selection]
+    return candidate
 
 
 def update_dependencies(publishing_pkg, next_version):
@@ -158,6 +161,14 @@ def update_dependencies(publishing_pkg, next_version):
         open_file.write("\n".join(new_file_content))
 
 
+def build_candidate(pkg_name):
+    subprocess.call(["python3", "setup.py", "sdist", "bdist_wheel"], cwd=os.path.join("..", pkg_name))
+
+
+def uploade_candidate(pkg_name):
+    subprocess.call(["python3", "-m", "twine", "upload", "dist/*"], cwd=os.path.join("..", pkg_name))
+
+
 def publish(pkg_name):
     pkg_name = pkg_name or get_pkg_name()
     metadata = load_metadata(pkg_name)
@@ -166,8 +177,49 @@ def publish(pkg_name):
     # update_dependencies(pkg_name, next_version)
 
 
+def cleanup(pkg_name):
+    pkg_root = f"../{pkg_name}/"
+    home = os.path.expanduser("~")
+    python_version = ".".join(sys.version.split(" ")[0].split(".")[:2])
+
+    for folder in [x[0] for x in os.walk(pkg_root)]:
+        if folder.split("/")[-1] == "__pycache__":
+            if os.path.exists(folder) and os.path.isdir(folder):
+                shutil.rmtree(folder)
+                print(f"Removed __pycache__: {folder}")
+
+    for folder in glob(os.path.join(pkg_root, "build")):
+        if os.path.exists(folder) and os.path.isdir(folder):
+            shutil.rmtree(folder)
+            print(f"Removed build: {folder}")
+
+    for folder in glob(os.path.join(pkg_root, "dist")):
+        if os.path.exists(folder) and os.path.isdir(folder):
+            shutil.rmtree(folder)
+            print(f"Removed dist: {folder}")
+
+    # remove links
+    converted_pkg_name = pkg_name.replace("_", "-")
+    files = [f"{home}/.local/lib/python{python_version}/site-packages/{converted_pkg_name}.egg-link"]
+    files.append(f"{home}/.local/lib/python{python_version}/site-packages/{pkg_name}.egg-link")
+    for file in files:
+        if os.path.exists(file) and os.path.isfile(file):
+            shutil.rmtree(file)
+            print(f"Removed link: {file}")
+
+    # remove libs
+    for folder in glob(f"{home}/.local/lib/python{python_version}/site-packages/{pkg_name}*"):
+        if os.path.exists(folder) and os.path.isdir(folder):
+            shutil.rmtree(folder)
+            print(f"Removed dist: {folder}")
+
+
 def main():
-    choose_candidate()
+    candidate = choose_candidate()
+    cleanup(candidate)
+    publish(candidate)
+    build_candidate(candidate)
+    uploade_candidate(candidate)
 
 
 if __name__ == '__main__':

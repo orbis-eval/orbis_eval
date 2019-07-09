@@ -3,14 +3,33 @@
 ## Prerequisites
 To be able to develop and run Orbis you will need the following installed and
 configured on your system:
-- Python 3.6
+- Python 3.7
 - Python Setup Tools
-- A Linux OS (Windows and Mac are untested)
+- A Linux or Mac OS (Windows is untested)
 
 
 ## Install
-To use Orbis, the repository needs to be cloned and Orbis has to be installed on your system.
+To use Orbis, download and install it from PyPI:
 
+
+```shell
+    $ python3 -m pip install -U orbis-eval['all'] --user
+```
+
+Following extras are available:
+```
+    - all: Install all extras for Orbis. Recommended option
+    - all_plugins: Install only all plugins for Orbis.
+    - all_addons: Install only all addons for Orbis.
+    - aggregation: Install only all aggregation plugins for Orbis.
+    - evaluation: Install only all evaluation plugins for Orbis.
+    - metrics: Install only all metrics plugins for Orbis.
+    - scoring: Install only all scoring plugins for Orbis.
+    - storage: Install only all storage plugins for Orbis.
+    - "plugin or addon name": Install only the specified addon or plugin named.
+```
+
+Alternatively Orbis can be install by cloning the Repo and installing it manually. Plugins and addons must be installed seperatly.
 ```shell
     $ git clone https://github.com/orbis-eval/Orbis.git
     $ cd Orbis
@@ -24,7 +43,7 @@ Depending on your system and if you have Python 2 and Python 3 installed you eit
 You will promted to set an orbis user folder. This folder will contain the evaluation run queue, the logs, the corpora and monocle data, the output and the documentation. Default location will be ```orbis-eval``` in the user's home folder. An alternative location can be specified.
 
 ## Run
-After installation Orbis can be executed by running ```orbis```. The Orbis help can be be called by using ```-h``` (```orbis -h```)
+After installation Orbis can be executed by running ```orbis-eval```. The Orbis help can be be called by using ```-h``` (```orbis-eval -h```)
 Before you can run an evaluation, please install a corpus using the repoman addon ```orbis-addons ```.
 
 ## Configure evaluation runs
@@ -86,8 +105,10 @@ The aggregation stage of orbis collects all the data needed for an evaluation ru
           - us_states_list_en-txt-12_jan_28-0913am
 ```
 
-The service section of the yaml config specifies the name of the web service (annotation service). This should be the same (written the same) as the folder of the webservice located in ```Orbis/orbis/plugins/aggregation```.
-Location specifies where the annotations should come from. If it's set to web, then the aggregation plugin will attemt to query the webservice. If location is set to local, then the local cache (located in ```Orbis/data/corpora/{corpus_name}/copmuted/{annotator_name}/```) will be used assumed there is a cache to be used.
+The service section of the yaml config specifies the name of the web service (annotation service). This should be the same (written the same) as the webservice plugin minus the ```orbis_plugin_aggregation_``` prefix.
+
+Location specifies where the annotations should come from. If it's set to web, then the aggregation plugin will attemt to query the webservice. If location is set to local, then the local cache (located in ```~/orbis-eval/data/corpora/{corpus_name}/copmuted/{annotator_name}/```) will be used assuming there is a cache to be used.
+If there is no cache, run the evaluation in web mode and add ```- cache_webservice_results``` to the storage section to build a cache.
 
 ``` yaml
     aggregation:
@@ -96,11 +117,8 @@ Location specifies where the annotations should come from. If it's set to web, t
         location: web
 ```
 
-The service section of the yaml config specifies the name of the web service (annotation service). This should be the same (written the same) as the folder of the webservice located in ```Orbis/orbis/plugins/aggregation```.
-Location specifies where the annotations should come from. If it's set to web, then the aggregation plugin will attemt to query the webservice. If location is set to local, then the local cache (located in ```Orbis/data/corpora/{corpus_name}/copmuted/{annotator_name}/```) will be used assumed there is a cache to be used.
-If there is no cache, run the evaluation in web mode and add ```- cache_webservice_results``` to the storage section to build a cache.
 
-The input section defines what corpus should be used (in the example rss1). The corpora name should be written the same as the corpus folder located in ```Orbis/data/corpora/```.
+The input section defines what corpus should be used (in the example rss1). The corpora name should be written the same as the corpus folder located in ```~/orbis-eval/data/corpora/```.
 Orbis will locate from there on automatically the corpus texts and the gold standard.
 
 ```yaml
@@ -115,11 +133,11 @@ Orbis will locate from there on automatically the corpus texts and the gold stan
         - us_states_list_en-txt-12_jan_28-0913am
 ```
 
-If needed, the lenses, mappings and filters can also be specified in the input section. These should be located in ```Orbis/data/[filters|lenses|mappings]``` and should be specified in the section without the file ending.
+If needed, the lenses, mappings and filters can also be specified in the input section. These should be located in ```~/orbis-eval/data/[filters|lenses|mappings]``` and should be specified in the section without the file ending.
 
 
 ### Evaluation
-The evaluator stage evaluates the the annotator results against the gold standard. The evaluation section defines what kind of evaluation should be used. The evaluator should have the same name the evaluation folder name in ```Orbis/orbis/plugins/evaluation```. At the moment the
+The evaluator stage evaluates the the annotator results against the gold standard. The evaluation section defines what kind of evaluation should be used. The evaluator should have the same name as the evaluation plugin minus the ```orbis_plugin_evaluation_``` prefix.
 
 ```yaml
     evaluation:
@@ -128,6 +146,7 @@ The evaluator stage evaluates the the annotator results against the gold standar
 
 ### Scoring
 The scoring stage scores the evaluation according to specified conditions. These conditions are preset in the scorer and can be specified in the scoring section as well as what entity types should be scored. If no entity type is defined, all are scored. If one or more entity types are defined, then only those will be scored. Additionally ```ignore_empty``` can be set to define if the scorer should ignore empty annotation results or not.
+The scorer should have the same name as the scoring plugin minus the ```orbis_plugin_scoring_``` prefix.
 
 ```yaml
     scoring:
@@ -162,7 +181,8 @@ Currently available conditions are:
 ```
 
 ### Metrics
-The metrics stage calculates the metrics to analyze the evaluation. The defined metrics name should be written the same as the folder of the metrics plugin located at ```Orbis/orbis/plugins/metrics/```.
+The metrics stage calculates the metrics to analyze the evaluation. The metric should have the same name as the metrics plugin minus the ```orbis_plugin_metrics_``` prefix.
+
 
 ```yaml
     metrics:
@@ -170,7 +190,8 @@ The metrics stage calculates the metrics to analyze the evaluation. The defined 
 ```
 
 ### Storage
-The storage stage defines what kind of output orbis should create. As allways, the metrics plugin should be written the same as the folder of the metrics plugin defined in ```Orbis/orbis/plugins/storage```.
+The storage stage defines what kind of output orbis should create. As allways, the storage should have the same name as the storage plugin minus the ```orbis_plugin_storage_``` prefix.
+
 
 ``` yaml
     storage:
@@ -182,7 +203,10 @@ The storage stage defines what kind of output orbis should create. As allways, t
 Multiple storage options can be chosen and the ones in the example above are the recomended (at the moment working) possibilities.
 
 ## Test run
-Running ```orbis -t``` will run the test files located in ```Orbis/queue/tests```. It is possible to just take one of these YAML files and modify them to your own needs.
+Running ```orbis-eval -t``` will run the test files located in ```~/orbis-eval/queue/tests```. It is possible to just take one of these YAML files and modify them to your own needs.
 
 ### OrbisAddons
-To run an Orbis addon Orbis provides a CLI that can be accessed by running ```orbis-addons``` or ```orbis --run-addon```. The menu will guide you to the addons and the addons mostly provide an own menu.
+To run an Orbis addon Orbis provides a CLI that can be accessed by running ```orbis-addons``` or ```orbis-eval --run-addon```. The menu will guide you to the addons and the addons mostly provide an own menu.
+
+Orbis addons can be called directly by appending the Addon name the orbis-addon command:
+```orbis-addon repoman```

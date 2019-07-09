@@ -2,6 +2,8 @@
 
 import os
 
+from orbis_eval.libs import orbis_setup
+
 
 class AddonBaseClass(object):
     """docstring for AddonBaseClass"""
@@ -9,12 +11,8 @@ class AddonBaseClass(object):
     def __init__(self):
         super(AddonBaseClass, self).__init__()
         self.addon_path = None
+        self.metadata = self.load_metadata()
 
     def get_description(self):
-        self.description_path = os.path.join(self.addon_path, "description.txt")
-        try:
-            with open(self.description_path, "r", encoding="utf-8") as open_file:
-                self.description = open_file.read().strip()
-        except Exception as exception:
-            print(exception)
-            self.description = None
+        init_path = os.path.join(self.addon_path, '__init__.py')
+        self.description = orbis_setup.load_metadata(init_path)['description']
