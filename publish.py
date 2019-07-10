@@ -86,12 +86,14 @@ def get_next_version(metadata):
     current_version = metadata["version"]
     potential_next_version = calc_next_version(current_version)
 
+    print(f"\n\n{metadata['name']}\n#########################\n")
     print(f'Current version: {current_version}')
     next_version = input(f"Please enter new version ({potential_next_version}):\n")
     if not next_version:
         next_version = potential_next_version
 
-    print(f"{version.parse(current_version)} < {version.parse(next_version)} {version.parse(current_version) < version.parse(next_version)}")
+    # print(f"{version.parse(current_version)} < {version.parse(next_version)} {version.parse(current_version) < version.parse(next_version)}")
+
     if not version.parse(current_version) < version.parse(next_version):
         print("Next version is smaller than current version. Please try again.")
         get_next_version(metadata)
@@ -120,14 +122,23 @@ def test_get_next_version():
 
 def choose_candidate():
     folders = {}
+    all = []
     for idx, folder in enumerate(glob("../orbis*")):
         folder_name = folder.split("/")[-1]
         folders[str(idx)] = folder_name
+        all.append(folder_name)
         print(f"[{idx}]\t{folder}")
 
+    print(f"[a]\tall")
+
     selection = input("Choose: ")
-    candidate = folders[selection]
-    return candidate
+
+    if selection == "a":
+        candidates = all
+    else:
+        candidates = [folders[selection]]
+
+    return candidates
 
 
 def update_dependencies(publishing_pkg, next_version):
@@ -162,10 +173,12 @@ def update_dependencies(publishing_pkg, next_version):
 
 
 def build_candidate(pkg_name):
+
     subprocess.call(["python3", "setup.py", "sdist", "bdist_wheel"], cwd=os.path.join("..", pkg_name))
 
 
 def uploade_candidate(pkg_name):
+
     subprocess.call(["python3", "-m", "twine", "upload", "dist/*"], cwd=os.path.join("..", pkg_name))
 
 
@@ -204,7 +217,7 @@ def cleanup(pkg_name):
     files.append(f"{home}/.local/lib/python{python_version}/site-packages/{pkg_name}.egg-link")
     for file in files:
         if os.path.exists(file) and os.path.isfile(file):
-            shutil.rmtree(file)
+            os.remove(file)
             print(f"Removed link: {file}")
 
     # remove libs
@@ -215,11 +228,14 @@ def cleanup(pkg_name):
 
 
 def main():
-    candidate = choose_candidate()
-    cleanup(candidate)
-    publish(candidate)
-    build_candidate(candidate)
-    uploade_candidate(candidate)
+    candidates = choose_candidate()
+    for candidate in candidates:
+        cleanup(candidate)
+    for candidate in candidates:
+        publish(candidate)
+    for candidate in candidates:
+        build_candidate(candidate)
+        uploade_candidate(candidate)
 
 
 if __name__ == '__main__':

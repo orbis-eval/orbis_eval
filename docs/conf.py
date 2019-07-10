@@ -15,6 +15,8 @@
 import os
 import sys
 from shutil import copyfile
+import re
+import io
 
 sys.path.insert(0, os.path.abspath('../orbis'))
 autoclass_content = 'both'
@@ -28,21 +30,35 @@ src = "../README.md"
 dst = "quickstart/index.md"
 copyfile(src, dst)
 
-# -- Project information -----------------------------------------------------
-metadata_dict = {}
-with open("../metadata.txt", encoding="utf-8") as open_file:
-    for line in open_file.readlines():
-        key, value = line.replace(" ", "").split("=")
-        metadata_dict[key] = value.replace('"', '').replace("\n", "")
 
-project = metadata_dict['project']
-copyright = metadata_dict['copyright']
+# -- Project information -----------------------------------------------------
+def parse_metadata(target, file_content):
+    regex = f"^{target} = ['\"](.*?)['\"]"
+    metadatum = re.search(regex, file_content, re.MULTILINE).group(1)
+    return metadatum
+
+
+metadata_dict = {}
+with io.OpenWrapper(f"../orbis_eval/__init__.py", "rt", encoding="utf8") as open_file:
+    file_content = open_file.read()
+
+metadata_dict["version"] = parse_metadata("__version__", file_content)
+metadata_dict["name"] = parse_metadata("__name__", file_content)
+metadata_dict["author"] = parse_metadata("__author__", file_content)
+metadata_dict["description"] = parse_metadata("__description__", file_content)
+metadata_dict["license"] = parse_metadata("__license__", file_content)
+metadata_dict["min_python_version"] = parse_metadata("__min_python_version__", file_content)
+metadata_dict["requirements_file"] = parse_metadata("__requirements_file__", file_content)
+metadata_dict["url"] = parse_metadata("__url__", file_content)
+metadata_dict["year"] = parse_metadata("__year__", file_content)
+metadata_dict["type"] = parse_metadata("__type__", file_content)
+
+project = metadata_dict['name']
 author = metadata_dict['author']
 
 # The short X.Y version
 version = metadata_dict['version']
 # The full version, including alpha/beta/rc tags
-release = metadata_dict['release']
 
 
 # -- General configuration ---------------------------------------------------

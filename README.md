@@ -1,5 +1,9 @@
 # Orbis quickstart
 
+Orbis is a versatile framework for performing NEL evaluation analyses. It supports standard metrics such as precision, recall and F1-score and visualizes gold standard and annotator results in the context of the annotated document. Color coding the entities allows experts to quickly identify correct and incorrect annotations and the corresponding links to the KB that are also provided by Orbis. Due to the modular pipeline architecture used by Orbis different stages in the evaluation process can be easily modified, replaced or added.
+
+Results of our first Orbis based drill-down analyses efforts were presented at the SEMANTiCS 2018 Conference in Vienna [Odoni, Kuntschik, Braşoveanu, & Weichselbraun, 2018][https://www.sciencedirect.com/science/article/pii/S1877050918316089].
+
 ## Prerequisites
 To be able to develop and run Orbis you will need the following installed and
 configured on your system:
@@ -11,12 +15,11 @@ configured on your system:
 ## Install
 To use Orbis, download and install it from PyPI:
 
-
 ```shell
     $ python3 -m pip install -U orbis-eval['all'] --user
 ```
 
-Following extras are available:
+There are more extras options available but we recommend you use the all option. Only use the other options if you really know what you are doing.
 ```
     - all: Install all extras for Orbis. Recommended option
     - all_plugins: Install only all plugins for Orbis.

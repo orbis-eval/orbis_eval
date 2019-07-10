@@ -3,7 +3,7 @@
     "multiprocessing": "True",
     "multi_process_number": 2,
     "logger_format": "%(levelname)-8s %(asctime)-25s %(pathname)-25s %(funcName)-25s %(lineno)-5d %(message)s",
-    "logging_level": "debug",
+    "logging_level": "info",
     "default_folders_to_create": [
         "log_path",
         "output_path"
