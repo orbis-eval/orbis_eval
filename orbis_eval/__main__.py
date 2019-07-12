@@ -77,6 +77,7 @@ def run():
     if args.test:
         app.paths.queue = app.paths.test_queue
 
+    # print(app.paths.test_queue)
     run_orbis(args.config or None, args)
 
 

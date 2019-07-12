@@ -76,6 +76,6 @@ def create_logger(app, maxBytes=False, backupCount=False):
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
 
-    print(console_handler.level)
+    # print(console_handler.level)
 
     return logger

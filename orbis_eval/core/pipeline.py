@@ -40,7 +40,7 @@ class Pipeline(object):
         # Evaluation
         app.logger.debug(f"Starting evaluation for {self.file_name}")
         self.rucksack = Evaluation(self.rucksack).run()
-        save_rucksack(f"{app.paths.user_dir}/rucksack_{self.file_name}.json", app.paths.log_path, self.rucksack)
+        save_rucksack(f"{app.paths.log_path}/rucksack_{self.file_name}.json", app.paths.log_path, self.rucksack)
 
         # Storage
         app.logger.debug(f"Starting storage for {self.file_name}")

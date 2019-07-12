@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
+try:
+    from ez_setup import use_setuptools
+    use_setuptools()
+except ImportError:
+    pass
+
+try:
+    from setuptools import setup, find_packages
+except ImportError:
+    from distutils.core import setup, find_packages
 
 from pathlib import PurePath
-from setuptools import find_packages
-from setuptools import setup
-from pathlib import Path
-from distutils.dir_util import copy_tree
+
 import re
 import io
 import os
@@ -44,7 +51,8 @@ class OrbisSetup(object):
         with open(metadata['requirements_file'], encoding="utf8") as open_file:
             for line in open_file.readlines():
                 if dev:
-                    line = line.replace("\n", "").replace("<", "=").replace(">", "=")
+                    line = line.replace("\n", "").replace(
+                        "<", "=").replace(">", "=")
                     line = line.split("=")[0]
                     requirements.append(line)
                 else:
@@ -52,9 +60,11 @@ class OrbisSetup(object):
         return requirements
 
     def check_python_version(self, metadata):
-        python_needed = tuple([int(i) for i in metadata['min_python_version'].split(".")])
+        python_needed = tuple(
+            [int(i) for i in metadata['min_python_version'].split(".")])
         if not sys.version_info >= python_needed:
-            sys.exit(f"Sorry, Python {metadata['min_python_version']} or newer needed")
+            sys.exit(
+                f"Sorry, Python {metadata['min_python_version']} or newer needed")
 
     def get_long_description(self):
         with io.open("README.md", "rt", encoding="utf8") as f:
@@ -75,10 +85,13 @@ class OrbisSetup(object):
         metadata["version"] = self.parse_metadata("__version__", file_content)
         metadata["name"] = self.parse_metadata("__name__", file_content)
         metadata["author"] = self.parse_metadata("__author__", file_content)
-        metadata["description"] = self.parse_metadata("__description__", file_content)
+        metadata["description"] = self.parse_metadata(
+            "__description__", file_content)
         metadata["license"] = self.parse_metadata("__license__", file_content)
-        metadata["min_python_version"] = self.parse_metadata("__min_python_version__", file_content)
-        metadata["requirements_file"] = self.parse_metadata("__requirements_file__", file_content)
+        metadata["min_python_version"] = self.parse_metadata(
+            "__min_python_version__", file_content)
+        metadata["requirements_file"] = self.parse_metadata(
+            "__requirements_file__", file_content)
         metadata["url"] = self.parse_metadata("__url__", file_content)
         metadata["year"] = self.parse_metadata("__year__", file_content)
         metadata["type"] = self.parse_metadata("__type__", file_content)
@@ -106,53 +119,9 @@ class OrbisSetup(object):
                 extras[part] = extras.get(part, []) + [extra]
         return extras
 
-    def load_user_folder_path(self, user_folder_settings_file):
-        try:
-            with open(user_folder_settings_file, 'r', encoding='utf-8') as settings_file:
-                user_folder = settings_file.read()
-        except Exception as exception:
-            print(f"User folder location not found: ({exception})")
-            user_folder = False
-
-        if not user_folder:
-            print(f"\nCreating new...\n")
-            user_folder = self.create_orbis_external_folder(user_folder_settings_file)
-
-        return user_folder
-
-    def create_orbis_external_folder(self, user_folder_settings_file):
-        default_dir = Path.home() / "orbis-eval"
-        print("Where would you like to install the Orbis input/output directory?")
-        user_dir = input(f"> ({str(default_dir)}):") or default_dir
-        print(f"Creating: {user_dir}")
-        Path(user_dir).mkdir(parents=True, exist_ok=True)
-        with open(user_folder_settings_file, 'w', encoding='utf-8') as settings_file:
-            settings_file.write(str(user_dir))
-        self.fill_data(user_dir)
-        self.fill_queue(user_dir)
-        return user_dir
-
-    def fill_data(self, user_dir):
-        # ToDo: check if data already filled!
-        data = Path("data")
-        source = data
-        target = user_dir / "data"
-        print(f"Copying: {str(source)} -> {str(target)}")
-        copy_tree(str(source), str(target))
-
-    def fill_queue(self, user_dir):
-        # ToDo: check if data already filled!
-        queue = Path("queue")
-        source = queue
-        target = user_dir / "queue"
-        print(f"Copying: {str(source)} -> {str(target)}")
-        copy_tree(str(source), str(target))
-
     def run(self, directory):
 
-        path_split = PurePath(directory).parts
-        plugin_name = path_split[-1]
-
+        plugin_name = PurePath(directory).parts[-1]
         metadata = self.load_metadata(directory, plugin_name)
         self.check_python_version(metadata)
 
@@ -170,7 +139,13 @@ class OrbisSetup(object):
             "packages": find_packages(),
             "python_requires": f">{metadata['min_python_version']}",
             "install_requires": self.load_requirements_file(plugin_name, metadata, dev),
-            "include_package_data": True
+            "package_data": {'orbis_eval': [
+                'config/settings.json',
+                'data/tests/queue/*',
+                'data/tests/corpora/rss1/computed/**/*',
+                'data/tests/corpora/rss1/**/*'
+            ]
+            }
         }
 
         if metadata["type"] == "main":
@@ -185,11 +160,8 @@ class OrbisSetup(object):
         setup_dict["extras_require"] = self.get_extras()
 
         setup(**setup_dict)
-        self.load_user_folder_path(PurePath(directory) / plugin_name / "config" / "user_folder.txt")
 
 
 if __name__ == '__main__':
     directory = os.path.dirname(os.path.realpath(__file__))
     OrbisSetup().run(directory)
-    # SETUP = OrbisSetup()
-    # print(SETUP.get_extras())

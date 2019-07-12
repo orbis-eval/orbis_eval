@@ -1,1 +1,1 @@
-recursive-include orbis_eval/config settings.json
+global-exclude *.pyc

@@ -1,0 +1,73 @@
+[
+{
+    "tokenFragment":
+    {
+        "start": 1,
+        "end": 1
+    },
+    "charFragment":
+    {
+        "start": 4,
+        "end": 7
+    },
+    "babelSynsetID": "bn:00003341n",
+    "DBpediaURL": "http://dbpedia.org/resource/United_States",
+    "BabelNetURL": "http://babelnet.org/rdf/s00003341n",
+    "score": 0.981630309988519,
+    "coherenceScore": 0.9047619047619048,
+    "globalScore": 0.42857142857142855,
+    "source": "BABELFY",
+    "key": "http://dbpedia.org/resource/United_States",
+    "entity_type": "Place",
+    "document_start": 4,
+    "document_end": 8,
+    "surfaceForm": "U.S."
+},
+{
+    "tokenFragment":
+    {
+        "start": 1,
+        "end": 3
+    },
+    "charFragment":
+    {
+        "start": 4,
+        "end": 21
+    },
+    "babelSynsetID": "bn:01475789n",
+    "DBpediaURL": "http://dbpedia.org/resource/United_States_Patent_and_Trademark_Office",
+    "BabelNetURL": "http://babelnet.org/rdf/s01475789n",
+    "score": 1.0,
+    "coherenceScore": 0.19047619047619047,
+    "globalScore": 0.020050125313283207,
+    "source": "BABELFY",
+    "key": "http://dbpedia.org/resource/United_States_Patent_and_Trademark_Office",
+    "entity_type": "Organization",
+    "document_start": 4,
+    "document_end": 22,
+    "surfaceForm": "U.S. Patent Office"
+},
+{
+    "tokenFragment":
+    {
+        "start": 24,
+        "end": 24
+    },
+    "charFragment":
+    {
+        "start": 123,
+        "end": 126
+    },
+    "babelSynsetID": "bn:01220810n",
+    "DBpediaURL": "http://dbpedia.org/resource/American_Civil_Liberties_Union",
+    "BabelNetURL": "http://babelnet.org/rdf/s01220810n",
+    "score": 1.0,
+    "coherenceScore": 0.09523809523809523,
+    "globalScore": 0.0030075187969924814,
+    "source": "BABELFY",
+    "key": "http://dbpedia.org/resource/American_Civil_Liberties_Union",
+    "entity_type": "Organization",
+    "document_start": 123,
+    "document_end": 127,
+    "surfaceForm": "ACLU"
+}]
