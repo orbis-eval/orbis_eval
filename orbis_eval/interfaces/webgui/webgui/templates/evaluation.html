@@ -1,0 +1,80 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Orbis{% endblock %}
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+    <!-- ... -->
+</div>
+{% endblock %}
+{% block content %}
+
+<body class="bg-light">
+    <div class="container">
+        <div class="py-5 text-center">
+            <img class="d-block mx-auto mb-4" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+            <h2>Checkout form</h2>
+            <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+        </div>
+
+        <form action="/build_config" class="form form-horizontal" method="post" role="form">
+
+            <div class="form-group">
+                <div class="col-md-6">
+                    <label for={{ form.aggregation__service__name.id }}>Aggregator</label>
+                    <div class="dropdown"> {{ form.aggregation__service__name(class_="form-control") }}</div>
+                </div>
+                <div class="col-md-4">
+                  <label for={{ form.aggregation__service__name.id }}>Corpus</label>
+                    <div class="dropdown"> {{ form.aggregation__input__data_set__name(class_="form-control") }}</div>
+                </div>
+                <div class="col-md-2">
+                    <label for={{ form.aggregation__service__name.id }}>Location</label>
+                    <div class="dropdown"> {{ form.aggregation__service__location(class_="form-control") }}</div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label for={{ form.evaluation__name.id }}>Evaluator</label>
+              <div class="dropdown"> {{ form.evaluation__name(class_="form-control") }}</div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label for={{ form.scoring__name.id }}>Scoring</label>
+              <div class="dropdown"> {{ form.scoring__name(class_="form-control") }}</div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label for={{ form.metrics__name.id }}>Metrics</label>
+              <div class="dropdown"> {{ form.metrics__name(class_="form-control") }}</div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <label for={{ form.storage__name.id }}>Storage</label>
+              <div class="form-check"> {{ form.storage__name(class_="form-control") }}</div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-md-4">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Build</button>
+              </div>
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock %}
+<!--
+        <div class="row">
+            <div class="col-md-8 order-md-1">
+                <h3 class="mb-3">Evaluation Settings</h3>
+                <form class="form form-horizontal" method="post" role="form">
+                    {{ form.hidden_tag() }}
+
+                    <h4 class="mb-3">Aggregation</h4>
+                    <label>{{ form.aggregation__service__name.label }} <span class="text-muted">(Optional)</span></label>
+        <form class="form form-horizontal" method="post" role="form">
+                    {{ form.aggregation__service__name(class_="custom-select d-block w-100") }}
+
+            </div>
+            <hr class="mb-4">
+            </form>
+        </div>
+-->

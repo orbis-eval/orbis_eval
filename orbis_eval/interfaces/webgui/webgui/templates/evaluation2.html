@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+
+<body>
+    <h2 style="text-align: center;">Form</h2>
+    <form action="http://localhost:5000/contact" method=post>
+        <fieldset>
+            <legend>Aggregation</legend>
+            <div style=font-size:20px; font-weight:bold; margin-left:150px;>
+                {{ form.aggregation__service__name.label}}: {{ form.aggregation__service__name }}<br>
+                {{ form.aggregation__service__location.label}}: {{ form.aggregation__service__location }}<br>
+                {{ form.aggregation__input__data_set__name.label}}: {{ form.aggregation__input__data_set__name }}<br>
+                {{ form.submit }}
+                {{ form.csrf_token }}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Evaluation</legend>
+            <div style=font-size:20px; font-weight:bold; margin-left:150px;>
+                {{ form.evaluation__name.label}}: {{ form.evaluation__name }}<br>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Scoring</legend>
+            <div style=font-size:20px; font-weight:bold; margin-left:150px;>
+                {{ form.scoring__name.label}}: {{ form.scoring__name }}<br>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Matrics</legend>
+            <div style=font-size:20px; font-weight:bold; margin-left:150px;>
+                {{ form.metrics__name.label}}: {{ form.metrics__name }}<br>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Storage</legend>
+            <div style=font-size:20px; font-weight:bold; margin-left:150px;>
+                {{ form.storage__name.label}}: {{ form.storage__name }}<br>
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+</html>

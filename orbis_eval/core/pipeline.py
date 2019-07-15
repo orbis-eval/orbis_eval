@@ -18,6 +18,10 @@ class Pipeline(object):
         self.file_name = self.rucksack.open['config']['file_name']
 
     def get_plugin(self, pipeline_stage_name, plugin_name):
+        print(f"21: {pipeline_stage_name}")
+        print(f"22: {plugin_name}")
+        pipeline_stage_name = pipeline_stage_name.replace(" ", "_")
+        plugin_name = plugin_name.replace(" ", "_")
         app.logger.debug(f"Getting {pipeline_stage_name} plugin: {plugin_name}")
         imported_module = load_plugin(pipeline_stage_name, plugin_name)
         module_class_object = imported_module.Main

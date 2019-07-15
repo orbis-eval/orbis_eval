@@ -163,5 +163,34 @@ class OrbisSetup(object):
 
 
 if __name__ == '__main__':
+    """
+    if "--foo" in sys.argv:
+        do_foo_stuff()
+        sys.argv.remove("--foo")
+    """
     directory = os.path.dirname(os.path.realpath(__file__))
     OrbisSetup().run(directory)
+
+
+"""
+from distutils.core import setup, Command
+
+class InstallCommand(Command):
+    description = "Installs the foo."
+    user_options = [
+        ('foo=', None, 'Specify the foo to bar.'),
+    ]
+    def initialize_options(self):
+        self.foo = None
+    def finalize_options(self):
+        assert self.foo in (None, 'myFoo', 'myFoo2'), 'Invalid foo!'
+    def run(self):
+        install_all_the_things()
+
+setup(
+    ...,
+    cmdclass={
+        'install': InstallCommand,
+    }
+)
+"""
