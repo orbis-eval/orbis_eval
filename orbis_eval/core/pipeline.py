@@ -46,6 +46,8 @@ class Pipeline(object):
         app.logger.debug(f"Starting storage for {self.file_name}")
         self.rucksack = Storage(self.rucksack).run()
 
+        return self.rucksack
+
 
 ###############################################################################
 class Aggregation(Pipeline):

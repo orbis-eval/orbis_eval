@@ -55,15 +55,19 @@ class Rucksack(object):
         self.plugins[name] = plugin
 
     def pack_gold(self, gold):
+
         self.open['data']['gold'] = gold
 
     def pack_corpus(self, corpus):
+
         self.open['data']['corpus'] = corpus
 
     def pack_computed(self, computed):
+
         self.open['data']['computed'] = computed
 
-    def pack_results(self, reults):
+    def pack_results(self, results):
+
         raise NotImplemented
 
     def pack_results_summary(self, results_summary):
@@ -71,6 +75,7 @@ class Rucksack(object):
         raise NotImplemented
 
     def get_paths(self):
+
         raise NotImplemented
 
     def get_keys(self):

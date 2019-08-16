@@ -107,16 +107,15 @@ class OrbisSetup(object):
                 extra_parts[1] = "all_plugins"
                 extra_parts[3] = "_".join(extra_parts[3:])
                 extra_parts = extra_parts[1:4]
-                # print(extra_parts)
 
             if extra_parts[1] == "addon":
                 extra_parts[1] = "all_addons"
                 extra_parts[2] = "_".join(extra_parts[2:])
                 extra_parts = extra_parts[1:3]
 
-            # print(extra_parts)
             for part in extra_parts:
                 extras[part] = extras.get(part, []) + [extra]
+
         return extras
 
     def run(self, directory):
