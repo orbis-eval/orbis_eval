@@ -153,7 +153,8 @@ class OrbisSetup(object):
             setup_dict["entry_points"] = {
                 'console_scripts': [
                     'orbis-eval = orbis_eval.__main__:run',
-                    'orbis-addons = orbis_eval.interfaces.addons.main:run'
+                    'orbis-addons = orbis_eval.interfaces.addons.main:run',
+                    'orbis-webgui = orbis_eval.interfaces.webgui.main:run'
                 ]
             }
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-import datetime
+
 import pkgutil
 from orbis_eval import app
 import os
@@ -19,14 +19,15 @@ blacklist = {
     'orbis_plugin_aggregation_serial_corpus'
 }
 
+
 def get_modules(stage):
     plugins = [
         # (' '.join(name.split('_')[3:]), name)
         (name, name)
         for finder, name, ispkg
         in pkgutil.iter_modules()
-        if name.startswith(f'orbis_plugin_{stage}')
-        and name not in blacklist
+        if name.startswith(f'orbis_plugin_{stage}') and
+        name not in blacklist
     ]
     return plugins
 

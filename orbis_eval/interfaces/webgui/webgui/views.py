@@ -1,22 +1,24 @@
-import yaml
-import json
-
-from time import sleep
 from flask import render_template
 from flask import request
-from webgui import webgui_app
+from . import webgui_app
 
 from orbis_eval import app
 from orbis_eval.__main__ import run_orbis
-from webgui.forms import ConfigForm
+from .forms import ConfigForm
 
 webgui_app.secret_key = 'development key'
 
 
+@webgui_app.route('/')
+def hello():
+    return "Helloo"
+
+
 @webgui_app.route('/config')
 def config():
-   form = ConfigForm()
-   return render_template('evaluation.html', form = form)
+    form = ConfigForm()
+    return render_template('evaluation2.html', form=form)
+
 
 @webgui_app.route('/build_config', methods=['POST'])
 def build_config():
@@ -54,13 +56,12 @@ def build_config():
 
 
 if __name__ == '__main__':
-   app.run(debug = True)
+    app.run(debug=True)
 
-#@webgui_app.route('/')
+
+# @webgui_app.route('/')
 # def index():
 #    return render_template('index.html')
-
-
 
 """
 @webgui_app.route('/stream')
