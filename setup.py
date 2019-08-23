@@ -39,9 +39,6 @@ class OrbisSetup(object):
                 "orbis_plugin_storage_cache_webservice_results",
                 "orbis_plugin_storage_csv_result_list",
                 "orbis_plugin_storage_html_pages",
-                "orbis_plugin_storage_single_view",
-                "orbis_addon_tunnelblick",
-                "orbis_addon_satyanweshi",
                 "orbis_addon_repoman"
             ]
         }

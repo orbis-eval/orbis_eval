@@ -52,16 +52,29 @@ def run_orbis(config_file=None, args=None):
     else:
         app.logger.debug(f'Searching in: {str(os.path.join(app.paths.queue, "*.yaml"))}')
         config_files = sorted(glob.glob(os.path.join(app.paths.queue, "*.yaml")))
-        app.logger.debug(f"Loading queue: {str(config_files)}")
-        configs = load_config(config_files)
-        monocle.check_resources(configs, refresh=False)
 
-        if app.settings['multiprocessing']:
-            with multiprocessing.Pool(processes=app.settings['multi_process_number']) as pool:
-                pool.map(start_runner, configs)
+        if len(config_files) <= 0:
+            app.logger.error(
+                f'\n\n'
+                f'\tNo YAMLs found!\n'
+                f'\t---------------\n'
+                f'\tPlease create one or more evaluation run YAML configuration files and save in "{app.paths.queue}"\n'
+                f'\tor execute the YAML directly using the "--config" parameter:\n'
+                f'\t\t"orbis-eval --config my_run.yaml"'
+                f'\n\n'
+            )
         else:
-            for config in configs:
-                start_runner(config)
+
+            app.logger.debug(f"Loading queue: {str(config_files)}")
+            configs = load_config(config_files)
+            monocle.check_resources(configs, refresh=False)
+
+            if app.settings['multiprocessing']:
+                with multiprocessing.Pool(processes=app.settings['multi_process_number']) as pool:
+                    pool.map(start_runner, configs)
+            else:
+                for config in configs:
+                    start_runner(config)
 
 
 def run():

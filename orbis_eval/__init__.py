@@ -3,7 +3,7 @@
 from orbis_eval.core import orbis_app
 
 __name__ = "orbis_eval"
-__version__ = "2.1.3dev1"
+__version__ = "2.2"
 __author__ = "fabod"
 __year__ = "2019"
 __description__ = "An Extendable Evaluation Pipeline for Named Entity Drill-Down Analysis"
