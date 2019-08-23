@@ -1,8 +1,5 @@
 # Orbis Specific
-/logs/
-/output/
-/data/corpora/
-!/data/corpora/rss1/
+/orbis_eval/config/user_folder.txt
 /docker_volumes
 *.nogit.*
 temp-plot.html

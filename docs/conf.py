@@ -18,7 +18,7 @@ from shutil import copyfile
 import re
 import io
 
-sys.path.insert(0, os.path.abspath('../orbis'))
+sys.path.insert(0, os.path.abspath('../orbis_eval'))
 autoclass_content = 'both'
 
 # -- Use MD in documentation--------------------------------------------------
@@ -194,7 +194,6 @@ texinfo_documents = [
      author, 'Orbis', 'An Extendable Evaluation Pipeline for Named Entity Drill-Down Analysis',
      'Miscellaneous'),
 ]
-
 
 # -- Options for Epub output -------------------------------------------------
 
