@@ -5,6 +5,7 @@
 
 from copy import deepcopy
 import os
+import re
 
 from orbis_eval import app
 
@@ -78,15 +79,38 @@ class Rucksack(object):
 
         raise NotImplemented
 
+    """
+    def natural_sort_key(self, keys):
+        key_list = []
+        max_len = max([len(str(key)) for key in keys])
+
+        for key in [str(key) for key in keys]:
+            if len(key) < max_len:
+                diff = max_len - len(key)
+                zeros = dif * "0"
+                key = zeros + key
+            key_list.append(key)
+        key_list = sorted(key_list)
+
+        key_list = [int()]
+
+
+        key_list =
+        print(max_len)
+        return None
+
+        return [int(text) if text.isdigit() else text.lower()
+                for text in _nsre.split(keys)]
+    """
+
     def get_keys(self):
         keys = []
         data = self.open['data']
         for key in data['corpus'].keys():
             keys.append(key)
-        return sorted(keys)
+        return keys
 
     def itemview(self, key):
-
         data = self.open['data']
         if data['corpus'].get(key, None):
             result = {
@@ -118,10 +142,13 @@ class Rucksack(object):
 
     def resultview(self, key, specific=None):
         items = self.open['results']['items']
-        response = items[key]
-        if specific:
-            response = response.get(specific)
-        return response
+        if items.get(key):
+            response = items[key]
+            if specific:
+                response = response.get(specific)
+            return response
+        else:
+            return None
 
     def resultsview(self, specific=None):
         items = self.open['results']['items']

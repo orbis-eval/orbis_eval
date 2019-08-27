@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+from datetime import datetime
 
 from orbis_eval import app
 from orbis_eval.libs import orbis_setup
@@ -24,9 +25,17 @@ class AggregationBaseClass(object):
     def run(self):
         computed = {}
         for item in self.rucksack.itemsview():
+
+            start = datetime.now()
+
             response = self.query(item)
+            duration = datetime.now() - start
             if response:
+                app.logger.info(f"Queried Item {item['index']} ({duration})")
                 computed[item['index']] = self.get_computed(response, item)
+            else:
+                app.logger.info(f"Queried Item {item['index']} ({duration}) - Failed")
+                computed[item['index']] = []
         return computed
 
     def get_computed(self, response, item):
@@ -35,6 +44,11 @@ class AggregationBaseClass(object):
 
         entities = self.map_entities(response, item)
         entities = self.run_monocle(entities)
+
+        """
+        with open("entities.txt", "w") as open_file:
+            open_file.write(str(entities))
+        # """
 
         return entities
 

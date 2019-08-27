@@ -75,6 +75,7 @@ class Aggregation(Pipeline):
         # Getting computed
         app.logger.debug(f"Getting computed results for {self.plugin_name} via {self.aggregator_location}")
         self.rucksack.pack_computed(self.run_plugin(self.pipeline_stage_name, self.aggregator_service, self.rucksack))
+
         return self.rucksack
 
 
