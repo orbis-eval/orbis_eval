@@ -85,8 +85,8 @@ def run():
         app.logger.debug("Setting logging level to {arg.logging}")
         app.logger.setLevel(arg.logging.upper())
 
-    if arg and arg.addon in [addon[0] for addon in addon_list]:
-        addon = addon_module_list[addon_name_list.index(arg.addon)].Main()
+    if arg and arg.addon.lower() in [addon[0].split("orbis_addon_")[-1].lower() for addon in addon_list]:
+        addon = addon_module_list[addon_name_list.index(f"orbis_addon_{arg.addon}")].Main()
         addon.run()
     elif len(addon_list) > 0:
         addon_name = addon_selection_menu(addon_list)

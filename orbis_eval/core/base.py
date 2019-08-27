@@ -25,9 +25,7 @@ class AggregationBaseClass(object):
     def run(self):
         computed = {}
         for item in self.rucksack.itemsview():
-
             start = datetime.now()
-
             response = self.query(item)
             duration = datetime.now() - start
             if response:
@@ -44,11 +42,6 @@ class AggregationBaseClass(object):
 
         entities = self.map_entities(response, item)
         entities = self.run_monocle(entities)
-
-        """
-        with open("entities.txt", "w") as open_file:
-            open_file.write(str(entities))
-        # """
 
         return entities
 
