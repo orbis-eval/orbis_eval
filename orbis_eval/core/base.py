@@ -5,7 +5,14 @@ from datetime import datetime
 
 from orbis_eval import app
 from orbis_eval.libs import orbis_setup
-from orbis_plugin_aggregation_monocle import Main as monocle
+
+import logging
+logger = logging.getLogger(__name__)
+
+try:
+    from orbis_plugin_aggregation_monocle import Main as monocle
+except ModuleNotFoundError:
+    logger.warning("Monocle not found. Please install to use. 'pip install --upgrade orbis-plugin-aggregation-monocle'")
 
 
 class AggregationBaseClass(object):
@@ -21,6 +28,31 @@ class AggregationBaseClass(object):
         self.lense = self.data['lense']
         self.mapping = self.data['mapping']
         self.str_filter = self.data['str_filter']
+        self.environment_variables = self.get_environment_variables()
+
+    def environment(self):
+        return {}
+
+    def get_environment_variables(self):
+        keys = self.environment()
+        variables = {}
+
+        for key, value in keys.items():
+            try:
+                variables[key] = os.environ[key]
+            except KeyError:
+                logger.error(f"Environment variable {key} not found.")
+                """
+                logger.error(f"Environment variable {key} not found. Please enter manually.")
+                # Doesnt work with multiprocessing
+                # https://stackoverflow.com/questions/7489967/python-using-stdin-in-child-process/15766145#15766145
+                manual_value = input()
+                logger.error(f"Manual value: {manual_value}")
+                os.environ[key] = manual_value
+                variables[key] = manual_value
+                """
+                variables[key] = None
+        return variables
 
     def run(self):
         computed = {}
@@ -29,10 +61,10 @@ class AggregationBaseClass(object):
             response = self.query(item)
             duration = datetime.now() - start
             if response:
-                app.logger.info(f"Queried Item {item['index']} ({duration})")
+                logger.info(f"Queried Item {self.file_name}: {item['index']} ({duration})")
                 computed[item['index']] = self.get_computed(response, item)
             else:
-                app.logger.info(f"Queried Item {item['index']} ({duration}) - Failed")
+                logger.info(f"Queried Item {self.file_name}: {item['index']} ({duration}) - Failed")
                 computed[item['index']] = []
         return computed
 
@@ -40,8 +72,19 @@ class AggregationBaseClass(object):
         if not response:
             return None
 
+        data = {
+            "lense": self.lense,
+            "mapping": self.mapping,
+            "str_filter": self.str_filter
+        }
+
         entities = self.map_entities(response, item)
-        entities = self.run_monocle(entities)
+
+        # entities = monocle.run_monocle(entities, data)
+        try:
+            entities = monocle.run_monocle(entities, data)
+        except NameError as exception:
+            logger.warning(f"Monocle not installed. Nothing done. {exception}")
 
         return entities
 
@@ -53,7 +96,7 @@ class AggregationBaseClass(object):
 
         return NotImplementedError
 
-    def run_monocle(self, entities):
+    def _run_monocle(self, entities):
         result = []
 
         for item in entities:

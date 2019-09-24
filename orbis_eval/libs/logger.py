@@ -3,6 +3,31 @@
 from logging.handlers import RotatingFileHandler
 import logging
 import os
+import coloredlogs
+import inspect
+
+# from . import fancylogger
+
+"""
+# will log to screen by default
+fancylogger.logToFile('dir/filename')
+fancylogger.setLogLevelDebug()  # set global loglevel to debug
+logger = fancylogger.getLogger(name)  # get a logger with a specific name
+logger.setLevel(level)  # set local debugging level
+# If you want the logger to be showing modulename.functionname as the name, use
+fancylogger.getLogger(fname=True)
+# you can use the handler to set a different formatter by using
+handler = fancylogger.logToFile('dir/filename')
+formatstring = '%(asctime)-15s %(levelname)-10s %(mpirank)-5s %(funcname)-15s %(threadName)-10s %(message)s'
+handler.setFormatter(logging.Formatter(formatstring))
+# setting a global loglevel will impact all logers:
+from vsc.utils import fancylogger
+logger = fancylogger.getLogger("test")
+logger.warning("warning")
+logger.debug("warning")
+fancylogger.setLogLevelDebug()
+logger.debug("warning")
+"""
 
 
 def set_color(org_string, level=None):
@@ -19,7 +44,7 @@ def set_color(org_string, level=None):
         return color_levels[int(level)].format(org_string)
 
 
-def create_logger(app, maxBytes=False, backupCount=False):
+def create_logger(app, name=None, maxBytes=False, backupCount=False):
     """ """
 
     maxBytes = maxBytes or 100000
@@ -33,8 +58,20 @@ def create_logger(app, maxBytes=False, backupCount=False):
 
     formatter = logging.Formatter(logger_format)
     stream_formatter = logging.Formatter(stream_logger_format)
-    logger = logging.getLogger()
+
+    # """ Basic Version
+    if name:
+        logger = logging.getLogger(name)
+    else:
+        logger = logging.getLogger()
     logger.setLevel(eval(f"logging.{level.upper()}"))
+    # """
+
+    """
+    Fancylogger Version
+    logger = fancylogger.getLogger(fname=True)
+    logger.setLevel(eval(f"logging.{level.upper()}"))
+    """
 
     """
     logger.info(set_color("test"))
@@ -80,6 +117,7 @@ def create_logger(app, maxBytes=False, backupCount=False):
     logger.addHandler(console_handler)
 
     # print(console_handler.level)
+    coloredlogs.install()
 
     return logger
 

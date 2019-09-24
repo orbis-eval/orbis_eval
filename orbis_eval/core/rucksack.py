@@ -6,6 +6,8 @@
 from copy import deepcopy
 import os
 import re
+import logging
+logger = logging.getLogger(__name__)
 
 from orbis_eval import app
 
@@ -125,7 +127,7 @@ class Rucksack(object):
 
     def itemsview(self):
         data = self.open['data']
-        for key, item in data['corpus'].items():
+        for key, item in sorted(data['corpus'].items()):
             result = {
                 'index': key,
                 'corpus': item,
@@ -152,7 +154,7 @@ class Rucksack(object):
 
     def resultsview(self, specific=None):
         items = self.open['results']['items']
-        for key, results in items.items():
+        for key, results in sorted(items.items()):
             if specific:
                 response = results.get(specific)
             else:

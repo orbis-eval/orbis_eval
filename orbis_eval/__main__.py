@@ -13,6 +13,10 @@ from orbis_eval.libs.arguments import parse_args
 from orbis_plugin_aggregation_monocle import Main as monocle
 
 
+import logging
+logger = logging.getLogger(__name__)
+
+
 def load_config(config_files) -> dict:
         configs = []
         for config_file in config_files:
@@ -28,12 +32,11 @@ def load_config(config_files) -> dict:
             config["file_name"] = str(config_file).split("/")[-1]
             config["file_dir"] = str(config_file).split("/")[0:-1]
             configs.append(config)
-        app.logger.debug(f"test : {configs}")
         return configs
 
 
 def start_runner(config):
-    app.logger.debug("Starting pipeline")
+    logger.debug("Starting pipeline")
     p = pipeline.Pipeline()
     p.load(config)
     p.run()
@@ -41,20 +44,20 @@ def start_runner(config):
 
 def run_orbis(config_file=None, args=None):
 
-    app.logger.info("Welcome to Orbis!")
+    logger.info("Welcome to Orbis!")
 
     if config_file:
-        app.logger.debug("Single config")
+        logger.debug("Single config")
         config = load_config([config_file])[0]
         monocle.check_resources(config, refresh=False)
         start_runner(config)
 
     else:
-        app.logger.debug(f'Searching in: {str(os.path.join(app.paths.queue, "*.yaml"))}')
+        logger.debug(f'Searching in: {str(os.path.join(app.paths.queue, "*.yaml"))}')
         config_files = sorted(glob.glob(os.path.join(app.paths.queue, "*.yaml")))
 
         if len(config_files) <= 0:
-            app.logger.error(
+            logger.error(
                 f'\n\n'
                 f'\tNo YAMLs found!\n'
                 f'\t---------------\n'
@@ -65,7 +68,7 @@ def run_orbis(config_file=None, args=None):
             )
         else:
 
-            app.logger.debug(f"Loading queue: {str(config_files)}")
+            logger.debug(f"Loading queue: {str(config_files)}")
             configs = load_config(config_files)
             monocle.check_resources(configs, refresh=False)
 
@@ -81,9 +84,9 @@ def run():
     args = parse_args()
     """
     # Seems to break logging... -_-
-    app.logger.debug(f"Test {args.logging}")
+    logger.debug(f"Test {args.logging}")
     if args.logging:
-        app.logger.setLevel(args.logging.upper())
+        logger.setLevel(args.logging.upper())
     """
     if args and args.deletehtml:
         maintainance.delete_html_folders()
