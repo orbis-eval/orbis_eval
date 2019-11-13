@@ -3,6 +3,7 @@ aggregation:
   service:
     name: spotlight
     location: web
+    language: en
   input:
     data_set:
       name: rss1
