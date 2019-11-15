@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import os
 import sys
 
-from orbis_eval import app
-from orbis_eval.config import paths
 from orbis_eval.libs.decorators import clear_screen
-from orbis_eval.libs.addons import load_addon
 from orbis_eval.libs.addons import list_installed_addons
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 def get_addons():
@@ -79,14 +78,15 @@ def run():
     parser = argparse.ArgumentParser(description='Run a Orbis addon')
     parser.add_argument('addon', type=str, nargs='?', default=False)
     parser.add_argument('--logging', default="error", action='store', help='Set logging level')
+
     arg = parser.parse_args()
 
     if arg.logging:
-        app.logger.debug("Setting logging level to {arg.logging}")
-        app.logger.setLevel(arg.logging.upper())
+        logger.debug("Setting logging level to {arg.logging}")
+        logger.setLevel(arg.logging.upper())
 
-    if arg and arg.addon in [addon[0] for addon in addon_list]:
-        addon = addon_module_list[addon_name_list.index(arg.addon)].Main()
+    if arg.addon and arg.addon.lower() in [addon[0].split("orbis_addon_")[-1].lower() for addon in addon_list]:
+        addon = addon_module_list[addon_name_list.index(f"orbis_addon_{arg.addon}")].Main()
         addon.run()
     elif len(addon_list) > 0:
         addon_name = addon_selection_menu(addon_list)

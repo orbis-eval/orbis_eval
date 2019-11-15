@@ -5,15 +5,28 @@ import json
 import os
 import time
 
-from orbis_eval import app
+import logging
+logger = logging.getLogger(__name__)
+
 from orbis_eval.config import paths
+
+# wip
+def capture_io():
+    def decorator(fn):
+        @functools.wraps(fn)
+        def inner(*args, **kwargs):
+            result = fn(*args, **kwargs)
+
+            return result
+        return inner
+    return decorator
 
 
 def clear_screen():
     def decorator(fn):
         @functools.wraps(fn)
         def inner(*args, **kwargs):
-            if app.logger.level != "debug":
+            if logger.level != "debug":
                 os.system('cls')  # on Windows
                 os.system('clear')  # on linux / os x
 
@@ -23,14 +36,14 @@ def clear_screen():
     return decorator
 
 
-def timed(app):
+def timed():
     def decorator(fn):
         @functools.wraps(fn)
         def inner(*args, **kwargs):
             start = time.time()
             result = fn(*args, **kwargs)
             duration = time.time() - start
-            app.logger.info(repr(fn), duration * 1000)
+            logger.info(repr(fn), duration * 1000)
             return result
         return inner
     return decorator
@@ -56,7 +69,7 @@ def query(app):
             try:
                 result = fn(*args, **kwargs)
             except Exception as exception:
-                app.logger.error(f"Query failed: exception")
+                logger.error(f"Query failed: {exception}")
                 result = None
             return result
         return inner

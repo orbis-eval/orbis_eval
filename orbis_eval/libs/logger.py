@@ -3,6 +3,31 @@
 from logging.handlers import RotatingFileHandler
 import logging
 import os
+import coloredlogs
+import inspect
+
+# from . import fancylogger
+
+"""
+# will log to screen by default
+fancylogger.logToFile('dir/filename')
+fancylogger.setLogLevelDebug()  # set global loglevel to debug
+logger = fancylogger.getLogger(name)  # get a logger with a specific name
+logger.setLevel(level)  # set local debugging level
+# If you want the logger to be showing modulename.functionname as the name, use
+fancylogger.getLogger(fname=True)
+# you can use the handler to set a different formatter by using
+handler = fancylogger.logToFile('dir/filename')
+formatstring = '%(asctime)-15s %(levelname)-10s %(mpirank)-5s %(funcname)-15s %(threadName)-10s %(message)s'
+handler.setFormatter(logging.Formatter(formatstring))
+# setting a global loglevel will impact all logers:
+from vsc.utils import fancylogger
+logger = fancylogger.getLogger("test")
+logger.warning("warning")
+logger.debug("warning")
+fancylogger.setLogLevelDebug()
+logger.debug("warning")
+"""
 
 
 def set_color(org_string, level=None):
@@ -19,19 +44,34 @@ def set_color(org_string, level=None):
         return color_levels[int(level)].format(org_string)
 
 
-def create_logger(app, maxBytes=False, backupCount=False):
+def create_logger(app, name=None, maxBytes=False, backupCount=False):
     """ """
 
     maxBytes = maxBytes or 100000
     backupCount = backupCount or 1
 
-    logger_format = app.settings.get('logger_format') or '%(levelname)-8s %(asctime)-25s %(module)-25s %(lineno)-5d %(message)s'
+    logger_format = app.settings.get('logger_format') or '%(levelname)-8s %(asctime)-25s %(pathname)-25s %(module)-25s %(funcName)-25s %(lineno)-5d %(message)s'
+    stream_logger_format = app.settings.get('stream_logger_format') or '[orbis-eval] %(levelname)-8s %(asctime)-25s %(message)s'
+
     level = app.settings['logging_level'] or 'debug'
     log_path = app.paths.log_path
 
     formatter = logging.Formatter(logger_format)
-    logger = logging.getLogger()
+    stream_formatter = logging.Formatter(stream_logger_format)
+
+    # """ Basic Version
+    if name:
+        logger = logging.getLogger(name)
+    else:
+        logger = logging.getLogger()
     logger.setLevel(eval(f"logging.{level.upper()}"))
+    # """
+
+    """
+    Fancylogger Version
+    logger = fancylogger.getLogger(fname=True)
+    logger.setLevel(eval(f"logging.{level.upper()}"))
+    """
 
     """
     logger.info(set_color("test"))
@@ -73,9 +113,48 @@ def create_logger(app, maxBytes=False, backupCount=False):
 
     console_handler = logging.StreamHandler()
     console_handler.setLevel(eval(f"logging.{level.upper()}"))
-    console_handler.setFormatter(formatter)
+    console_handler.setFormatter(stream_formatter)
     logger.addHandler(console_handler)
 
     # print(console_handler.level)
+    coloredlogs.install()
 
     return logger
+
+
+"""
+import logging
+import io
+
+### Create the logger
+logger = logging.getLogger('basic_logger')
+logger.setLevel(logging.DEBUG)
+
+### Setup the console handler with a StringIO object
+log_capture_string = io.StringIO()
+ch = logging.StreamHandler(log_capture_string)
+ch.setLevel(logging.DEBUG)
+
+### Optionally add a formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+
+### Add the console handler to the logger
+logger.addHandler(ch)
+
+
+### Send log messages.
+logger.debug('debug message')
+logger.info('info message')
+logger.warn('warn message')
+logger.error('error message')
+logger.critical('critical message')
+
+
+### Pull the contents back into a string and close the stream
+log_contents = log_capture_string.getvalue()
+log_capture_string.close()
+
+### Output as lower case to prove it worked.
+print(log_contents.lower())
+"""

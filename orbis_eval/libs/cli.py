@@ -5,13 +5,17 @@ import functools
 import time
 
 from orbis_eval import app
+import logging
+logger = logging.getLogger(__name__)
 
 
 def multiline_logging(msg, level=None):
+
     try:
         msg = msg.decode("utf-8")
     except Exception:
         pass
+
     msg = str(msg)
     msg = msg.replace(""""u'""", """"u'""")
     msg = msg.replace(", u'", ", '")
@@ -50,13 +54,13 @@ def print_loading(msg, with_runtime=False):
         @functools.wraps(fn)
         def inner(*args, **kwargs):
             start = time.time()
-            app.logger.info("Starting: {msg}".format(msg=msg.capitalize()))
+            logger.info("Starting: {msg}".format(msg=msg.capitalize()))
             result = fn(*args, **kwargs)
             end = time.time()
             hours, rem = divmod(end - start, 3600)
             minutes, seconds = divmod(rem, 60)
             runtime = "{:0>2}:{:0>2}:{:05.2f}".format(int(hours), int(minutes), seconds)
-            app.logger.info("Runtime: {time} ({msg})".format(msg=msg, time="(" + str(runtime) + ")" if with_runtime else ""))
+            logger.info("Runtime: {time} ({msg})".format(msg=msg, time="(" + str(runtime) + ")" if with_runtime else ""))
             # print(repr(fn), duration * 1000)
             return result
         return inner

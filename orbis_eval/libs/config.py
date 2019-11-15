@@ -26,3 +26,4 @@ def load_config(config_files):
             configs.append(config)
 
         return configs
+

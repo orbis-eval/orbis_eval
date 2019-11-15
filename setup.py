@@ -39,9 +39,6 @@ class OrbisSetup(object):
                 "orbis_plugin_storage_cache_webservice_results",
                 "orbis_plugin_storage_csv_result_list",
                 "orbis_plugin_storage_html_pages",
-                "orbis_plugin_storage_single_view",
-                "orbis_addon_tunnelblick",
-                "orbis_addon_satyanweshi",
                 "orbis_addon_repoman"
             ]
         }
@@ -99,24 +96,31 @@ class OrbisSetup(object):
         return metadata
 
     def get_extras(self):
+
+        with io.OpenWrapper(f"{directory}/{plugin_name}/__init__.py", "rt", encoding="utf8") as open_file:
+            file_content = open_file.read()
+
+        extras = []
+
+
+
         extras = self.extras
-        for extra in extras["all"]:
+        for extra in extras:
             extra_parts = extra.split("_")
 
             if extra_parts[1] == "plugin":
                 extra_parts[1] = "all_plugins"
                 extra_parts[3] = "_".join(extra_parts[3:])
                 extra_parts = extra_parts[1:4]
-                # print(extra_parts)
 
             if extra_parts[1] == "addon":
                 extra_parts[1] = "all_addons"
                 extra_parts[2] = "_".join(extra_parts[2:])
                 extra_parts = extra_parts[1:3]
 
-            # print(extra_parts)
             for part in extra_parts:
                 extras[part] = extras.get(part, []) + [extra]
+
         return extras
 
     def run(self, directory):
@@ -154,44 +158,17 @@ class OrbisSetup(object):
                 'console_scripts': [
                     'orbis-eval = orbis_eval.__main__:run',
                     'orbis-addons = orbis_eval.interfaces.addons.main:run',
-                    'orbis-webgui = orbis_eval.interfaces.webgui.main:run'
+                    'orbis-webgui = orbis_eval.interfaces.webgui.main:run',
+                    'orbis-cli = orbis_eval.interfaces.cli.main:run'
                 ]
             }
 
-        setup_dict["extras_require"] = self.get_extras()
+        setup_dict["extras_require"] = self.get_extras(directory, plugin_name)
 
         setup(**setup_dict)
 
 
 if __name__ == '__main__':
-    """
-    if "--foo" in sys.argv:
-        do_foo_stuff()
-        sys.argv.remove("--foo")
-    """
     directory = os.path.dirname(os.path.realpath(__file__))
     OrbisSetup().run(directory)
 
-
-"""
-from distutils.core import setup, Command
-
-class InstallCommand(Command):
-    description = "Installs the foo."
-    user_options = [
-        ('foo=', None, 'Specify the foo to bar.'),
-    ]
-    def initialize_options(self):
-        self.foo = None
-    def finalize_options(self):
-        assert self.foo in (None, 'myFoo', 'myFoo2'), 'Invalid foo!'
-    def run(self):
-        install_all_the_things()
-
-setup(
-    ...,
-    cmdclass={
-        'install': InstallCommand,
-    }
-)
-"""

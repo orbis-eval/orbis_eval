@@ -5,6 +5,9 @@
 
 from copy import deepcopy
 import os
+import re
+import logging
+logger = logging.getLogger(__name__)
 
 from orbis_eval import app
 
@@ -55,15 +58,19 @@ class Rucksack(object):
         self.plugins[name] = plugin
 
     def pack_gold(self, gold):
+
         self.open['data']['gold'] = gold
 
     def pack_corpus(self, corpus):
+
         self.open['data']['corpus'] = corpus
 
     def pack_computed(self, computed):
+
         self.open['data']['computed'] = computed
 
-    def pack_results(self, reults):
+    def pack_results(self, results):
+
         raise NotImplemented
 
     def pack_results_summary(self, results_summary):
@@ -71,17 +78,41 @@ class Rucksack(object):
         raise NotImplemented
 
     def get_paths(self):
+
         raise NotImplemented
+
+    """
+    def natural_sort_key(self, keys):
+        key_list = []
+        max_len = max([len(str(key)) for key in keys])
+
+        for key in [str(key) for key in keys]:
+            if len(key) < max_len:
+                diff = max_len - len(key)
+                zeros = dif * "0"
+                key = zeros + key
+            key_list.append(key)
+        key_list = sorted(key_list)
+
+        key_list = [int()]
+
+
+        key_list =
+        print(max_len)
+        return None
+
+        return [int(text) if text.isdigit() else text.lower()
+                for text in _nsre.split(keys)]
+    """
 
     def get_keys(self):
         keys = []
         data = self.open['data']
         for key in data['corpus'].keys():
             keys.append(key)
-        return sorted(keys)
+        return keys
 
     def itemview(self, key):
-
         data = self.open['data']
         if data['corpus'].get(key, None):
             result = {
@@ -96,7 +127,7 @@ class Rucksack(object):
 
     def itemsview(self):
         data = self.open['data']
-        for key, item in data['corpus'].items():
+        for key, item in sorted(data['corpus'].items()):
             result = {
                 'index': key,
                 'corpus': item,
@@ -113,14 +144,17 @@ class Rucksack(object):
 
     def resultview(self, key, specific=None):
         items = self.open['results']['items']
-        response = items[key]
-        if specific:
-            response = response.get(specific)
-        return response
+        if items.get(key):
+            response = items[key]
+            if specific:
+                response = response.get(specific)
+            return response
+        else:
+            return None
 
     def resultsview(self, specific=None):
         items = self.open['results']['items']
-        for key, results in items.items():
+        for key, results in sorted(items.items()):
             if specific:
                 response = results.get(specific)
             else:

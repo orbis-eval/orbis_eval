@@ -17,7 +17,7 @@ def hello():
 @webgui_app.route('/config')
 def config():
     form = ConfigForm()
-    return render_template('evaluation2.html', form=form)
+    return render_template('evaluation.html', form=form)
 
 
 @webgui_app.route('/build_config', methods=['POST'])

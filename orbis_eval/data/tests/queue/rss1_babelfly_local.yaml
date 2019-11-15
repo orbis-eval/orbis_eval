@@ -3,6 +3,7 @@ aggregation:
   service:
     name: babelfly
     location: local
+    language: en
   input:
     data_set:
       name: rss1

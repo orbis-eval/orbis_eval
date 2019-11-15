@@ -14,6 +14,7 @@ class App(object):
 
         # Load Settings
         self.settings = self.load_settings()
+        self.__name__ = "orbis-eval"
 
         # Initialize folders
         files.create_folders(self.paths)
@@ -23,6 +24,9 @@ class App(object):
 
         # Initialize logger
         self.logger = logger.create_logger(self)
+        # self.logger = logger.create_logger(self, name=__name__)
+
+        # self.app.logger.debug(f">>>>>>>>>>>>>>>>> {self.__name__}")
 
         # Initialize Resources
         self.lenses = None

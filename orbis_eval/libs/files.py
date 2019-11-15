@@ -4,6 +4,8 @@ import datetime
 import json
 import os
 import pathlib
+import logging
+logger = logging.getLogger(__name__)
 
 
 def get_timestamp():
@@ -40,7 +42,19 @@ def check_folders(paths, folders_to_create=None):
         raise NotADirectoryError(str(unfound_folders))
 
 
+def save_rucksack(file, path, rucksack):
+
+    dir = os.path.join(path, file)
+
+    with open(dir, "w", encoding="utf-8") as open_file:
+        json.dump(rucksack.open, open_file, indent=4, skipkeys=True)
+
+
 def build_file_name(config, base_path, module_name, ending, raw=False):
+    """
+    Under construction!
+    """
+    return NotImplementedError
 
     # eg: /output/html_pages/
     file_path = os.path.join(base_path, module_name)
@@ -81,9 +95,4 @@ def build_file_name(config, base_path, module_name, ending, raw=False):
     return file_path
 
 
-def save_rucksack(file, path, rucksack):
 
-    dir = os.path.join(path, file)
-
-    with open(dir, "w", encoding="utf-8") as open_file:
-        json.dump(rucksack.open, open_file, indent=4, skipkeys=True)
