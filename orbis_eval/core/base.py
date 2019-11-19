@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Summary
+"""
 
 import os
 
@@ -9,7 +11,26 @@ from orbis_plugin_aggregation_monocle import Main as monocle
 
 class AggregationBaseClass(object):
 
+    """Summary
+
+    Attributes:
+        app (TYPE): Description
+        config (TYPE): Description
+        data (TYPE): Description
+        file_name (TYPE): Description
+        lense (TYPE): Description
+        mapping (TYPE): Description
+        results (TYPE): Description
+        rucksack (TYPE): Description
+        str_filter (TYPE): Description
+    """
+
     def __init__(self, rucksack):
+        """Summary
+
+        Args:
+            rucksack (TYPE): Description
+        """
         super(AggregationBaseClass, self).__init__()
         self.app = app
         self.rucksack = rucksack
@@ -22,6 +43,11 @@ class AggregationBaseClass(object):
         self.str_filter = self.data['str_filter']
 
     def run(self):
+        """Summary
+
+        Returns:
+            TYPE: Description
+        """
         computed = {}
         for item in self.rucksack.itemsview():
             response = self.query(item)
@@ -30,6 +56,15 @@ class AggregationBaseClass(object):
         return computed
 
     def get_computed(self, response, item):
+        """Summary
+
+        Args:
+            response (TYPE): Description
+            item (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
         if not response:
             return None
 
@@ -39,14 +74,37 @@ class AggregationBaseClass(object):
         return entities
 
     def query(self, item):
+        """Summary
 
+        Args:
+            item (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
         return NotImplementedError
 
     def map_entities(self, response, item):
+        """Summary
 
+        Args:
+            response (TYPE): Description
+            item (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
         return NotImplementedError
 
     def run_monocle(self, entities):
+        """Summary
+
+        Args:
+            entities (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
         result = []
 
         for item in entities:
@@ -61,13 +119,23 @@ class AggregationBaseClass(object):
 
 
 class AddonBaseClass(object):
-    """docstring for AddonBaseClass"""
+    """docstring for AddonBaseClass
+
+    Attributes:
+        addon_path (TYPE): Description
+        description (TYPE): Description
+        metadata (TYPE): Description
+    """
 
     def __init__(self):
+        """Summary
+        """
         super(AddonBaseClass, self).__init__()
         self.addon_path = None
         self.metadata = self.load_metadata()
 
     def get_description(self):
+        """Summary
+        """
         init_path = os.path.join(self.addon_path, '__init__.py')
         self.description = orbis_setup.load_metadata(init_path)['description']
