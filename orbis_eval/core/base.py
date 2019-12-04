@@ -15,7 +15,24 @@ except ModuleNotFoundError:
     logger.warning("Monocle not found. Please install to use. 'pip install --upgrade orbis-plugin-aggregation-monocle'")
 
 
-class AggregationBaseClass(object):
+class PluginBaseClass(object):
+    """docstring for PluginBaseClass"""
+
+    def __init__(self):
+        super(PluginBaseClass, self).__init__()
+
+    def get_plugin_dir(self, file):
+        plugin_dir = os.path.abspath("/".join(os.path.realpath(file).split("/")[:-2]))
+        return plugin_dir
+
+    def catch_data(self, variable, function_name, file_name, file):
+        plugin_dir = self.get_plugin_dir(file)
+        data_dir = plugin_dir + "/tests/data/"
+        with open(data_dir + function_name + "_" + file_name, "w") as open_file:
+            open_file.write(str(variable))
+
+
+class AggregationBaseClass(PluginBaseClass):
 
     def __init__(self, rucksack):
         super(AggregationBaseClass, self).__init__()
