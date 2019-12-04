@@ -1,0 +1,18 @@
+language: python
+python:
+  - 3.6
+  - 3.7
+"""
+install:
+  - python setup.py install
+  - pip install pytest
+  - pip install pytest-cov
+  - pip install codecov
+
+script:
+  - py.test --cov=inscriptis ./tests
+
+# Push the results back to codecov
+after_success:
+  - codecov
+"""

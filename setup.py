@@ -96,8 +96,16 @@ class OrbisSetup(object):
         return metadata
 
     def get_extras(self):
+
+        with io.OpenWrapper(f"{directory}/{plugin_name}/__init__.py", "rt", encoding="utf8") as open_file:
+            file_content = open_file.read()
+
+        extras = []
+
+
+
         extras = self.extras
-        for extra in extras["all"]:
+        for extra in extras:
             extra_parts = extra.split("_")
 
             if extra_parts[1] == "plugin":
@@ -149,11 +157,13 @@ class OrbisSetup(object):
             setup_dict["entry_points"] = {
                 'console_scripts': [
                     'orbis-eval = orbis_eval.__main__:run',
-                    'orbis-addons = orbis_eval.interfaces.addons.main:run'
+                    'orbis-addons = orbis_eval.interfaces.addons.main:run',
+                    'orbis-webgui = orbis_eval.interfaces.webgui.main:run',
+                    'orbis-cli = orbis_eval.interfaces.cli.main:run'
                 ]
             }
 
-        setup_dict["extras_require"] = self.get_extras()
+        setup_dict["extras_require"] = self.get_extras(directory, plugin_name)
 
         setup(**setup_dict)
 
@@ -161,3 +171,4 @@ class OrbisSetup(object):
 if __name__ == '__main__':
     directory = os.path.dirname(os.path.realpath(__file__))
     OrbisSetup().run(directory)
+

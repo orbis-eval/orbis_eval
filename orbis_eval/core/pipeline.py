@@ -7,6 +7,9 @@ from orbis_eval.core.rucksack import Rucksack
 from orbis_eval.libs.files import save_rucksack
 from orbis_eval.libs.plugins import load_plugin
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 class Pipeline(object):
 
@@ -18,32 +21,34 @@ class Pipeline(object):
         self.file_name = self.rucksack.open['config']['file_name']
 
     def get_plugin(self, pipeline_stage_name, plugin_name):
-        app.logger.debug(f"Getting {pipeline_stage_name} plugin: {plugin_name}")
+
+        logger.debug(f"Getting {pipeline_stage_name} plugin: {plugin_name}")
+
         imported_module = load_plugin(pipeline_stage_name, plugin_name)
         module_class_object = imported_module.Main
         return module_class_object
 
     @classmethod
     def run_plugin(cls, pipeline_stage_name, plugin_name, rucksack):
-        app.logger.debug(f"Running {pipeline_stage_name} plugin: {plugin_name}")
+        logger.debug(f"Running {pipeline_stage_name} plugin: {plugin_name}")
         plugin = cls.get_plugin(cls, pipeline_stage_name, plugin_name)
         rucksack = plugin(rucksack).run()
         return rucksack
 
     def run(self):
-        app.logger.info(f"Running: {self.file_name}")
+        logger.info(f"Running: {self.file_name}")
 
         # Aggregation
-        app.logger.info(f"Starting aggregation for {self.file_name}")
+        logger.info(f"Starting aggregation for {self.file_name}")
         self.rucksack = Aggregation(self.rucksack).run()
 
         # Evaluation
-        app.logger.info(f"Starting evaluation for {self.file_name}")
+        logger.info(f"Starting evaluation for {self.file_name}")
         self.rucksack = Evaluation(self.rucksack).run()
         save_rucksack(f"{app.paths.log_path}/rucksack_{self.file_name}.json", app.paths.log_path, self.rucksack)
 
         # Storage
-        app.logger.info(f"Starting storage for {self.file_name}")
+        logger.info(f"Starting storage for {self.file_name}")
         self.rucksack = Storage(self.rucksack).run()
 
         return self.rucksack
@@ -65,16 +70,17 @@ class Aggregation(Pipeline):
 
     def run(self) -> object:
         # Getting corpus
-        app.logger.debug(f"Getting corpus texts for {self.file_name}")
+        logger.debug(f"Getting corpus texts for {self.file_name}")
         self.rucksack.pack_corpus(self.run_plugin(self.pipeline_stage_name, "serial_corpus", self.rucksack))
 
         # Getting gold
-        app.logger.debug(f"Getting gold results for {self.file_name}")
+        logger.debug(f"Getting gold results for {self.file_name}")
         self.rucksack.pack_gold(self.run_plugin(self.pipeline_stage_name, "gold_gs", self.rucksack))
 
         # Getting computed
-        app.logger.debug(f"Getting computed results for {self.plugin_name} via {self.aggregator_location}")
+        logger.debug(f"Getting computed results for {self.plugin_name} via {self.aggregator_location}")
         self.rucksack.pack_computed(self.run_plugin(self.pipeline_stage_name, self.aggregator_service, self.rucksack))
+
         return self.rucksack
 
 
@@ -108,7 +114,8 @@ class Storage(Pipeline):
 
     def run(self):
         if self.config.get('storage'):
+            logger.debug(f"Storage Plugins: {self.config['storage']}")
             for item in self.config["storage"]:
-                app.logger.debug(f"Running: {item}")
+                logger.debug(f"Running: {item}")
                 self.run_plugin(self.pipeline_stage_name, item, self.rucksack)
         return self.rucksack
