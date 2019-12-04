@@ -32,21 +32,21 @@ def load_config(config_files, webgui=False) -> dict:
                 config.read_string(config_file)
 
             else:
-                return None
+                pass
 
-        config["file_name"] = str(config_file).split("/")[-1]
-        config["file_dir"] = str(config_file).split("/")[0:-1]
-        configs.append(config)
-        app.logger.debug(f"test : {configs}")
+            config["file_name"] = str(config_file).split("/")[-1]
+            config["file_dir"] = str(config_file).split("/")[0:-1]
+            configs.append(config)
+            logger.debug(f"test : {configs}")
+
     else:
-        app.logger.debug(f"Loading Web Config")
+        logger.debug(f"Loading Web Config")
 
         config = config_files[0]
         config["file_name"] = "webgui"
         config["file_dir"] = None
         configs.append(config)
 
-    print(f"45: {configs}")
     return configs
 
 
@@ -62,7 +62,7 @@ def run_orbis(config_file=None, args=None, webgui=False):
     logger.info("Welcome to Orbis!")
 
     if config_file:
-        app.logger.debug("Single config")
+        logger.debug("Single config")
         config = load_config([config_file], webgui=webgui)[0]
         monocle.check_resources([config], refresh=False)
         start_runner(config)
@@ -70,7 +70,7 @@ def run_orbis(config_file=None, args=None, webgui=False):
     else:
         logger.debug(f'Searching in: {str(os.path.join(app.paths.queue, "*.yaml"))}')
         config_files = sorted(glob.glob(os.path.join(app.paths.queue, "*.yaml")))
-        app.logger.debug(f"Loading queue: {str(config_files)}")
+        logger.debug(f"Loading queue: {str(config_files)}")
         configs = load_config(config_files, webgui=webgui)
         monocle.check_resources(configs, refresh=False)
 
@@ -85,11 +85,6 @@ def run_orbis(config_file=None, args=None, webgui=False):
                 f'\n\n'
             )
         else:
-
-            logger.debug(f"Loading queue: {str(config_files)}")
-            configs = load_config(config_files)
-            monocle.check_resources(configs, refresh=False)
-
             if app.settings['multiprocessing']:
                 with multiprocessing.Pool(processes=app.settings['multi_process_number']) as pool:
                     pool.map(start_runner, configs)

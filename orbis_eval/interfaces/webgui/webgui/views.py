@@ -50,8 +50,8 @@ def build_config():
         },
         'storage': [data['storage__name']]
     }
-
-    run_orbis(config_data, webgui=True)
+    # Will it time out if it takes too long? Checkit
+    result = run_orbis(config_data, webgui=True)
     return 'Finished'
 
 

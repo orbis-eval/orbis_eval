@@ -22,16 +22,17 @@ class PluginBaseClass(object):
         super(PluginBaseClass, self).__init__()
 
     def get_plugin_dir(self, file):
-        print(f"{file}")
-        self.file = file
-        """
+        # print(f"{file}")
         plugin_dir = os.path.abspath("/".join(os.path.realpath(file).split("/")[:-2]))
+        self.file = plugin_dir
+        """
         return plugin_dir
         """
 
     def catch_data(self, variable, function_name, file_name, file):
-        plugin_dir = self.get_plugin_dir(file)
-        data_dir = plugin_dir + "/tests/data/"
+        self.get_plugin_dir(file)
+        # data_dir = plugin_dir + "/tests/data/"
+        data_dir = self.file + "/tests/data/"
         with open(data_dir + function_name + "_" + file_name, "w") as open_file:
             open_file.write(str(variable))
 
