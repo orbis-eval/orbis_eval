@@ -97,9 +97,10 @@ class OrbisSetup(object):
 
     def get_extras(self):
 
+        """
         with io.OpenWrapper(f"{directory}/{plugin_name}/__init__.py", "rt", encoding="utf8") as open_file:
             file_content = open_file.read()
-
+        """
         extras = []
 
 
@@ -163,7 +164,7 @@ class OrbisSetup(object):
                 ]
             }
 
-        setup_dict["extras_require"] = self.get_extras(directory, plugin_name)
+        setup_dict["extras_require"] = self.get_extras()
 
         setup(**setup_dict)
 
