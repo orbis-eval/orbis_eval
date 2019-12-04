@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 """Summary
+
+Attributes:
+    logger (TYPE): Description
 """
 
 import os
@@ -18,23 +21,42 @@ except ModuleNotFoundError:
 
 
 class PluginBaseClass(object):
-    """docstring for PluginBaseClass"""
+    """ Provides some basic methods for all Plugins. Shoudl not be used
+    directly. Use on of the specific plugin classes that are based on this
+    class. (Use its children...)
+    """
 
     def __init__(self):
+        """Summary
+        """
         super(PluginBaseClass, self).__init__()
 
     def get_plugin_dir(self, file):
-        # print(f"{file}")
+        """Get the path of a path and returns the directory of that file.
+        Usually used to get the directory where the plugin is located.
+
+        Args:
+            file (str): A file path as string.
+
+        Returns:
+            TYPE: A directory path containing the file of the provided file path.
+        """
         plugin_dir = os.path.abspath("/".join(os.path.realpath(file).split("/")[:-2]))
-        self.file = plugin_dir
-        """
         return plugin_dir
-        """
 
     def catch_data(self, variable, function_name, file_name, file):
-        self.get_plugin_dir(file)
-        # data_dir = plugin_dir + "/tests/data/"
-        data_dir = self.file + "/tests/data/"
+        """WIP: Should catch data and save it. To use this method, call it from within
+        the plugin that is based on a Plugin base class
+
+        Args:
+            variable (TYPE): Description
+            function_name (TYPE): Description
+            file_name (TYPE): Description
+            file (TYPE): Description
+        """
+        plugin_dir = self.get_plugin_dir(file)
+        data_dir = plugin_dir + "/tests/data/"
+
         with open(data_dir + function_name + "_" + file_name, "w") as open_file:
             open_file.write(str(variable))
 
@@ -47,6 +69,10 @@ class AggregationBaseClass(PluginBaseClass):
         app (TYPE): Description
         config (TYPE): Description
         data (TYPE): Description
+<<<<<<< HEAD
+=======
+        environment_variables (TYPE): Description
+>>>>>>> master
         file_name (TYPE): Description
         lense (TYPE): Description
         mapping (TYPE): Description
@@ -74,9 +100,19 @@ class AggregationBaseClass(PluginBaseClass):
         self.environment_variables = self.get_environment_variables()
 
     def environment(self):
+        """Summary
+
+        Returns:
+            TYPE: Description
+        """
         return {}
 
     def get_environment_variables(self):
+        """Summary
+
+        Returns:
+            TYPE: Description
+        """
         keys = self.environment()
         variables = {}
 
@@ -168,7 +204,7 @@ class AggregationBaseClass(PluginBaseClass):
         """
         return NotImplementedError
 
-    def run_monocle(self, entities):
+    def _run_monocle(self, entities):
         """Summary
 
         Args:
