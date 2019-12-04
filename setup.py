@@ -101,12 +101,8 @@ class OrbisSetup(object):
         with io.OpenWrapper(f"{directory}/{plugin_name}/__init__.py", "rt", encoding="utf8") as open_file:
             file_content = open_file.read()
         """
-        extras = []
-
-
-
         extras = self.extras
-        for extra in extras:
+        for extra in extras["all"]:
             extra_parts = extra.split("_")
 
             if extra_parts[1] == "plugin":
