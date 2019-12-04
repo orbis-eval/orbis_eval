@@ -1,7 +1,7 @@
 {
     "queue": null,
-    "multiprocessing": "True",
-    "multi_process_number": 4,
+    "multiprocessing": false,
+    "multi_process_number": 1,
     "logger_format": "%(asctime)-25s %(levelname)-8s [%(name)s] \t %(pathname)-25s %(module)-25s %(funcName)-25s %(lineno)-5d %(message)s",
     "stream_logger_format": "%(asctime)-25s %(levelname)-8s [%(name)s] %(message)s",
     "logging_level": "debug",

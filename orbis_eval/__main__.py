@@ -73,6 +73,7 @@ def run_orbis(config_file=None, args=None):
             monocle.check_resources(configs, refresh=False)
 
             if app.settings['multiprocessing']:
+                logger.info(f">>>> multiprocessing {app.settings['multiprocessing']}")
                 with multiprocessing.Pool(processes=app.settings['multi_process_number']) as pool:
                     pool.map(start_runner, configs)
             else:

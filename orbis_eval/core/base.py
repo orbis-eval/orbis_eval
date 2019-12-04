@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+"""Summary
+
+Attributes:
+    logger (TYPE): Description
+"""
 
 import os
 from datetime import datetime
@@ -16,16 +21,39 @@ except ModuleNotFoundError:
 
 
 class PluginBaseClass(object):
-    """docstring for PluginBaseClass"""
+    """ Provides some basic methods for all Plugins. Shoudl not be used
+    directly. Use on of the specific plugin classes that are based on this
+    class. (Use its children...)
+    """
 
     def __init__(self):
+        """Summary
+        """
         super(PluginBaseClass, self).__init__()
 
     def get_plugin_dir(self, file):
+        """Get the path of a path and returns the directory of that file.
+        Usually used to get the directory where the plugin is located.
+
+        Args:
+            file (str): A file path as string.
+
+        Returns:
+            TYPE: A directory path containing the file of the provided file path.
+        """
         plugin_dir = os.path.abspath("/".join(os.path.realpath(file).split("/")[:-2]))
         return plugin_dir
 
     def catch_data(self, variable, function_name, file_name, file):
+        """WIP: Should catch data and save it. To use this method, call it from within
+        the plugin that is based on a Plugin base class
+
+        Args:
+            variable (TYPE): Description
+            function_name (TYPE): Description
+            file_name (TYPE): Description
+            file (TYPE): Description
+        """
         plugin_dir = self.get_plugin_dir(file)
         data_dir = plugin_dir + "/tests/data/"
         with open(data_dir + function_name + "_" + file_name, "w") as open_file:
@@ -34,7 +62,27 @@ class PluginBaseClass(object):
 
 class AggregationBaseClass(PluginBaseClass):
 
+    """Summary
+
+    Attributes:
+        app (TYPE): Description
+        config (TYPE): Description
+        data (TYPE): Description
+        environment_variables (TYPE): Description
+        file_name (TYPE): Description
+        lense (TYPE): Description
+        mapping (TYPE): Description
+        results (TYPE): Description
+        rucksack (TYPE): Description
+        str_filter (TYPE): Description
+    """
+
     def __init__(self, rucksack):
+        """Summary
+
+        Args:
+            rucksack (TYPE): Description
+        """
         super(AggregationBaseClass, self).__init__()
         self.app = app
         self.rucksack = rucksack
@@ -48,9 +96,19 @@ class AggregationBaseClass(PluginBaseClass):
         self.environment_variables = self.get_environment_variables()
 
     def environment(self):
+        """Summary
+
+        Returns:
+            TYPE: Description
+        """
         return {}
 
     def get_environment_variables(self):
+        """Summary
+
+        Returns:
+            TYPE: Description
+        """
         keys = self.environment()
         variables = {}
 
@@ -72,6 +130,11 @@ class AggregationBaseClass(PluginBaseClass):
         return variables
 
     def run(self):
+        """Summary
+
+        Returns:
+            TYPE: Description
+        """
         computed = {}
         for item in self.rucksack.itemsview():
             start = datetime.now()
@@ -86,6 +149,15 @@ class AggregationBaseClass(PluginBaseClass):
         return computed
 
     def get_computed(self, response, item):
+        """Summary
+
+        Args:
+            response (TYPE): Description
+            item (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
         if not response:
             return None
 
@@ -106,14 +178,37 @@ class AggregationBaseClass(PluginBaseClass):
         return entities
 
     def query(self, item):
+        """Summary
 
+        Args:
+            item (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
         return NotImplementedError
 
     def map_entities(self, response, item):
+        """Summary
 
+        Args:
+            response (TYPE): Description
+            item (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
         return NotImplementedError
 
     def _run_monocle(self, entities):
+        """Summary
+
+        Args:
+            entities (TYPE): Description
+
+        Returns:
+            TYPE: Description
+        """
         result = []
 
         for item in entities:
@@ -128,13 +223,23 @@ class AggregationBaseClass(PluginBaseClass):
 
 
 class AddonBaseClass(object):
-    """docstring for AddonBaseClass"""
+    """docstring for AddonBaseClass
+
+    Attributes:
+        addon_path (TYPE): Description
+        description (TYPE): Description
+        metadata (TYPE): Description
+    """
 
     def __init__(self):
+        """Summary
+        """
         super(AddonBaseClass, self).__init__()
         self.addon_path = None
         self.metadata = self.load_metadata()
 
     def get_description(self):
+        """Summary
+        """
         init_path = os.path.join(self.addon_path, '__init__.py')
         self.description = orbis_setup.load_metadata(init_path)['description']
