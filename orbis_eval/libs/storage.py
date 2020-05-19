@@ -7,6 +7,8 @@ import os
 import json
 
 from orbis_eval.libs import files
+from orbis_eval.core import app
+
 
 
 def cache(run):
@@ -15,7 +17,7 @@ def cache(run):
     aggregator_name = run['aggregator']['service']['name']
     files.create_folder(os.path.join(data_set_path, 'computed', aggregator_name))
     for number, item in data.items():
-        with open(os.path.join(path, str(number) + ".json"), "w") as open_file:
+        with open(os.path.join(app.path, str(number) + ".json"), "w") as open_file:
             computed = item['computed']
             json.dump(computed, open_file)
 

@@ -44,20 +44,6 @@ def create_logger(app, name=None, maxBytes=False, backupCount=False):
     logger.setLevel(eval(f"logging.{level.upper()}"))
     # """
 
-    """
-    Fancylogger Version
-    logger = fancylogger.getLogger(fname=True)
-    logger.setLevel(eval(f"logging.{level.upper()}"))
-    """
-
-    """
-    logger.info(set_color("test"))
-    logger.debug(set_color("test", level=10))
-    logger.warning(set_color("test", level=30))
-    logger.error(set_color("test", level=40))
-    logger.fatal(set_color("test", level=50))
-    """
-
     error_log_path = os.path.join(log_path, "error.log")
     error_handler = RotatingFileHandler(error_log_path, maxBytes=maxBytes, backupCount=backupCount)
     error_handler.setLevel(logging.ERROR)
@@ -97,41 +83,3 @@ def create_logger(app, name=None, maxBytes=False, backupCount=False):
     coloredlogs.install()
 
     return logger
-
-
-"""
-import logging
-import io
-
-### Create the logger
-logger = logging.getLogger('basic_logger')
-logger.setLevel(logging.DEBUG)
-
-### Setup the console handler with a StringIO object
-log_capture_string = io.StringIO()
-ch = logging.StreamHandler(log_capture_string)
-ch.setLevel(logging.DEBUG)
-
-### Optionally add a formatter
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-ch.setFormatter(formatter)
-
-### Add the console handler to the logger
-logger.addHandler(ch)
-
-
-### Send log messages.
-logger.debug('debug message')
-logger.info('info message')
-logger.warn('warn message')
-logger.error('error message')
-logger.critical('critical message')
-
-
-### Pull the contents back into a string and close the stream
-log_contents = log_capture_string.getvalue()
-log_capture_string.close()
-
-### Output as lower case to prove it worked.
-print(log_contents.lower())
-"""

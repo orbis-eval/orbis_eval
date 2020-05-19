@@ -1,16 +1,14 @@
-import os
 import io
 import re
 
 
 def parse_metadata(target, file_content):
-        regex = f"^{target} = ['\"](.*?)['\"]"
-        metadatum = re.search(regex, file_content, re.MULTILINE).group(1)
-        return metadatum
+    regex = f"^{target} = ['\"](.*?)['\"]"
+    metadatum = re.search(regex, file_content, re.MULTILINE).group(1)
+    return metadatum
 
 
 def load_metadata(init_path):
-    # init_path = os.path.join(addon_path, '__init__.py')
     metadata = {}
 
     with io.OpenWrapper(init_path, 'rt', encoding='utf8') as open_file:

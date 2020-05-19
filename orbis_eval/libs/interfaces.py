@@ -20,8 +20,7 @@ def get_modules(stage):
         (name, name)
         for finder, name, ispkg
         in pkgutil.iter_modules()
-        if name.startswith(f'orbis_plugin_{stage}') and
-        name not in blacklist
+        if name.startswith(f'orbis_plugin_{stage}') and name not in blacklist
     ]
     return plugins
 
