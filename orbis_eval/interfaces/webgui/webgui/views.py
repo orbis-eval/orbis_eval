@@ -2,7 +2,7 @@ from flask import render_template
 from flask import request
 from . import webgui_app
 
-from orbis_eval import app
+from orbis_eval.core import app
 from orbis_eval.__main__ import run_orbis
 from .forms import ConfigForm
 

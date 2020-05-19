@@ -4,7 +4,7 @@ from pprint import pformat
 import functools
 import time
 
-from orbis_eval import app
+from orbis_eval.core import app
 import logging
 logger = logging.getLogger(__name__)
 

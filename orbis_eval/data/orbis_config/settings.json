@@ -8,5 +8,6 @@
     "default_folders_to_create": [
         "log_path",
         "output_path"
-    ]
+    ],
+    "catch_data": false
 }

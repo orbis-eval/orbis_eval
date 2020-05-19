@@ -6,29 +6,6 @@ import os
 import coloredlogs
 import inspect
 
-# from . import fancylogger
-
-"""
-# will log to screen by default
-fancylogger.logToFile('dir/filename')
-fancylogger.setLogLevelDebug()  # set global loglevel to debug
-logger = fancylogger.getLogger(name)  # get a logger with a specific name
-logger.setLevel(level)  # set local debugging level
-# If you want the logger to be showing modulename.functionname as the name, use
-fancylogger.getLogger(fname=True)
-# you can use the handler to set a different formatter by using
-handler = fancylogger.logToFile('dir/filename')
-formatstring = '%(asctime)-15s %(levelname)-10s %(mpirank)-5s %(funcname)-15s %(threadName)-10s %(message)s'
-handler.setFormatter(logging.Formatter(formatstring))
-# setting a global loglevel will impact all logers:
-from vsc.utils import fancylogger
-logger = fancylogger.getLogger("test")
-logger.warning("warning")
-logger.debug("warning")
-fancylogger.setLogLevelDebug()
-logger.debug("warning")
-"""
-
 
 def set_color(org_string, level=None):
     color_levels = {

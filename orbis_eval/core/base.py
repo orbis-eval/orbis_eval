@@ -8,7 +8,7 @@ Attributes:
 import os
 from datetime import datetime
 
-from orbis_eval import app
+from orbis_eval.core import app
 from orbis_eval.libs import orbis_setup
 
 import logging
@@ -54,11 +54,15 @@ class PluginBaseClass(object):
             file_name (TYPE): Description
             file (TYPE): Description
         """
-        plugin_dir = self.get_plugin_dir(file)
-        data_dir = plugin_dir + "/tests/data/"
+        if app.settings["catch_data"]:
+            plugin_dir = self.get_plugin_dir(file)
+            data_dir = plugin_dir + "/tests/data/"
 
-        with open(data_dir + function_name + "_" + file_name, "w") as open_file:
-            open_file.write(str(variable))
+            if not os.path.exists(data_dir):
+                os.makedirs(data_dir)
+
+            with open(data_dir + function_name + "_" + file_name, "w") as open_file:
+                open_file.write(str(variable))
 
 
 class AggregationBaseClass(PluginBaseClass):
@@ -144,12 +148,14 @@ class AggregationBaseClass(PluginBaseClass):
             start = datetime.now()
             response = self.query(item)
             duration = datetime.now() - start
+
             if response:
                 logger.info(f"Queried Item {self.file_name}: {item['index']} ({duration})")
                 computed[item['index']] = self.get_computed(response, item)
             else:
                 logger.info(f"Queried Item {self.file_name}: {item['index']} ({duration}) - Failed")
                 computed[item['index']] = []
+
         return computed
 
     def get_computed(self, response, item):

@@ -3,13 +3,15 @@
 """Summary
 """
 
+from datetime import datetime
 from copy import deepcopy
 import os
-import re
+import uuid
+
+from orbis_eval.core import app
+
 import logging
 logger = logging.getLogger(__name__)
-
-from orbis_eval import app
 
 
 class Rucksack(object):
@@ -44,11 +46,15 @@ class Rucksack(object):
         rucksack['data']['mapping'] = app.mappings
         rucksack['data']['filter'] = app.filters
         rucksack['data']['str_filter'] = app.filters
+        rucksack['metadata'] = {'run': {}}
+        rucksack['metadata']['run']['uuid'] = str(uuid.uuid4())
+        rucksack['metadata']['corpus'] = {'source': None, 'download_time': None}
 
         if self.config:
             rucksack['config']['data_set_path'] = os.path.join(app.paths.corpora_dir, self.config['aggregation']['input']['data_set']['name'])
             rucksack['config']['corpus_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'corpus'))
             rucksack['config']['gold_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'gold'))
+            rucksack['config']['corpus_source_file'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'source.txt'))
             rucksack['config']['computed_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'computed', self.config['aggregation']['service']['name'])) if rucksack['config']['aggregation']['service']['location'] == "local" else None
 
         return rucksack
@@ -61,9 +67,20 @@ class Rucksack(object):
 
         self.open['data']['gold'] = gold
 
+    def pack_source_and_downloadtime(self):
+
+        with open(self.open['config']['corpus_source_file']) as open_file:
+            content = open_file.read()
+            # Downloaded from http://www.yovisto.com/labs/ner-benchmarks/data/dbpedia-spotlight-nif.ttl at 2020-05-18 14:50:23.625538
+            source = content.split()[2]
+            time = f'{content.split()[4]} {content.split()[5]}'
+        self.open['metadata']['corpus']['source'] = source
+        self.open['metadata']['corpus']['download_time'] = time
+
     def pack_corpus(self, corpus):
 
         self.open['data']['corpus'] = corpus
+        self.pack_source_and_downloadtime()
 
     def pack_computed(self, computed):
 

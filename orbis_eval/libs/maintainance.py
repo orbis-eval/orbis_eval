@@ -5,7 +5,7 @@ import shutil
 import logging
 logger = logging.getLogger(__name__)
 
-from orbis_eval import app
+from orbis_eval.core import app
 
 
 def delete_html_folders():

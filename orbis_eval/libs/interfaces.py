@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pkgutil
-from orbis_eval import app
+from orbis_eval.core import app
 import os
 
 blacklist = {

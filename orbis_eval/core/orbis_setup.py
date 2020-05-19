@@ -10,12 +10,12 @@ import sys
 from orbis_eval.libs import orbis_setup
 
 
-
 class OrbisSetupBaseClass(object):
     """docstring for OrbisSetupBaseClass"""
 
-    def __init__(self):
+    def __init__(self, setup_dict=None):
         super(OrbisSetupBaseClass, self).__init__()
+        self.setup_dict = setup_dict or {}
 
     def load_requirements_file(self, plugin_name, metadata, dev):
         # requirements = ["orbis_eval"] if metadata["type"] != "main" else []
@@ -39,6 +39,10 @@ class OrbisSetupBaseClass(object):
         with io.open("README.md", "rt", encoding="utf8") as f:
             long_description = f.read()
         return long_description
+
+    def add_to_setup_dict(self, setup_dict):
+        setup_dict.update(self.additional_setup_dict)
+        return setup_dict
 
     def run(self, directory):
 
@@ -64,6 +68,8 @@ class OrbisSetupBaseClass(object):
             "install_requires": self.load_requirements_file(plugin_name, metadata, dev),
             "include_package_data": True
         }
+
+        setup_dict.update(self.setup_dict)
 
         setup(**setup_dict)
 

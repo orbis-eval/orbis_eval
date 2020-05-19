@@ -2,13 +2,21 @@
 
 import datetime
 
-from orbis_eval import app
+"""
+import sys
+print('\n'.join(sys.path))
+"""
+import imp
+# print(imp.find_module("orbis_eval/main"))
+
+from orbis_eval.core import app
 from orbis_eval.core.rucksack import Rucksack
 from orbis_eval.libs.files import save_rucksack
 from orbis_eval.libs.plugins import load_plugin
 
 import logging
 logger = logging.getLogger(__name__)
+timestamp = "{:%Y-%m-%d_%H:%M:%S.%f}".format(datetime.datetime.now())
 
 
 class Pipeline(object):
@@ -42,10 +50,17 @@ class Pipeline(object):
         logger.info(f"Starting aggregation for {self.file_name}")
         self.rucksack = Aggregation(self.rucksack).run()
 
+        if not self.rucksack:
+            return False
+
         # Evaluation
         logger.info(f"Starting evaluation for {self.file_name}")
         self.rucksack = Evaluation(self.rucksack).run()
-        save_rucksack(f"{app.paths.log_path}/rucksack_{self.file_name}.json", app.paths.log_path, self.rucksack)
+
+        if not self.rucksack:
+            return False
+
+        save_rucksack(f"{app.paths.log_path}/rooksack_{self.file_name}-{timestamp}.json", app.paths.log_path, self.rucksack)
 
         # Storage
         logger.info(f"Starting storage for {self.file_name}")
@@ -72,14 +87,20 @@ class Aggregation(Pipeline):
         # Getting corpus
         logger.debug(f"Getting corpus texts for {self.file_name}")
         self.rucksack.pack_corpus(self.run_plugin(self.pipeline_stage_name, "serial_corpus", self.rucksack))
+        corpus_size = len(self.rucksack.open['data']['corpus'])
 
         # Getting gold
         logger.debug(f"Getting gold results for {self.file_name}")
         self.rucksack.pack_gold(self.run_plugin(self.pipeline_stage_name, "gold_gs", self.rucksack))
+        gold_size = len(self.rucksack.open['data']['gold'])
 
         # Getting computed
         logger.debug(f"Getting computed results for {self.plugin_name} via {self.aggregator_location}")
         self.rucksack.pack_computed(self.run_plugin(self.pipeline_stage_name, self.aggregator_service, self.rucksack))
+        computed_size = len(self.rucksack.open['data']['computed'])
+
+        if corpus_size <= 0 or gold_size <= 0 or computed_size <= 0:
+            return False
 
         return self.rucksack
 
