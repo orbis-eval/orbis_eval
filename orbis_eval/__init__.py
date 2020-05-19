@@ -30,6 +30,7 @@ __plugins__ = [
     "orbis_plugin_evaluation_binary_classification_evaluation",
     "orbis_plugin_metrics_binary_classification_metrics",
     "orbis_plugin_scoring_nel_scorer",
+    "orbis_plugin_scoring_ner_scorer",
     "orbis_plugin_storage_cache_webservice_results",
     "orbis_plugin_storage_csv_result_list",
     "orbis_plugin_storage_html_pages"
