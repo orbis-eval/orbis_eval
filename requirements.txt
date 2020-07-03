@@ -1,6 +1,3 @@
 pyyaml>=4.2b1
-flask
-flask-wtf
-flask-bootstrap
 coloredlogs>=10.0
 sphinxcontrib-napoleon

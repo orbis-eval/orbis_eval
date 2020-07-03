@@ -139,4 +139,7 @@ class Storage(Pipeline):
             for item in self.config["storage"]:
                 logger.debug(f"Running: {item}")
                 self.run_plugin(self.pipeline_stage_name, item, self.rucksack)
+        # print(dir(self.rucksack))
+        print(self.rucksack.result_summary())
         return self.rucksack
+

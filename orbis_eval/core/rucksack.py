@@ -39,6 +39,7 @@ class Rucksack(object):
         rucksack['config'] = deepcopy(self.config)
         rucksack['data'] = {}
         rucksack['data']['corpus'] = {}
+        rucksack['data']['corpus_modified'] = {}
         rucksack['data']['gold'] = {}
         rucksack['data']['computed'] = {}
         rucksack['results'] = {}
@@ -78,8 +79,14 @@ class Rucksack(object):
         self.open['metadata']['corpus']['download_time'] = time
 
     def pack_corpus(self, corpus):
+        # print(f"81: corpus: {corpus}")
 
-        self.open['data']['corpus'] = corpus
+        for doc, content in corpus.items():
+            if doc.split("-")[-1] == "modified":
+                self.open['data']['corpus_modified'][doc.replace("-modified", "")] = content
+            else:
+                self.open['data']['corpus'][doc] = content
+
         self.pack_source_and_downloadtime()
 
     def pack_computed(self, computed):
@@ -135,6 +142,7 @@ class Rucksack(object):
             result = {
                 'index': key,
                 'corpus': data['corpus'].get(key, None),
+                'corpus_modified': data['corpus_modified'].get(key, None),
                 'gold': data['gold'].get(key, None),
                 'computed': data['computed'].get(key, None)
             }
@@ -145,12 +153,18 @@ class Rucksack(object):
     def itemsview(self):
         data = self.open['data']
         for key, item in sorted(data['corpus'].items()):
+            # print(">>>itemsview")
+            # print(data['gold'][key])
+
             result = {
                 'index': key,
+                'url': data['gold'][key][0]['key'],
                 'corpus': item,
+                'corpus_modified': data['corpus_modified'].get(key, None),
                 'gold': data['gold'].get(key, None),
                 'computed': data['computed'].get(key, None)
             }
+            # print(f"Yielding: {item.keys()}\n")
             yield result
 
     def result_summary(self, specific=None):

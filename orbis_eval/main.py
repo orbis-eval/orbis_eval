@@ -3,7 +3,9 @@
 import glob
 import multiprocessing
 import os
+import sys
 
+import orbis_eval
 from orbis_eval.core import app
 from orbis_eval.core import pipeline
 from orbis_eval.libs import maintainance
@@ -67,6 +69,10 @@ def run():
     if args.logging:
         logger.setLevel(args.logging.upper())
     """
+    if args and args.version:
+        print(f'Orbis version: {orbis_eval.__version__}')
+        sys.exit(0)
+
     if args and args.deletehtml:
         maintainance.delete_html_folders()
 

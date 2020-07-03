@@ -7,6 +7,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('-t', '--test', default=False, action='store_true',
                         help='Text input as string. Use \' in console')
+    parser.add_argument('--version', default=False, action='store_true',
+                        help='Show installed version')
     parser.add_argument('-c', '--config', default=False, action='store',
                         help='Define single yml config to run.')
     parser.add_argument('--deletehtml', default=False, action='store_true',
