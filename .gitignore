@@ -102,3 +102,6 @@ ENV/
 
 # Dolphin
 .directory
+
+# PyCharm
+.idea
