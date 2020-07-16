@@ -3,6 +3,7 @@
 /docker_volumes
 *.nogit.*
 temp-plot.html
+harvest_evaluation_results.txt
 
 # Sublime 3
 *.sublime-project
