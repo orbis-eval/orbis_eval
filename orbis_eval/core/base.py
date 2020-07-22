@@ -68,21 +68,6 @@ class PluginBaseClass(object):
 class AggregationBaseClass(PluginBaseClass):
 
     """Summary
-
-    Attributes:
-        app (TYPE): Description
-        config (TYPE): Description
-        data (TYPE): Description
-<<<<<<< HEAD
-=======
-        environment_variables (TYPE): Description
->>>>>>> master
-        file_name (TYPE): Description
-        lense (TYPE): Description
-        mapping (TYPE): Description
-        results (TYPE): Description
-        rucksack (TYPE): Description
-        str_filter (TYPE): Description
     """
 
     def __init__(self, rucksack):
