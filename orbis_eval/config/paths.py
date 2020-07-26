@@ -5,6 +5,16 @@ import os
 from pathlib import Path
 from distutils.dir_util import copy_tree
 
+file_dir = Path(os.path.dirname(os.path.realpath(__file__)))
+
+with open(file_dir / 'settings.json', 'r') as open_file:
+    settings = json.load(open_file)
+
+headless = settings['headless']
+if headless:
+    user_home = os.path.realpath(file_dir / ".." / "..")
+else:
+    user_home = Path.home()
 
 def fill_config(user_dir, test_data_dir):
     # ToDo: check if data already filled!
@@ -47,10 +57,22 @@ def fill_queue(user_dir, test_data_dir):
 
 
 def create_orbis_external_folder(user_folder_settings_file, test_data_dir):
-    default_dir = Path.home() / "orbis-eval"
+    """
 
-    print("Where would you like to install the Orbis user directory?")
-    user_dir = input(f"> ({str(default_dir)}):") or default_dir
+    Args:
+        user_folder_settings_file:
+        test_data_dir:
+
+    Returns:
+
+    """
+    default_dir = user_home / "orbis-eval"
+
+    if not headless:
+        print("Where would you like to install the Orbis user directory?")
+        user_dir = input(f"> ({str(default_dir)}):") or user_home / "orbis-eval"
+    else:
+        user_dir = user_home / "user_folder"
 
     print(f"\nCreating: {user_dir}")
     Path(user_dir).mkdir(parents=True, exist_ok=True)
@@ -66,6 +88,15 @@ def create_orbis_external_folder(user_folder_settings_file, test_data_dir):
 
 
 def load_user_folder_path(user_folder_settings_file, test_data_dir):
+    """
+
+    Args:
+        user_folder_settings_file:
+        test_data_dir:
+
+    Returns:
+
+    """
     file = user_folder_settings_file
 
     # print(f"user_folder.txt ({file}) {os.path.isfile(file)}")
@@ -99,7 +130,7 @@ package_root = os.path.join(source_root, 'orbis_eval')
 test_data_dir = os.path.join(package_root, 'data', 'tests')
 
 # ~/.orbis-eval.txt
-user_folder_settings_file = os.path.join(Path.home() / '.orbis-eval.txt')
+user_folder_settings_file = os.path.join(user_home / '.orbis-eval.txt')
 
 # e.g.: ~/orbis-eval
 user_dir = load_user_folder_path(user_folder_settings_file, test_data_dir)
