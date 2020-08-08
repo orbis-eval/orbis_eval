@@ -1,5 +1,5 @@
 # Orbis Specific
-/orbis_eval/config/user_folder.txt
+/user_folder/
 /docker_volumes
 *.nogit.*
 temp-plot.html
@@ -109,3 +109,4 @@ ENV/
 
 # PyCharm
 .idea
+/.orbis-eval.txt
