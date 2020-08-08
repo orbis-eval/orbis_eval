@@ -12,7 +12,7 @@ with open(file_dir / 'settings.json', 'r') as open_file:
 
 headless = settings['headless']
 if headless:
-    user_home = os.path.realpath(file_dir / ".." / "..")
+    user_home = Path(os.path.realpath(file_dir / ".." / ".."))
 else:
     user_home = Path.home()
 

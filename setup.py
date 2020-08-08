@@ -11,6 +11,8 @@ except ImportError:
     from distutils.core import setup, find_packages
 
 from pathlib import PurePath
+from pathlib import Path
+import json
 
 
 import re
@@ -168,7 +170,20 @@ class OrbisSetup(object):
 
         setup_dict["extras_require"] = self.get_extras(metadata)
 
+        is_headless = False
+        if "--headless" in sys.argv:
+            is_headless = True
+            sys.argv.remove("--headless")
+
         setup(**setup_dict)
+
+        with open(Path(directory) / 'orbis_eval'/ 'config' / 'settings.json') as open_file:
+            settings = json.load(open_file)
+        
+        settings['headless'] = is_headless
+
+        with open(Path(directory) / 'orbis_eval' / 'config' / 'settings.json', 'w') as open_file:
+            json.dump(settings, open_file)
 
 
 if __name__ == '__main__':
