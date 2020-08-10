@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from pathlib import PurePath
+from pathlib import PurePath, Path
 from setuptools import find_packages
 from setuptools import setup
 import io
@@ -49,7 +49,7 @@ class OrbisSetupBaseClass(object):
         path_split = PurePath(directory).parts
         plugin_name = path_split[-1]
 
-        metadata = orbis_setup.load_metadata(f"{directory}/{plugin_name}/__init__.py")
+        metadata = orbis_setup.load_metadata(directory / f"{plugin_name}" / "__init__.py")
         self.check_python_version(metadata)
 
         dev = False  # Dev set ignores requirements versions
@@ -75,5 +75,5 @@ class OrbisSetupBaseClass(object):
 
 
 if __name__ == '__main__':
-    directory = os.path.dirname(os.path.realpath(__file__))
+    directory = Path(__file__).parent
     OrbisSetupBaseClass().run(directory)

@@ -16,7 +16,7 @@ from orbis_eval.libs.plugins import load_plugin
 
 import logging
 logger = logging.getLogger(__name__)
-timestamp = "{:%Y-%m-%d_%H:%M:%S.%f}".format(datetime.datetime.now())
+timestamp = "{:%Y-%m-%d_%H-%M-%S.%f}".format(datetime.datetime.now())
 
 
 class Pipeline(object):

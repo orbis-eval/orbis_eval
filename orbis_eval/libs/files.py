@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def get_timestamp():
-    return "{:%Y-%m-%d_%H:%M:%S}".format(datetime.datetime.now())
+    return "{:%Y-%m-%d_%H-%M-%S}".format(datetime.datetime.now())
 
 
 def create_folder(directory_name):
@@ -44,7 +44,7 @@ def check_folders(paths, folders_to_create=None):
 
 def save_rucksack(file, path, rucksack):
 
-    dir = os.path.join(path, file)
+    dir = path / file
 
     with open(dir, "w", encoding="utf-8") as open_file:
         json.dump(rucksack.open, open_file, indent=4, skipkeys=True)
