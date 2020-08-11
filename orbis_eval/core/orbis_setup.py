@@ -4,7 +4,6 @@ from pathlib import PurePath, Path
 from setuptools import find_packages
 from setuptools import setup
 import io
-import os
 import sys
 
 from orbis_eval.libs import orbis_setup

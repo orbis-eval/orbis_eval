@@ -2,7 +2,6 @@
 
 from logging.handlers import RotatingFileHandler
 import logging
-import os
 import coloredlogs
 import inspect
 
@@ -44,31 +43,31 @@ def create_logger(app, name=None, maxBytes=False, backupCount=False):
     logger.setLevel(eval(f"logging.{level.upper()}"))
     # """
 
-    error_log_path = os.path.join(log_path, "error.log")
+    error_log_path = log_path / "error.log"
     error_handler = RotatingFileHandler(error_log_path, maxBytes=maxBytes, backupCount=backupCount)
     error_handler.setLevel(logging.ERROR)
     error_handler.setFormatter(formatter)
     logger.addHandler(error_handler)
 
-    info_log_path = os.path.join(log_path, "info.log")
+    info_log_path = log_path / "info.log"
     info_handler = RotatingFileHandler(info_log_path, maxBytes=maxBytes, backupCount=backupCount)
     info_handler.setLevel(logging.INFO)
     info_handler.setFormatter(formatter)
     logger.addHandler(info_handler)
 
-    debug_log_path = os.path.join(log_path, "debug.log")
+    debug_log_path = log_path / "debug.log"
     debug_handler = RotatingFileHandler(debug_log_path, maxBytes=maxBytes, backupCount=backupCount)
     debug_handler.setLevel(logging.DEBUG)
     debug_handler.setFormatter(formatter)
     logger.addHandler(debug_handler)
 
-    warning_log_path = os.path.join(log_path, "warning.log")
+    warning_log_path = log_path / "warning.log"
     warning_handler = RotatingFileHandler(warning_log_path, maxBytes=maxBytes, backupCount=backupCount)
     warning_handler.setLevel(logging.WARNING)
     warning_handler.setFormatter(formatter)
     logger.addHandler(warning_handler)
 
-    critical_log_path = os.path.join(log_path, "critical.log")
+    critical_log_path = log_path / "critical.log"
     critical_handler = RotatingFileHandler(critical_log_path, maxBytes=maxBytes, backupCount=backupCount)
     critical_handler.setLevel(logging.CRITICAL)
     critical_handler.setFormatter(formatter)

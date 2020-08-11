@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import pkgutil
+
 from orbis_eval.core import app
-import os
 
 blacklist = {
     'orbis_plugin_aggregation_local_cache',
@@ -30,7 +30,7 @@ def get_corpora():
     corpora = [
         (dirnames, dirnames)
         for dirnames
-        in os.listdir(corpora_dir)
-        if os.path.isdir(os.path.join(corpora_dir, dirnames))
+        in corpora_dir.iterdir()
+        if (corpora_dir, dirnames).is_dir()
     ]
     return corpora

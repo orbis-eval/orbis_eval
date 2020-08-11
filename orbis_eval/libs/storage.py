@@ -15,9 +15,9 @@ def cache(run):
     data = run['data']
     data_set_path = run['config']['data_set_path']
     aggregator_name = run['aggregator']['service']['name']
-    files.create_folder(os.path.join(data_set_path, 'computed', aggregator_name))
+    files.create_folder(data_set_path / 'computed' / aggregator_name)
     for number, item in data.items():
-        with open(os.path.join(app.path, str(number) + ".json"), "w") as open_file:
+        with open(app.path / f"{str(number)}.json", "w") as open_file:
             computed = item['computed']
             json.dump(computed, open_file)
 

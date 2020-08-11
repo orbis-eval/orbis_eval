@@ -3,7 +3,6 @@
 import datetime
 import json
 import os
-import pathlib
 import logging
 logger = logging.getLogger(__name__)
 
@@ -13,7 +12,7 @@ def get_timestamp():
 
 
 def create_folder(directory_name):
-    pathlib.Path(directory_name).mkdir(parents=True, exist_ok=True)
+    directory_name.mkdir(parents=True, exist_ok=True)
 
 
 def create_folders(paths, folders_to_create=None):
@@ -32,7 +31,7 @@ def check_folders(paths, folders_to_create=None):
         paths.output_path,
     )
     folders_to_check = folders_to_create or default_folders_to_check
-    folders_not_found = [path for path in folders_to_check if not pathlib.Path(path).is_dir()]
+    folders_not_found = [path for path in folders_to_check if not path.is_dir()]
     if len(folders_not_found) > 0:
         unfound_folders = []
         for path in folders_not_found:
