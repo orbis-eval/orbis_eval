@@ -3,6 +3,9 @@
 import datetime
 import json
 import os
+
+from .pathencoder import PathEncoder
+
 import logging
 logger = logging.getLogger(__name__)
 
@@ -46,7 +49,7 @@ def save_rucksack(file, path, rucksack):
     dir = path / file
 
     with open(dir, "w", encoding="utf-8") as open_file:
-        json.dump(rucksack.open, open_file, indent=4, skipkeys=True)
+        json.dump(rucksack.open, open_file, indent=4, skipkeys=True, cls=PathEncoder)
 
 
 def build_file_name(config, base_path, module_name, ending, raw=False):

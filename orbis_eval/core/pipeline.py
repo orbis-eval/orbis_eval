@@ -60,7 +60,7 @@ class Pipeline(object):
         if not self.rucksack:
             return False
 
-        save_rucksack(f"{app.paths.log_path}/rooksack_{self.file_name}-{timestamp}.json", app.paths.log_path, self.rucksack)
+        save_rucksack(f"rooksack_{self.file_name}-{timestamp}.json", app.paths.log_path, self.rucksack)
 
         # Storage
         logger.info(f"Starting storage for {self.file_name}")

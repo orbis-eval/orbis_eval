@@ -3,6 +3,7 @@
 import glob
 import multiprocessing
 import os
+from pathlib import Path
 import sys
 
 import orbis_eval
@@ -36,7 +37,7 @@ def run_orbis(config_file=None, args=None, webgui=False):
 
     else:
         logger.debug(f'Searching in: {str(os.path.join(app.paths.queue, "*.yaml"))}')
-        config_files = sorted(glob.glob(os.path.join(app.paths.queue, "*.yaml")))
+        config_files = sorted([Path(file) for file in glob.glob(os.path.join(app.paths.queue, "*.yaml"))])
         logger.debug(f"Loading queue: {str(config_files)}")
         configs = config_module.load_config(config_files, webgui=webgui)
         monocle.check_resources(configs, refresh=False)

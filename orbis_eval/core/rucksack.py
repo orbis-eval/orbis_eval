@@ -5,7 +5,7 @@
 
 from datetime import datetime
 from copy import deepcopy
-import os
+from pathlib import Path
 import uuid
 
 from orbis_eval.core import app
