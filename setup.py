@@ -12,4 +12,9 @@ setup(
         [console_scripts]
         orbis=orbis_eval.orbis:cli
     ''',
+    package_data = {
+        'orbis_eval': [
+            'data/**/*'
+        ]
+    }
 )
