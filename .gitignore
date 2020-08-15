@@ -1,9 +1,11 @@
 # Orbis Specific
 /user_folder/
 /docker_volumes
+/.orbis-eval.txt
 *.nogit.*
 temp-plot.html
 harvest_evaluation_results.txt
+/old/
 
 # Sublime 3
 *.sublime-project
@@ -109,4 +111,4 @@ ENV/
 
 # PyCharm
 .idea
-/.orbis-eval.txt
+/.run/
