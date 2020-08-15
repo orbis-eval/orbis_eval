@@ -112,3 +112,4 @@ ENV/
 # PyCharm
 .idea
 /.run/
+/old/

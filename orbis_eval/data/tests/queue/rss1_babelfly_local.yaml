@@ -24,5 +24,4 @@ metrics:
   name: binary_classification_metrics
 
 storage:
-  - csv_result_list
   - html_pages
