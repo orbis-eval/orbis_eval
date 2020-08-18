@@ -7,12 +7,13 @@ setup(
     py_modules=['orbis_eval'],
     install_requires=[
         'Click',
+        'orbis_eval_libs'
     ],
     entry_points='''
         [console_scripts]
         orbis=orbis_eval.orbis:cli
     ''',
-    package_data = {
+    package_data={
         'orbis_eval': [
             'data/**/*'
         ]
