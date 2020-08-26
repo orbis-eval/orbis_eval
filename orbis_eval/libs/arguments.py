@@ -27,5 +27,7 @@ def parse_args() -> argparse.Namespace:
                         help='Start the Flask WebGUI')
     parser.add_argument('--logging', default="error", action='store',
                         help='Set logging level')
+    parser.add_argument('--webservice', default=False, action='store_true',
+                        help='Starts the webservice to configure and run orbis')
     args = parser.parse_args()
     return args

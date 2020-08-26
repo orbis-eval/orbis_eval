@@ -11,6 +11,7 @@ from orbis_eval.core import pipeline
 from orbis_eval.libs import maintainance
 from orbis_eval.libs import config as config_module
 from orbis_eval.libs.arguments import parse_args
+from orbis_eval.webservice import run as webservice
 from orbis_plugin_aggregation_monocle import Main as monocle
 
 import logging
@@ -24,13 +25,13 @@ def start_runner(config):
     p.run()
 
 
-def run_orbis(config_file=None, args=None, webgui=False):
+def run_orbis(config_file=None):
 
     logger.info("Welcome to Orbis!")
 
     if config_file:
         logger.debug("Single config")
-        config = config_module.load_config([config_file], webgui=webgui)[0]
+        config = config_module.load_config([config_file])[0]
         monocle.check_resources([config], refresh=False)
         start_runner(config)
 
@@ -38,7 +39,7 @@ def run_orbis(config_file=None, args=None, webgui=False):
         logger.debug(f'Searching in: {str(os.path.join(app.paths.queue, "*.yaml"))}')
         config_files = sorted(glob.glob(os.path.join(app.paths.queue, "*.yaml")))
         logger.debug(f"Loading queue: {str(config_files)}")
-        configs = config_module.load_config(config_files, webgui=webgui)
+        configs = config_module.load_config(config_files)
         monocle.check_resources(configs, refresh=False)
 
         if len(config_files) <= 0:
@@ -79,8 +80,10 @@ def run():
     if args.test:
         app.paths.queue = app.paths.test_queue
 
-    # print(app.paths.test_queue)
-    run_orbis(args.config or None, args)
+    if args.webservice:
+        webservice.start_webservice()
+    else:
+        run_orbis(args.config or None)
 
 
 if __name__ == '__main__':
