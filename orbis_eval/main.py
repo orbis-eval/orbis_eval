@@ -11,7 +11,6 @@ from orbis_eval.core import pipeline
 from orbis_eval.libs import maintainance
 from orbis_eval.libs import config as config_module
 from orbis_eval.libs.arguments import parse_args
-from orbis_eval.webservice import run as webservice
 from orbis_plugin_aggregation_monocle import Main as monocle
 
 import logging
@@ -80,10 +79,7 @@ def run():
     if args.test:
         app.paths.queue = app.paths.test_queue
 
-    if args.webservice:
-        webservice.start_webservice()
-    else:
-        run_orbis(args.config or None)
+    run_orbis(args.config or None)
 
 
 if __name__ == '__main__':
