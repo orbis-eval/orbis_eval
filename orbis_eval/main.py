@@ -17,10 +17,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def start_runner(config):
+def start_runner(config, emit_step_complete=None):
     logger.debug("Starting pipeline")
     p = pipeline.Pipeline()
     p.load(config)
+    if callable(emit_step_complete):
+        p.set_step_complete_receiver(emit_step_complete)
     p.run()
 
 

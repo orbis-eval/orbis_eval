@@ -15,6 +15,7 @@ from orbis_eval.libs.files import save_rucksack
 from orbis_eval.libs.plugins import load_plugin
 
 import logging
+
 logger = logging.getLogger(__name__)
 timestamp = "{:%Y-%m-%d_%H:%M:%S.%f}".format(datetime.datetime.now())
 
@@ -27,6 +28,13 @@ class Pipeline(object):
     def load(self, config):
         self.rucksack = Rucksack(config)
         self.file_name = self.rucksack.open['config']['file_name']
+
+    def set_step_complete_receiver(self, step_complete_receiver):
+        self.step_complete_receiver = step_complete_receiver
+
+    def notify_receiver(self, step_name):
+        if hasattr(self, 'step_complete_receiver') and callable(self.step_complete_receiver):
+            self.step_complete_receiver(step_name)
 
     def get_plugin(self, pipeline_stage_name, plugin_name):
 
@@ -52,6 +60,7 @@ class Pipeline(object):
 
         if not self.rucksack:
             return False
+        self.notify_receiver('aggregation')
 
         # Evaluation
         logger.info(f"Starting evaluation for {self.file_name}")
@@ -59,12 +68,16 @@ class Pipeline(object):
 
         if not self.rucksack:
             return False
+        self.notify_receiver('evaluation')
 
-        save_rucksack(f"{app.paths.log_path}/rooksack_{self.file_name}-{timestamp}.json", app.paths.log_path, self.rucksack)
+        save_rucksack(f"{app.paths.log_path}/rooksack_{self.file_name}-{timestamp}.json", app.paths.log_path,
+                      self.rucksack)
 
         # Storage
         logger.info(f"Starting storage for {self.file_name}")
         self.rucksack = Storage(self.rucksack).run()
+
+        self.notify_receiver('storage')
 
         return self.rucksack
 
@@ -142,4 +155,3 @@ class Storage(Pipeline):
         # print(dir(self.rucksack))
         print(self.rucksack.result_summary())
         return self.rucksack
-
