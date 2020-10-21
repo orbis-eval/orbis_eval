@@ -8,3 +8,5 @@
 * Using a json file for corups and gold document instead of *.gs and *.txt files. More flexible.
 * Replace the rucksack dictionaries with classes.
 * Use template engine for html storage.
+* Rucksack has config stored twice -> config and open
+* Use validation rules to test if config file is correct.
