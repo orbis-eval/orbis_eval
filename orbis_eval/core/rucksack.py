@@ -11,6 +11,7 @@ import uuid
 from orbis_eval.core import app
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -52,11 +53,18 @@ class Rucksack(object):
         rucksack['metadata']['corpus'] = {'source': None, 'download_time': None}
 
         if self.config:
-            rucksack['config']['data_set_path'] = os.path.join(app.paths.corpora_dir, self.config['aggregation']['input']['data_set']['name'])
-            rucksack['config']['corpus_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'corpus'))
+            rucksack['config']['data_set_path'] = os.path.join(app.paths.corpora_dir,
+                                                               self.config['aggregation']['input']['data_set']['name'])
+            rucksack['config']['corpus_path'] = os.path.abspath(
+                os.path.join(rucksack['config']['data_set_path'], 'corpus'))
             rucksack['config']['gold_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'gold'))
-            rucksack['config']['corpus_source_file'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'source.txt'))
-            rucksack['config']['computed_path'] = os.path.abspath(os.path.join(rucksack['config']['data_set_path'], 'computed', self.config['aggregation']['service']['name'])) if rucksack['config']['aggregation']['service']['location'] == "local" else None
+            rucksack['config']['corpus_source_file'] = os.path.abspath(
+                os.path.join(rucksack['config']['data_set_path'], 'source.txt'))
+            if 'service' in self.config['aggregation']:
+                rucksack['config']['computed_path'] = os.path.abspath(
+                    os.path.join(rucksack['config']['data_set_path'], 'computed',
+                                 self.config['aggregation']['service']['name'])) if \
+                rucksack['config']['aggregation']['service']['location'] == "local" else None
 
         return rucksack
 
@@ -138,6 +146,7 @@ class Rucksack(object):
 
     def itemview(self, key):
         data = self.open['data']
+
         if data['corpus'].get(key, None):
             result = {
                 'index': key,

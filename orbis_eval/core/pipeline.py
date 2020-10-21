@@ -15,6 +15,7 @@ from orbis_eval.libs.files import save_rucksack
 from orbis_eval.libs.plugins import load_plugin
 
 import logging
+
 logger = logging.getLogger(__name__)
 timestamp = "{:%Y-%m-%d_%H:%M:%S.%f}".format(datetime.datetime.now())
 
@@ -54,13 +55,17 @@ class Pipeline(object):
             return False
 
         # Evaluation
-        logger.info(f"Starting evaluation for {self.file_name}")
-        self.rucksack = Evaluation(self.rucksack).run()
+        if 'evaluation' in self.rucksack.open['config']:
+            logger.info(f"Starting evaluation for {self.file_name}")
+            self.rucksack = Evaluation(self.rucksack).run()
 
-        if not self.rucksack:
-            return False
+            if not self.rucksack:
+                return False
+        else:
+            logger.info("Skip evaluation step. No evaluation defined.")
 
-        save_rucksack(f"{app.paths.log_path}/rooksack_{self.file_name}-{timestamp}.json", app.paths.log_path, self.rucksack)
+        save_rucksack(f"{app.paths.log_path}/rooksack_{self.file_name}-{timestamp}.json", app.paths.log_path,
+                      self.rucksack)
 
         # Storage
         logger.info(f"Starting storage for {self.file_name}")
@@ -77,11 +82,12 @@ class Aggregation(Pipeline):
         self.pipeline_stage_name = "aggregation"
         self.rucksack = rucksack
         self.file_name = self.rucksack.open['config']['file_name']
-        self.plugin_name = self.rucksack.open['config']['aggregation']['service']['name']
+        if 'service' in self.rucksack.open['config']['aggregation']:
+            self.plugin_name = self.rucksack.open['config']['aggregation']['service']['name']
 
-        # Getting computed data either from a webservice or local storage
-        self.aggregator_location = self.rucksack.open['config']['aggregation']['service']['location']
-        self.aggregator_service = {'local': 'local_cache', 'web': self.plugin_name}[self.aggregator_location]
+            # Getting computed data either from a webservice or local storage
+            self.aggregator_location = self.rucksack.open['config']['aggregation']['service']['location']
+            self.aggregator_service = {'local': 'local_cache', 'web': self.plugin_name}[self.aggregator_location]
 
     def run(self) -> object:
         # Getting corpus
@@ -95,9 +101,14 @@ class Aggregation(Pipeline):
         gold_size = len(self.rucksack.open['data']['gold'])
 
         # Getting computed
-        logger.debug(f"Getting computed results for {self.plugin_name} via {self.aggregator_location}")
-        self.rucksack.pack_computed(self.run_plugin(self.pipeline_stage_name, self.aggregator_service, self.rucksack))
-        computed_size = len(self.rucksack.open['data']['computed'])
+        if 'computed' in self.rucksack.open['data'] and self.rucksack.open['data']['computed']:
+            logger.debug(f"Getting computed results for {self.plugin_name} via {self.aggregator_location}")
+            self.rucksack.pack_computed(self.run_plugin(self.pipeline_stage_name, self.aggregator_service,
+                                                        self.rucksack))
+            computed_size = len(self.rucksack.open['data']['computed'])
+        else:
+            logger.info(f"No aggregation plugin for computing defined")
+            computed_size = 1
 
         if corpus_size <= 0 or gold_size <= 0 or computed_size <= 0:
             return False
@@ -142,4 +153,3 @@ class Storage(Pipeline):
         # print(dir(self.rucksack))
         print(self.rucksack.result_summary())
         return self.rucksack
-
