@@ -65,6 +65,13 @@ class Rucksack(object):
                     os.path.join(rucksack['config']['data_set_path'], 'computed',
                                  self.config['aggregation']['service']['name'])) if \
                 rucksack['config']['aggregation']['service']['location'] == "local" else None
+            else:
+                rucksack['config']['aggregation']['service'] = {'name': None, 'location': None}
+
+            if 'evaluation' not in self.config:
+                rucksack['config']['evaluation'] = {'name': None}
+                rucksack['config']['scoring'] = {'name': None}
+                rucksack['config']['metrics'] = {'name': None}
 
         return rucksack
 
@@ -178,9 +185,11 @@ class Rucksack(object):
 
     def result_summary(self, specific=None):
 
-        summary = self.open['results']["summary"]
-        results = summary.get(specific) if specific else summary
-        return results
+        if "summary" in self.open['results']:
+            summary = self.open['results']["summary"]
+            results = summary.get(specific) if specific else summary
+            return results
+        return "No results calculated"
 
     def resultview(self, key, specific=None):
         items = self.open['results']['items']

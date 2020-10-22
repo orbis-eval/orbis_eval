@@ -55,7 +55,7 @@ class Pipeline(object):
             return False
 
         # Evaluation
-        if 'evaluation' in self.rucksack.open['config']:
+        if self.rucksack.open['config']['evaluation']['name']:
             logger.info(f"Starting evaluation for {self.file_name}")
             self.rucksack = Evaluation(self.rucksack).run()
 
@@ -82,7 +82,7 @@ class Aggregation(Pipeline):
         self.pipeline_stage_name = "aggregation"
         self.rucksack = rucksack
         self.file_name = self.rucksack.open['config']['file_name']
-        if 'service' in self.rucksack.open['config']['aggregation']:
+        if self.rucksack.open['config']['aggregation']['service']['name']:
             self.plugin_name = self.rucksack.open['config']['aggregation']['service']['name']
 
             # Getting computed data either from a webservice or local storage
@@ -101,7 +101,7 @@ class Aggregation(Pipeline):
         gold_size = len(self.rucksack.open['data']['gold'])
 
         # Getting computed
-        if 'computed' in self.rucksack.open['data'] and self.rucksack.open['data']['computed']:
+        if self.rucksack.open['config']['aggregation']['service']['name']:
             logger.debug(f"Getting computed results for {self.plugin_name} via {self.aggregator_location}")
             self.rucksack.pack_computed(self.run_plugin(self.pipeline_stage_name, self.aggregator_service,
                                                         self.rucksack))
