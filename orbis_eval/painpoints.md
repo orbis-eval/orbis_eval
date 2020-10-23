@@ -9,4 +9,6 @@
 * Replace the rucksack dictionaries with classes.
 * Use template engine for html storage.
 * Rucksack has config stored twice -> config and open
-* Use validation rules to test if config file is correct.
+* Use validation rules to test if config file is correct. At the current state the 
+* Use _ for private methods
+* code duplication -> use more functions...
