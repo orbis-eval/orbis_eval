@@ -192,14 +192,15 @@ class Rucksack(object):
         return "No results calculated"
 
     def resultview(self, key, specific=None):
-        items = self.open['results']['items']
-        if items.get(key):
-            response = items[key]
-            if specific:
-                response = response.get(specific)
-            return response
-        else:
-            return None
+        if 'items' in self.open['results']:
+            items = self.open['results']['items']
+            if items.get(key):
+                response = items[key]
+                if specific:
+                    response = response.get(specific)
+                return response
+
+        return {'confusion_matrix': {'fp_ids': [], 'tp_ids': [], 'fn_ids': []}}
 
     def resultsview(self, specific=None):
         items = self.open['results']['items']
