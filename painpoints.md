@@ -12,3 +12,4 @@
 * Use validation rules to test if config file is correct. At the current state the 
 * Use _ for private methods
 * code duplication -> use more functions...
+* Better user workflow for repoman. Example: To many request for file format. Could be automated.
