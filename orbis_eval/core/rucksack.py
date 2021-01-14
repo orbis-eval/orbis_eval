@@ -169,18 +169,15 @@ class Rucksack(object):
     def itemsview(self):
         data = self.open['data']
         for key, item in sorted(data['corpus'].items()):
-            # print(">>>itemsview")
-            # print(data['gold'][key])
 
             result = {
                 'index': key,
-                'url': data['gold'][key][0]['key'],
+                'url': data['gold'][key][0]['key'] if len(data['gold'][key]) else "",
                 'corpus': item,
                 'corpus_modified': data['corpus_modified'].get(key, None),
                 'gold': data['gold'].get(key, None),
                 'computed': data['computed'].get(key, None)
             }
-            # print(f"Yielding: {item.keys()}\n")
             yield result
 
     def result_summary(self, specific=None):
