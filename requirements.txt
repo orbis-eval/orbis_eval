@@ -2,3 +2,4 @@ pyyaml>=4.2b1
 coloredlogs>=10.0
 sphinxcontrib-napoleon
 fuzzysearch
+SPARQLWrapper==1.8.2

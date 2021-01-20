@@ -13,6 +13,8 @@ from orbis_eval.core import app
 from orbis_eval.core.rucksack import Rucksack
 from orbis_eval.libs.files import save_rucksack
 from orbis_eval.libs.plugins import load_plugin
+from orbis_eval.plugins.orbis_plugin_aggregation_serial_corpus import Main as SerialCorpus
+from orbis_eval.plugins.orbis_plugin_aggregation_gold_gs import Main as GoldGS
 
 import logging
 
@@ -92,12 +94,12 @@ class Aggregation(Pipeline):
     def run(self) -> object:
         # Getting corpus
         logger.debug(f"Getting corpus texts for {self.file_name}")
-        self.rucksack.pack_corpus(self.run_plugin(self.pipeline_stage_name, "serial_corpus", self.rucksack))
+        self.rucksack.pack_corpus(SerialCorpus(self.rucksack).run())
         corpus_size = len(self.rucksack.open['data']['corpus'])
 
         # Getting gold
         logger.debug(f"Getting gold results for {self.file_name}")
-        self.rucksack.pack_gold(self.run_plugin(self.pipeline_stage_name, "gold_gs", self.rucksack))
+        self.rucksack.pack_gold(GoldGS(self.rucksack).run())
         gold_size = len(self.rucksack.open['data']['gold'])
 
         # Getting computed
