@@ -213,3 +213,17 @@ To run an Orbis addon Orbis provides a CLI that can be accessed by running ```or
 
 Orbis addons can be called directly by appending the Addon name the orbis-addon command:
 ```orbis-addon repoman```
+
+## IDE Setup (Pycharm)
+
+1. Create a new project folder where you will clone all the necessary code repositories.
+2. Clone orbis-eval in the newly created folder and open orbis-eval as a new project in Pycharm.
+3. For every additional plugin/addon of your orbis-eval run-configuration file:
+    - Clone the repository into the folder created in step 1
+    - Attach the project to your orbis-eval project (step 2)
+4. In Pycharm, go to File->Settings->Projects Dependencies. Select all plugins/addons as dependencies of orbis-eval. For every plugin/addon select orbis-eval as dependency.
+5. Create a new Python interpreter within the project folder created in step 1. Make the interpreter available for all projects. Verify that all projects use this newly created interpreter.
+6. Install all dependencies of orbis-eval and additional plugins/addons.
+7. Add a Pycharm run configuration pointing to the main file of orbis-eval (orbis-eval/orbis-eval/main.py).
+8. If necessary, run repoman to create your gold-documents (Pycharm run configuration: orbis-eval/orbis-eval/interfaces/addons/main.py).
+9. Run orbis-eval with the run configuration created in step 7.
