@@ -228,6 +228,7 @@ Orbis addons can be called directly by appending the Addon name the orbis-addon 
 3. Open orbis-eval as a new project in Pycharm ```File->Open```
 4. Execute the script setup_development.sh
    ```shell
+   cd orbis_eval
    ./setup_development.sh
    ```
 5. Attach all downloaded plugin/addon to the project in Pycharm 
