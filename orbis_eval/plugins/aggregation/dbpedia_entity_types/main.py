@@ -5,9 +5,7 @@ from SPARQLWrapper import SPARQLWrapper
 from SPARQLWrapper import JSON
 from SPARQLWrapper import SPARQLExceptions
 
-from orbis_eval.core import app
-
-import orbis_eval.plugins.orbis_plugin_aggregation_dbpedia_entity_types.regex_patterns as regex_patterns
+import plugins.aggregation.dbpedia_entity_types.regex_patterns as regex_patterns
 
 import logging
 logger = logging.getLogger(__name__)
@@ -90,7 +88,8 @@ class Main(object):
     @classmethod
     def get_regex_patterns(cls, ):
         base_pattern = regex_patterns.base_pattern
-        organization_pattern = re.compile(base_pattern + "(" + "|".join(regex_patterns.organization_pattern) + ")[0-9]*")
+        organization_pattern = re.compile(base_pattern + "(" + "|".join(
+            regex_patterns.organization_pattern) + ")[0-9]*")
         person_pattern = re.compile(base_pattern + "(" + "|".join(regex_patterns.person_pattern) + ")[0-9]*")
         location_pattern = re.compile(base_pattern + "(" + "|".join(regex_patterns.location_pattern) + ")[0-9]*")
         return organization_pattern, person_pattern, location_pattern

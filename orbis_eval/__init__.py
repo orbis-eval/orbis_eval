@@ -19,10 +19,6 @@ __classifiers__ = [
     "Programming Language :: Python :: 3.7"
 ]
 __plugins__ = [
-    "orbis_plugin_aggregation_dbpedia_entity_types",
-    "orbis_plugin_aggregation_monocle",
-    "orbis_plugin_aggregation_gold_gs",
-    "orbis_plugin_aggregation_serial_corpus",
     "orbis_plugin_aggregation_local_cache",
     "orbis_plugin_aggregation_aida",
     "orbis_plugin_aggregation_babelfly",

@@ -6,15 +6,14 @@ import datetime
 import sys
 print('\n'.join(sys.path))
 """
-import imp
 # print(imp.find_module("orbis_eval/main"))
 
 from orbis_eval.core import app
 from orbis_eval.core.rucksack import Rucksack
 from orbis_eval.libs.files import save_rucksack
 from orbis_eval.libs.plugins import load_plugin
-from orbis_eval.plugins.orbis_plugin_aggregation_serial_corpus import Main as SerialCorpus
-from orbis_eval.plugins.orbis_plugin_aggregation_gold_gs import Main as GoldGS
+from orbis_eval.plugins.aggregation.serial_corpus import Main as SerialCorpus
+from orbis_eval.plugins.aggregation.gold_gs import Main as GoldGS
 
 import logging
 

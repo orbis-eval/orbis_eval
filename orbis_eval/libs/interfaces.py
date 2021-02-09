@@ -6,11 +6,7 @@ from orbis_eval.core import app
 import os
 
 blacklist = {
-    'orbis_plugin_aggregation_local_cache',
-    'orbis_plugin_aggregation_monocle',
-    'orbis_plugin_aggregation_gold_gs',
-    'orbis_plugin_aggregation_dbpedia_entity_types',
-    'orbis_plugin_aggregation_serial_corpus'
+    'orbis_plugin_aggregation_local_cache'
 }
 
 
