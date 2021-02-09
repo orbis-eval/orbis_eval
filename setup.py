@@ -161,7 +161,6 @@ class OrbisSetup(object):
                 'console_scripts': [
                     'orbis-eval = orbis_eval.main:run',
                     'orbis-addons = orbis_eval.interfaces.addons.main:run',
-                    'orbis-webgui = orbis_eval.interfaces.webgui.main:run',
                     'orbis-cli = orbis_eval.interfaces.cli.main:run'
                 ]
             }
