@@ -214,13 +214,27 @@ To run an Orbis addon Orbis provides a CLI that can be accessed by running ```or
 Orbis addons can be called directly by appending the Addon name the orbis-addon command:
 ```orbis-addon repoman```
 
-## IDE Setup (Pycharm)
+## Local Development (Pycharm)
 
-1. Create a new project folder where you will clone all the necessary code repositories.
-2. Clone orbis-eval in the newly created folder and open orbis-eval as a new project in Pycharm.
+1. Create a new project folder.
+   ```shell
+   mkdir Orbis
+   ```
+2. Clone orbis-eval in the newly created folder.
+   ```shell
+   cd Orbis
+   git clone https://github.com/orbis-eval/orbis_eval.git
+   ```
+3. Open orbis-eval as a new project in Pycharm ```File->Open```
+4. Execute the script setup_development.sh
+   ```shell
+   ./setup_development.sh
+   ```
+5. Attach all downloaded plugin/addon to the project in Pycharm 
+   ```File->Open```  
 3. For every additional plugin/addon of your orbis-eval run-configuration file:
-    - Clone the repository into the folder created in step 1
-    - Attach the project to your orbis-eval project (step 2)
+    - Clone the repository into the folder created in step 1.
+    - Attach the project to your orbis-eval project.
 4. In Pycharm, go to File->Settings->Projects Dependencies. Select all plugins/addons as dependencies of orbis-eval. For every plugin/addon select orbis-eval as dependency.
 5. Create a new Python interpreter within the project folder created in step 1. Make the interpreter available for all projects. Verify that all projects use this newly created interpreter.
 6. Install all dependencies of orbis-eval and additional plugins/addons.
