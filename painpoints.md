@@ -13,3 +13,4 @@
 * Use _ for private methods
 * code duplication -> use more functions...
 * Better user workflow for repoman. Example: To many request for file format. Could be automated.
+* Better separation of framework and project code.
