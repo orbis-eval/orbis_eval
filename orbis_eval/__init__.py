@@ -7,7 +7,7 @@ __description__ = "An Extendable Evaluation Pipeline for Named Entity Drill-Down
 __license__ = "GPL2"
 __min_python_version__ = "3.6"
 __requirements_file__ = "requirements.txt"
-__url__ = "https://orbis-eval.github.io/Orbis/"
+__url__ = "https://github.com/orbis-eval/orbis_eval"
 __type__ = "main"
 __classifiers__ = [
     "Framework :: orbis-eval",
