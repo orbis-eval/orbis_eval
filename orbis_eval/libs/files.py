@@ -5,6 +5,11 @@ import json
 import os
 import pathlib
 import logging
+import uuid
+
+from mdutils.mdutils import MdUtils
+from orbis_eval.__version__ import __version__ as orbis_version
+
 logger = logging.getLogger(__name__)
 
 
@@ -42,12 +47,51 @@ def check_folders(paths, folders_to_create=None):
         raise NotADirectoryError(str(unfound_folders))
 
 
-def save_rucksack(file, path, rucksack):
+def save_rucksack(path, rucksack, timestamp):
+    result_uuid = uuid.uuid4().hex
+    dir_rooksack = os.path.join(path, f"{result_uuid}-rooksack.json")
+    os.makedirs(path)
 
-    dir = os.path.join(path, file)
-
-    with open(dir, "w", encoding="utf-8") as open_file:
+    with open(dir_rooksack, "w", encoding="utf-8") as open_file:
         json.dump(rucksack.open, open_file, indent=4, skipkeys=True)
+
+    create_md_result_file(path, rucksack, timestamp, result_uuid)
+
+
+def create_md_result_file(path, rucksack, timestamp, result_uuid):
+    dir_result = os.path.join(path, f"{result_uuid}-result.md")
+    md_file = MdUtils(file_name=dir_result, title='Orbis Experiment')
+    md_file.new_line("Your Experiments are completed")
+    md_file.new_line("Metadata link: " + md_file.new_inline_link(link=f"{result_uuid}-rooksack.json"))
+    md_file.new_line()
+    result = rucksack.result_summary()
+    if "binary_classification" in result:
+        values = result["binary_classification"]
+        result_rows = ["Annotator", "Dataset", "Micro F1 score", "Micro Precision", "Micro Recall", "Macro F1 score",
+                       "Macro Precision", "Macro Recall", "Total True Positive", "Total False Positive",
+                       "Total False Negative", "Total Items", "Entities", "Timestamp", "Orbis Version"]
+        result_rows.extend([rucksack.config['aggregation']['service']['name'] if
+                            'aggregation' in rucksack.config else 'None',
+                            rucksack.config['aggregation']['input']['data_set']['name'] if
+                            'aggregation' in rucksack.config else 'None',
+                            f"{values['micro']['f1_score']:.4f}",
+                            f"{values['micro']['recall']:.4f}",
+                            f"{values['micro']['precision']:.4f}",
+                            f"{values['macro']['f1_score']:.4f}",
+                            f"{values['macro']['recall']:.4f}",
+                            f"{values['macro']['precision']:.4f}",
+                            f"{values['total_tp']:.4f}",
+                            f"{values['total_fp']:.4f}",
+                            f"{values['total_fn']:.4f}",
+                            f"{values['total_item_sum']:.4f}",
+                            " ".join(values['entities']),
+                            timestamp, orbis_version
+                            ])
+        md_file.new_table(columns=15, rows=2, text=result_rows, text_align='center')
+    else:
+        md_file.new_line("No results!!!")
+
+    md_file.create_md_file()
 
 
 def build_file_name(config, base_path, module_name, ending, raw=False):
@@ -93,6 +137,3 @@ def build_file_name(config, base_path, module_name, ending, raw=False):
             file_name = os.path.join(paths.output_path, file_name)
 
     return file_path
-
-
-
