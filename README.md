@@ -225,7 +225,7 @@ Orbis addons can be called directly by appending the Addon name the orbis-addon 
    cd Orbis
    git clone https://github.com/orbis-eval/orbis_eval.git
    ```
-3. Open orbis-eval as a new project in Pycharm ```File->Open```
+3. Open **orbis-eval** as a new project in Pycharm ```File->Open```
 4. Execute the clone_plugins.sh
    ```shell
    cd orbis_eval
