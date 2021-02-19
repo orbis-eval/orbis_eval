@@ -43,17 +43,25 @@ Alternatively Orbis can be install by cloning the Repo and installing it manuall
 
 Depending on your system and if you have Python 2 and Python 3 installed you either need to use ```python3``` (like on Ubuntu) or maybe just ```python```.
 
-You will promted to set an orbis user folder. This folder will contain the evaluation run queue, the logs, the corpora and monocle data, the output and the documentation. Default location will be ```orbis-eval``` in the user's home folder. An alternative location can be specified.
+## Test run
+To get a first impression of orbis and for setting up the user folder run ```orbis-eval -t```. You will be requested to set an orbis user folder. This folder will contain the evaluation run queue, the logs, the corpora and monocle data, the output and the documentation. Default location will be ```~/orbis-eval``` in the user's home folder. An alternative location can be specified.
+
+Running ```orbis-eval -t``` will run the test files located in ```~/orbis-eval/queue/tests```. These test configs are short evaluation runs for different annotators (AIDA, Babelfly, Recognyze and Spotlight). It is possible to just take one of these YAML files as template, copy them to the folder ```~/orbis-eval/queue/activated``` and modify them to your own needs.
+
+The results of the test runs as HTML can be found in your user orbis folder, e.g. ```~/orbis-eval/output/html_pages```
+
+## Orbis Addons
+To run an Orbis addon Orbis provides a CLI that can be accessed by running ```orbis-addons``` or ```orbis-eval --run-addon```. The menu will guide you to the addons and the addons mostly provide an own menu.
+
 
 ## Run
-After installation Orbis can be executed by running ```orbis-eval```. The Orbis help can be be called by using ```-h``` (```orbis-eval -h```)
-Before you can run an evaluation, please install a corpus using the repoman addon ```orbis-addons ```.
+After installation Orbis can be executed by running ```orbis-eval```. The Orbis help can be called by using ```-h``` (```orbis-eval -h```). Running ```orbis-eval``` executes all yaml config files in the folder ```~/orbis-eval/queue/activated```.
+Before you can run an evaluation, please install the corpus you're referencing in the yaml config files using the repoman addon ```orbis-addons```.
 
-## Configure evaluation runs
-Orbis uses yaml files to configure the evaluation runs. These config file are located in the queue folder in the Orbis root directory ```Orbis/queue```.
-Executing Orbis in test mode will run the yaml configs located in the test folder within the queue folder. These test configs are short evaluation runs for different annotators (AIDA, Babelfly, Recognyze and Spotlight).
+### Configure evaluation runs
+Orbis uses yaml files to configure the evaluation runs. These config files are located in the queue folder in the Orbis user directory ```~/orbis-eval/queue/activated```.
 
-A YAML configuration file is divided into the seperate stages of the pipeline:
+A YAML configuration file is divided into the stages of the pipeline:
 
 ```yaml
   aggregation:
@@ -89,7 +97,7 @@ A YAML configuration file is divided into the seperate stages of the pipeline:
     - cache_webservice_results
 ```
 
-### Aggregation
+#### Aggregation
 The aggregation stage of orbis collects all the data needed for an evaluation run. This includes corpus, quering the annotator and mappings, lenses and filters used by monocle. The aggregation settings specify what service, dataset and what lenses, mappings and filters should be used.
 
 ```yaml
@@ -139,7 +147,7 @@ Orbis will locate from there on automatically the corpus texts and the gold stan
 If needed, the lenses, mappings and filters can also be specified in the input section. These should be located in ```~/orbis-eval/data/[filters|lenses|mappings]``` and should be specified in the section without the file ending.
 
 
-### Evaluation
+#### Evaluation
 The evaluator stage evaluates the the annotator results against the gold standard. The evaluation section defines what kind of evaluation should be used. The evaluator should have the same name as the evaluation plugin minus the ```orbis_plugin_evaluation_``` prefix.
 
 ```yaml
@@ -147,7 +155,7 @@ The evaluator stage evaluates the the annotator results against the gold standar
       name: binary_classification_evaluation
 ```
 
-### Scoring
+#### Scoring
 The scoring stage scores the evaluation according to specified conditions. These conditions are preset in the scorer and can be specified in the scoring section as well as what entity types should be scored. If no entity type is defined, all are scored. If one or more entity types are defined, then only those will be scored. Additionally ```ignore_empty``` can be set to define if the scorer should ignore empty annotation results or not.
 The scorer should have the same name as the scoring plugin minus the ```orbis_plugin_scoring_``` prefix.
 
@@ -183,7 +191,7 @@ Currently available conditions are:
     - overlap
 ```
 
-### Metrics
+#### Metrics
 The metrics stage calculates the metrics to analyze the evaluation. The metric should have the same name as the metrics plugin minus the ```orbis_plugin_metrics_``` prefix.
 
 
@@ -192,7 +200,7 @@ The metrics stage calculates the metrics to analyze the evaluation. The metric s
       name: binary_classification_metrics
 ```
 
-### Storage
+#### Storage
 The storage stage defines what kind of output orbis should create. As allways, the storage should have the same name as the storage plugin minus the ```orbis_plugin_storage_``` prefix.
 
 
@@ -204,12 +212,6 @@ The storage stage defines what kind of output orbis should create. As allways, t
 ```
 
 Multiple storage options can be chosen and the ones in the example above are the recomended (at the moment working) possibilities.
-
-## Test run
-Running ```orbis-eval -t``` will run the test files located in ```~/orbis-eval/queue/tests```. It is possible to just take one of these YAML files and modify them to your own needs.
-
-### OrbisAddons
-To run an Orbis addon Orbis provides a CLI that can be accessed by running ```orbis-addons``` or ```orbis-eval --run-addon```. The menu will guide you to the addons and the addons mostly provide an own menu.
 
 Orbis addons can be called directly by appending the Addon name the orbis-addon command:
 ```orbis-addon repoman```
