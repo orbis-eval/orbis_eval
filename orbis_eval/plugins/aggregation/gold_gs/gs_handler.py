@@ -2,8 +2,8 @@ import glob
 import os
 import urllib
 
-from plugins.aggregation.dbpedia_entity_types import Main as dbpedia_entity_types
-from plugins.aggregation.monocle import Main as monocle
+from orbis_eval.plugins.aggregation.dbpedia_entity_types import Main as dbpedia_entity_types
+from orbis_eval.plugins.aggregation.monocle import Main as monocle
 
 from .gold_file_handler import GoldFileHandler
 

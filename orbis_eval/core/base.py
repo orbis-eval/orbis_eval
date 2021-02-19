@@ -15,7 +15,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 try:
-    from plugins.aggregation.monocle import Main as monocle
+    from orbis_eval.plugins.aggregation.monocle import Main as monocle
 except ModuleNotFoundError:
     logger.warning("Monocle not found. Please install to use. 'pip install --upgrade orbis-plugin-aggregation-monocle'")
 

@@ -5,7 +5,7 @@ from SPARQLWrapper import SPARQLWrapper
 from SPARQLWrapper import JSON
 from SPARQLWrapper import SPARQLExceptions
 
-import plugins.aggregation.dbpedia_entity_types.regex_patterns as regex_patterns
+import orbis_eval.plugins.aggregation.dbpedia_entity_types.regex_patterns as regex_patterns
 
 import logging
 logger = logging.getLogger(__name__)

@@ -11,7 +11,7 @@ from orbis_eval.core import pipeline
 from orbis_eval.libs import maintainance
 from orbis_eval.libs import config as config_module
 from orbis_eval.libs.arguments import parse_args
-from plugins.aggregation.monocle import Main as monocle
+from orbis_eval.plugins.aggregation.monocle import Main as monocle
 
 
 import logging
