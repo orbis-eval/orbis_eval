@@ -39,7 +39,7 @@ class GsHandler(GoldFileHandler):
         #  0    1    2   3    4    5        6
         # doc|start|end|url|score|type|surface_form
 
-        nuggets = line.strip().split("\t")
+        nuggets = line.strip().split()
         file_number = nuggets[0]
         start = int(nuggets[1])
         end = int(nuggets[2])
