@@ -150,7 +150,8 @@ class OrbisSetup(object):
                     'data/orbis_config/settings.json',
                     'data/tests/queue/*',
                     'data/tests/corpora/rss1/computed/**/*',
-                    'data/tests/corpora/rss1/**/*'
+                    'data/tests/corpora/rss1/**/*',
+                    'data/tests/corpora/rss1/source.txt'
                 ]
             }
         }
