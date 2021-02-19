@@ -242,6 +242,7 @@ Orbis addons can be called directly by appending the Addon name the orbis-addon 
 8. Create a new Python interpreter within the project folder created in step 1 (You can use an existing intrerpreter as well). Make the interpreter available for all projects. Verify that all projects use this newly created interpreter.
 
 ![Setup project dependencies](/docs/images/sample_setup.png)
+
 9. Install all dependencies of orbis-eval and additional plugins/addons.
 10. Add a Pycharm run configuration pointing to the main file of orbis-eval (orbis-eval/orbis-eval/main.py).
 11. If necessary, run repoman to create your gold-documents (Pycharm run configuration: orbis-eval/orbis-eval/interfaces/addons/main.py). Note: If you don't have any gold-documents yet, you can also use the sample files located in queue/tests in order to check that your installation is working.
