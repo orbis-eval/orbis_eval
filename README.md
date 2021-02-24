@@ -228,24 +228,43 @@ Orbis addons can be called directly by appending the Addon name the orbis-addon 
    git clone https://github.com/orbis-eval/orbis_eval.git
    ```
 3. Open orbis-eval as a new project in Pycharm ```File->Open```
+   
+![Setup project dependencies](/docs/images/open_project.png)
+
 4. Execute the script setup_development.sh
    ```shell
    cd orbis_eval
    ./setup_development.sh
    ```
 5. Attach all downloaded plugin/addon to the project in Pycharm 
-   ```File->Open```  
+   ```File->Open``` 
+   
+![Setup project dependencies](/docs/images/attach_project.png)
+![Setup project dependencies](/docs/images/project_tab.png)
+
 6. For every additional plugin/addon of your orbis-eval run-configuration file:
     - Clone the repository into the folder created in step 1.
     - Attach the project to your orbis-eval project.
 7. In Pycharm, go to File->Settings->Projects Dependencies. Select all plugins/addons as dependencies of orbis-eval. For every plugin/addon select orbis-eval as dependency.
-8. Create a new Python interpreter within the project folder created in step 1 (You can use an existing intrerpreter as well). Make the interpreter available for all projects. Verify that all projects use this newly created interpreter.
+   
+![Setup project dependencies](/docs/images/setup_dependencies.png)
 
-![Setup project dependencies](/docs/images/sample_setup.png)
+8. In Pycharm, go to File->Settings->Projects Interpreter. Create a new Python interpreter within the project folder created in step 1 (You can use an existing intrerpreter as well). Make the interpreter available for all projects. **Verify that all projects use this newly created interpreter**.
 
-9. Install all dependencies of orbis-eval and additional plugins/addons.
+![Setup project dependencies](/docs/images/create_interpreter.png)
+
+9. Install all dependencies of orbis-eval and additional plugins/addons (each project contains a requirements.txt with all dependencies).
+
+![Setup project dependencies](/docs/images/install_dependencies.png)
+
 10. Add a Pycharm run configuration pointing to the main file of orbis-eval (orbis-eval/orbis-eval/main.py).
-11. If necessary, run repoman to create your gold-documents (Pycharm run configuration: orbis-eval/orbis-eval/interfaces/addons/main.py). Note: If you don't have any gold-documents yet, you can also use the sample files located in queue/tests in order to check that your installation is working.
-12. Run orbis-eval with the run configuration created in step 10. If you want to run a sample file, the first execution will create an Orbis-Home folder where you can find the sample files. Create a folder "activated" within queue/ and copy a configuration form queue/tests into the created folder.
+11. If necessary, run repoman to create your gold-documents (Pycharm run configuration: orbis-eval/orbis-eval/interfaces/addons/main.py). 
+    Note: If you don't have any gold-documents yet, you can also use the sample files located in queue/tests in order to check that your installation is working (use the run configuration created in step 10 with -t as parameter)
 
-![Run sample file setup](/docs/images/setup_dependencies.png)
+![Setup project dependencies](/docs/images/run_tests.png)
+
+12. Run orbis-eval with the run configuration created in step 10. 
+    Note: The first execution will create an orbis-eval folder on the location of your choice. This folder contains all files to run an evaluation. Within orbis-eval/queue/ create a folder "activated". Create a configuration file in this folder.
+
+![Run sample file setup](/docs/images/run_orbis.png)
+![Run sample file setup](/docs/images/sample_setup.png)
