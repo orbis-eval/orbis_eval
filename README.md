@@ -239,7 +239,7 @@ Orbis addons can be called directly by appending the Addon name the orbis-addon 
 5. Attach all downloaded plugin/addon to the project in Pycharm 
    ```File->Open``` 
    
-![Setup project dependencies](/docs/images/attach_project.png){:height="500px" width="500px"}
+![Setup project dependencies](/docs/images/attach_project.png | 300x300)
 ![Setup project dependencies](/docs/images/project_tab.png)
 
 6. For every additional plugin/addon of your orbis-eval run-configuration file:
