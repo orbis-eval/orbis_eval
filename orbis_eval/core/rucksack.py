@@ -172,10 +172,10 @@ class Rucksack(object):
 
             result = {
                 'index': key,
-                'url': data['gold'][key][0]['key'] if len(data['gold'][key]) else "",
+                'url': data['gold'][key][0]['key'] if key in data['gold'] and len(data['gold'][key]) else "",
                 'corpus': item,
                 'corpus_modified': data['corpus_modified'].get(key, None),
-                'gold': data['gold'].get(key, None),
+                'gold': data['gold'].get(key, []),
                 'computed': data['computed'].get(key, None)
             }
             yield result
