@@ -216,6 +216,13 @@ Multiple storage options can be chosen and the ones in the example above are the
 Orbis addons can be called directly by appending the Addon name the orbis-addon command:
 ```orbis-addon repoman```
 
+## Datasets
+
+For NER/NEL tasks, evaluation datasets need to be in the NIF format. If this is not the case, feel free to use the following converter packages:
+- [nifconverter](https://github.com/wetneb/nifconverter) - Python
+- [pynif](https://pypi.org/project/pynif/) - Python
+- [NIF-lib](https://github.com/NLP2RDF/NIF-lib) - Java - the original NIF library
+
 ## Local Development (Pycharm)
 
 1. Create a new project folder.
