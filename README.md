@@ -238,10 +238,10 @@ For NER/NEL tasks, evaluation datasets need to be in the NIF format. If this is 
    
 ![Open Project](/docs/images/open_project.png)
 
-4. Execute the script setup_development.sh
+4. Execute the script clone_plugins.sh
    ```shell
    cd orbis_eval
-   ./setup_development.sh
+   ./clone_plugins.sh
    ```
 5. Attach all downloaded plugin/addon to the project in Pycharm 
    ```File->Open``` 
