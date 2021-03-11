@@ -1,5 +1,5 @@
 __name__ = "orbis_eval"
-__version__ = "2.3.2"
+__version__ = "2.3.3"
 __author__ = "fabod, rogerwaldvogel"
 __year__ = "2021"
 __description__ = "An Extendable Evaluation Pipeline for Named Entity Drill-Down Analysis"

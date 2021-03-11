@@ -151,7 +151,10 @@ class OrbisSetup(object):
                     'data/tests/queue/*',
                     'data/tests/corpora/rss1/computed/**/*',
                     'data/tests/corpora/rss1/**/*',
-                    'data/tests/corpora/rss1/source.txt'
+                    'data/tests/corpora/rss1/source.txt',
+                    'data/tests/corpora/harvest/**/*',
+                    'data/tests/corpora/harvest/source.txt',
+                    'data/tests/corpora/harvest/computed/**/*'
                 ]
             }
         }
