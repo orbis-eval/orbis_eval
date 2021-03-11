@@ -1,0 +1,115 @@
+{"harvest": {
+  "url": "https://forum.utorrent.com/topic/23012-check-on-startup/",
+  "gold_standard_annotation": [
+  {
+   "post_text": {
+    "surface_form": "I'm using uTorrent since 2 weeks and it's great! Only...I'm downloading a torrent with a total of 73GB and everytime uTorrent starts up it is checking the files so you get the status 'checked ...%' This takes a lot of CPU and time because it is 73GB to be checked! Can I disable the check at start up?",
+    "start": 1309,
+    "end": 1610
+   },
+   "datetime": {
+    "surface_form": "July 25, 2007",
+    "start": 937,
+    "end": 950
+   },
+   "user": {
+    "surface_form": "https://forum.utorrent.com/profile/21061-robman/",
+    "start": 806,
+    "end": 854
+   },
+   "post_link": {
+    "surface_form": "comment-158142",
+    "start": 1294,
+    "end": 1308
+   }
+  },
+  {
+   "post_text": {
+    "surface_form": "You can't disable it, but you can prevent it by fixing whatever it is that is preventing uT from saving its resume data.",
+    "start": 2164,
+    "end": 2284
+   },
+   "datetime": {
+    "surface_form": "July 25, 2007",
+    "start": 2135,
+    "end": 2148
+   },
+   "user": {
+    "surface_form": "https://forum.utorrent.com/profile/628-dreadwingknight/",
+    "start": 1803,
+    "end": 1858
+   },
+   "post_link": {
+    "surface_form": "comment-158145",
+    "start": 2149,
+    "end": 2163
+   }
+  },
+  {
+   "post_text": {
+    "surface_form": "Could you explain what you mean with: ''but you can prevent it by fixing whatever it is that is preventing uT from saving its resume data.'' Thanks!",
+    "start": 2771,
+    "end": 2919
+   },
+   "datetime": {
+    "surface_form": "July 25, 2007",
+    "start": 2742,
+    "end": 2755
+   },
+   "user": {
+    "surface_form": "https://forum.utorrent.com/profile/21061-robman/",
+    "start": 2466,
+    "end": 2514
+   },
+   "post_link": {
+    "surface_form": "comment-158146",
+    "start": 2756,
+    "end": 2770
+   }
+  },
+  {
+   "post_text": {
+    "surface_form": "Some antivirus, firewall and antispyware applications prevent uTorrent from writing its resume file. They need to either allow the write or be removed. Non-graceful shutdowns of uTorrent also prevent the writing of the resume file. Make sure uT shuts down cleanly.",
+    "start": 3473,
+    "end": 3737
+   },
+   "datetime": {
+    "surface_form": "July 25, 2007",
+    "start": 3444,
+    "end": 3457
+   },
+   "user": {
+    "surface_form": "https://forum.utorrent.com/profile/628-dreadwingknight/",
+    "start": 3112,
+    "end": 3167
+   },
+   "post_link": {
+    "surface_form": "comment-158158",
+    "start": 3458,
+    "end": 3472
+   }
+  },
+  {
+   "post_text": {
+    "surface_form": "Thanks",
+    "start": 4224,
+    "end": 4230
+   },
+   "datetime": {
+    "surface_form": "July 26, 2007",
+    "start": 4195,
+    "end": 4208
+   },
+   "user": {
+    "surface_form": "https://forum.utorrent.com/profile/21061-robman/",
+    "start": 3919,
+    "end": 3967
+   },
+   "post_link": {
+    "surface_form": "comment-158296",
+    "start": 4209,
+    "end": 4223
+   }
+  }
+ ]
+}}

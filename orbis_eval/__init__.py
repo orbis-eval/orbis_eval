@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __name__ = "orbis_eval"
-__version__ = "2.3.1"
+__version__ = "2.3.2"
 __author__ = "fabod, rogerwaldvogel"
 __year__ = "2021"
 __description__ = "An Extendable Evaluation Pipeline for Named Entity Drill-Down Analysis"
@@ -23,10 +23,12 @@ __plugins__ = [
     "orbis_plugin_aggregation_aida",
     "orbis_plugin_aggregation_babelfly",
     "orbis_plugin_aggregation_spotlight",
+    "orbis_plugin_aggregation_weblyzard_harvest",
     "orbis_plugin_evaluation_binary_classification_evaluation",
     "orbis_plugin_metrics_binary_classification_metrics",
     "orbis_plugin_scoring_nel_scorer",
     "orbis_plugin_scoring_ner_scorer",
+    "orbis_plugin_scoring_wl_harvest_scorer",
     "orbis_plugin_storage_cache_webservice_results",
     "orbis_plugin_storage_csv_result_list",
     "orbis_plugin_storage_html_pages"
