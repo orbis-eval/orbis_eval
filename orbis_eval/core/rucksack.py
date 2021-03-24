@@ -41,6 +41,7 @@ class Rucksack(object):
         rucksack['data'] = {}
         rucksack['data']['corpus'] = {}
         rucksack['data']['corpus_modified'] = {}
+        rucksack['data']['corpus_url'] = {}
         rucksack['data']['gold'] = {}
         rucksack['data']['computed'] = {}
         rucksack['results'] = {}
@@ -99,6 +100,8 @@ class Rucksack(object):
         for doc, content in corpus.items():
             if doc.split("-")[-1] == "modified":
                 self.open['data']['corpus_modified'][doc.replace("-modified", "")] = content
+            elif doc.split("-")[-1] == "url":
+                self.open['data']['corpus_url'][doc.replace("-url", "")] = content
             else:
                 self.open['data']['corpus'][doc] = content
 
@@ -159,6 +162,7 @@ class Rucksack(object):
                 'index': key,
                 'corpus': data['corpus'].get(key, None),
                 'corpus_modified': data['corpus_modified'].get(key, None),
+                'corpus_url': data['corpus_url'].get(key, None),
                 'gold': data['gold'].get(key, None),
                 'computed': data['computed'].get(key, None)
             }
@@ -175,6 +179,7 @@ class Rucksack(object):
                 'url': data['gold'][key][0]['key'] if key in data['gold'] and len(data['gold'][key]) else "",
                 'corpus': item,
                 'corpus_modified': data['corpus_modified'].get(key, None),
+                'corpus_url': data['corpus_url'].get(key, None),
                 'gold': data['gold'].get(key, []),
                 'computed': data['computed'].get(key, None)
             }
