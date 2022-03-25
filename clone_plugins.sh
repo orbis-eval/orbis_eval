@@ -3,6 +3,7 @@ git clone https://github.com/orbis-eval/orbis_addon_repoman.git
 git clone https://github.com/orbis-eval/orbis_plugin_aggregation_aida.git
 git clone https://github.com/orbis-eval/orbis_plugin_aggregation_babelfly.git
 git clone https://github.com/orbis-eval/orbis_plugin_aggregation_spotlight.git
+git clone https://github.com/orbis-eval/orbis_plugin_aggregation_local_cache.git
 git clone https://github.com/orbis-eval/orbis_plugin_scoring_nel_scorer.git
 git clone https://github.com/orbis-eval/orbis_plugin_scoring_wl_harvest_scorer.git
 git clone https://github.com/orbis-eval/orbis_plugin_metrics_binary_classification_metrics.git
